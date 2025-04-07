@@ -38,7 +38,9 @@ export const plTranslations = {
   home: {
     hero: {
       title: "Dom Giedroyciów",
-      subtitle: "Szlachecka litewska rodzina z bogatym dziedzictwem"
+      subtitle: "Szlachecka litewska rodzina z bogatym dziedzictwem",
+      motto: "Dziedzictwo, Historia, Spuścizna",
+      description: "Witamy na oficjalnej stronie Domu Giedroyciów, poświęconej zachowaniu i dzieleniu się naszym wielowiekowym dziedzictwem."
     },
     about: {
       title: "O rodzinie",
@@ -96,6 +98,10 @@ export const plTranslations = {
     noPostsFound: "Nie znaleziono wpisów w tej kategorii.",
     previous: "Poprzedni",
     next: "Następny",
+    annual: "Coroczne spotkanie rodziny Giedroyciów",
+    documents: "Odkryto nową kolekcję dokumentów historycznych",
+    "annual.description": "Informacje o nadchodzącym corocznym spotkaniu rodziny Giedroyciów w Wilnie.",
+    "documents.description": "Nowo odkryta kolekcja dokumentów z XVI wieku związanych z rodziną Giedroyciów.",
     categories: {
       all: "Wszystkie",
       history: "Historia",

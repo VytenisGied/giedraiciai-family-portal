@@ -74,6 +74,19 @@ export const ltTranslations = {
       title: "Naujausi straipsniai",
       readMore: "Skaityti daugiau",
       viewAll: "Peržiūrėti visus įrašus"
+    },
+    about: {
+      title: "Apie šeimą",
+      content: "Giedraičiai yra viena iš seniausių ir labiausiai garsėjančių bajorų šeimų iš Lietuvos Didžiosios Kunigaikštystės, kurios šaknys siekia XIV amžių."
+    },
+    history: {
+      title: "Turtinga istorija",
+      content: "Nuo viduramžių riterių iki vyskupų, politikų ir kultūros veikėjų, Giedraičių šeima atliko reikšmingą vaidmenį Lietuvos, Lenkijos ir Rytų Europos istorijoje."
+    },
+    join: {
+      title: "Prisijunkite prie asociacijos",
+      content: "Susisiekite su giminaičiais, tyrinėkite savo paveldą ir padėkite išsaugoti mūsų šeimos palikimą ateities kartoms.",
+      button: "Sužinoti daugiau"
     }
   },
 
