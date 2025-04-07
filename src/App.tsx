@@ -73,7 +73,7 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <ScrollToTop /> {/* Added ScrollToTop component */}
+          <ScrollToTop />
           <AppRoutes />
         </TooltipProvider>
       </LanguageProvider>
