@@ -2,24 +2,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, Languages } from "lucide-react";
-import { 
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { NavDropdown, LanguageDropdown, DropdownOption } from "@/components/ui/custom-dropdown";
 
 interface NavbarProps {
   language: "EN" | "LT" | "PL";
@@ -31,6 +18,40 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
   const isMobile = useIsMobile();
   
   const isActive = (path: string) => location.pathname === path;
+  const isPathActive = (paths: string[]) => paths.some(path => location.pathname.includes(path));
+  
+  // Official dropdown options
+  const officialOptions: DropdownOption[] = [
+    {
+      label: "Coat of Arms",
+      value: "coat-of-arms",
+      href: "/official/coat-of-arms"
+    },
+    {
+      label: "Documents",
+      value: "documents",
+      href: "/official/documents"
+    }
+  ];
+  
+  // Association dropdown options
+  const associationOptions: DropdownOption[] = [
+    {
+      label: "About",
+      value: "about",
+      href: "/association/about"
+    },
+    {
+      label: "Membership",
+      value: "membership",
+      href: "/association/membership"
+    },
+    {
+      label: "Submit Genealogy",
+      value: "submit-genealogy",
+      href: "/association/submit-genealogy"
+    }
+  ];
   
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gold/20 shadow-sm">
@@ -48,189 +69,64 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
           
           {/* Desktop Navigation */}
           {!isMobile && (
-            <NavigationMenu>
-              <NavigationMenuList className="gap-1">
-                {/* Home */}
-                <NavigationMenuItem>
-                  <Link to="/">
-                    <NavigationMenuLink 
-                      className={cn(
-                        "inline-flex h-9 px-4 py-2 items-center justify-center rounded-md text-sm font-medium transition-colors",
-                        isActive("/") 
-                          ? "bg-accent text-accent-foreground" 
-                          : "hover:bg-accent hover:text-accent-foreground"
-                      )}
-                    >
-                      Home
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                {/* History */}
-                <NavigationMenuItem>
-                  <Link to="/history">
-                    <NavigationMenuLink 
-                      className={cn(
-                        "inline-flex h-9 px-4 py-2 items-center justify-center rounded-md text-sm font-medium transition-colors",
-                        isActive("/history") 
-                          ? "bg-accent text-accent-foreground" 
-                          : "hover:bg-accent hover:text-accent-foreground"
-                      )}
-                    >
-                      History
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                
-                {/* Official */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger 
-                    className={cn(
-                      isActive("/official/coat-of-arms") || isActive("/official/documents") 
-                        ? "bg-accent text-accent-foreground" 
-                        : ""
-                    )}
-                  >
-                    Official
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[200px] gap-1 p-2">
-                      <li>
-                        <Link 
-                          to="/official/coat-of-arms" 
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                            isActive("/official/coat-of-arms") 
-                              ? "bg-accent text-accent-foreground" 
-                              : "hover:bg-accent hover:text-accent-foreground"
-                          )}
-                        >
-                          <div className="text-sm font-medium">Coat of Arms</div>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/official/documents" 
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                            isActive("/official/documents") 
-                              ? "bg-accent text-accent-foreground" 
-                              : "hover:bg-accent hover:text-accent-foreground"
-                          )}
-                        >
-                          <div className="text-sm font-medium">Documents</div>
-                        </Link>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-                
-                {/* Association */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger
-                    className={cn(
-                      isActive("/association/about") || isActive("/association/membership") || isActive("/association/submit-genealogy") 
-                        ? "bg-accent text-accent-foreground" 
-                        : ""
-                    )}
-                  >
-                    Association
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[200px] gap-1 p-2">
-                      <li>
-                        <Link 
-                          to="/association/about" 
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                            isActive("/association/about") 
-                              ? "bg-accent text-accent-foreground" 
-                              : "hover:bg-accent hover:text-accent-foreground"
-                          )}
-                        >
-                          <div className="text-sm font-medium">About</div>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/association/membership" 
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                            isActive("/association/membership") 
-                              ? "bg-accent text-accent-foreground" 
-                              : "hover:bg-accent hover:text-accent-foreground"
-                          )}
-                        >
-                          <div className="text-sm font-medium">Membership</div>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link 
-                          to="/association/submit-genealogy" 
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
-                            isActive("/association/submit-genealogy") 
-                              ? "bg-accent text-accent-foreground" 
-                              : "hover:bg-accent hover:text-accent-foreground"
-                          )}
-                        >
-                          <div className="text-sm font-medium">Submit Genealogy</div>
-                        </Link>
-                      </li>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-                
-                {/* Blog */}
-                <NavigationMenuItem>
-                  <Link to="/blog">
-                    <NavigationMenuLink 
-                      className={cn(
-                        "inline-flex h-9 px-4 py-2 items-center justify-center rounded-md text-sm font-medium transition-colors",
-                        isActive("/blog") 
-                          ? "bg-accent text-accent-foreground" 
-                          : "hover:bg-accent hover:text-accent-foreground"
-                      )}
-                    >
-                      Blog
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            <nav className="flex items-center gap-2">
+              <Link to="/">
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "h-9",
+                    isActive("/") ? "bg-accent text-accent-foreground" : ""
+                  )}
+                >
+                  Home
+                </Button>
+              </Link>
+              
+              <Link to="/history">
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "h-9",
+                    isActive("/history") ? "bg-accent text-accent-foreground" : ""
+                  )}
+                >
+                  History
+                </Button>
+              </Link>
+              
+              <NavDropdown
+                label="Official"
+                options={officialOptions}
+                isActive={isPathActive(["/official"])}
+              />
+              
+              <NavDropdown
+                label="Association"
+                options={associationOptions}
+                isActive={isPathActive(["/association"])}
+              />
+              
+              <Link to="/blog">
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "h-9",
+                    isActive("/blog") ? "bg-accent text-accent-foreground" : ""
+                  )}
+                >
+                  Blog
+                </Button>
+              </Link>
+            </nav>
           )}
           
           {/* Language Selector - Shown on both mobile and desktop */}
           <div className="flex items-center gap-2">
             {!isMobile && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center gap-1 h-9 px-3 border-gold">
-                    <Languages className="h-4 w-4" />
-                    <span>{language}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem 
-                    onClick={() => setLanguage("EN")}
-                    className={language === "EN" ? "bg-accent text-accent-foreground" : ""}
-                  >
-                    English
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => setLanguage("LT")}
-                    className={language === "LT" ? "bg-accent text-accent-foreground" : ""}
-                  >
-                    Lithuanian
-                  </DropdownMenuItem>
-                  <DropdownMenuItem 
-                    onClick={() => setLanguage("PL")}
-                    className={language === "PL" ? "bg-accent text-accent-foreground" : ""}
-                  >
-                    Polish
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <LanguageDropdown
+                currentLanguage={language}
+                onLanguageChange={setLanguage}
+              />
             )}
             
             {/* Mobile Menu */}

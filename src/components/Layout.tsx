@@ -1,7 +1,8 @@
 
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import { Link } from "react-router-dom";
+import Navbar from "@/components/Navbar";
+import { LanguageDropdown } from "@/components/ui/custom-dropdown";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -51,26 +52,11 @@ const Layout = ({ children }: LayoutProps) => {
             
             <div>
               <h3 className="text-lg font-medium mb-4">Language</h3>
-              <div className="flex gap-4">
-                <button 
-                  onClick={() => setLanguage("EN")} 
-                  className={`px-2 py-1 text-sm ${language === "EN" ? "font-bold text-gold" : "text-gray-300"}`}
-                >
-                  English
-                </button>
-                <button 
-                  onClick={() => setLanguage("LT")}
-                  className={`px-2 py-1 text-sm ${language === "LT" ? "font-bold text-gold" : "text-gray-300"}`}
-                >
-                  Lithuanian
-                </button>
-                <button 
-                  onClick={() => setLanguage("PL")}
-                  className={`px-2 py-1 text-sm ${language === "PL" ? "font-bold text-gold" : "text-gray-300"}`}
-                >
-                  Polish
-                </button>
-              </div>
+              <LanguageDropdown 
+                currentLanguage={language}
+                onLanguageChange={setLanguage}
+                align="left"
+              />
               
               <div className="mt-6">
                 <h3 className="text-lg font-medium mb-2">Contact</h3>
