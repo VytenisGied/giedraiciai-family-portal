@@ -62,7 +62,7 @@ const Navbar = () => {
               <span className="text-white font-serif text-lg">G</span>
             </div>
             <span className="font-serif text-lg text-dark-text hidden sm:block">
-              {t('footer.title')}
+              {t('nav.title')}
             </span>
           </Link>
           

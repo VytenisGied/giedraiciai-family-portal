@@ -1,8 +1,9 @@
 
 export const resources = {
-  EN: {
+  en: {
     translation: {
       // Navbar
+      "nav.title": "House of Giedraičiai",
       "nav.home": "Home",
       "nav.history": "History",
       "nav.official": "Official",
@@ -56,9 +57,10 @@ export const resources = {
       "blog.documents.description": "A collection of previously unknown documents related to the Giedraičiai family has been discovered in the National Archives. These papers date back to the 16th century."
     }
   },
-  LT: {
+  lt: {
     translation: {
       // Navbar
+      "nav.title": "Giedraičių namai",
       "nav.home": "Pagrindinis",
       "nav.history": "Istorija",
       "nav.official": "Oficialūs",
@@ -112,9 +114,10 @@ export const resources = {
       "blog.documents.description": "Nacionaliniame archyve buvo rasta anksčiau nežinomų dokumentų, susijusių su Giedraičių gimine. Šie dokumentai datuojami XVI amžiumi."
     }
   },
-  PL: {
+  pl: {
     translation: {
       // Navbar
+      "nav.title": "Dom Giedrojciów",
       "nav.home": "Strona główna",
       "nav.history": "Historia",
       "nav.official": "Oficjalne",

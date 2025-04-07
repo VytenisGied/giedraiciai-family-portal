@@ -16,7 +16,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   
   // Update i18n language when language state changes
   useEffect(() => {
-    const languageCode = language.toLowerCase();
+    // Map uppercase language codes to lowercase
+    const languageCodeMap: Record<string, string> = {
+      "EN": "en",
+      "LT": "lt",
+      "PL": "pl"
+    };
+    
+    const languageCode = languageCodeMap[language];
     console.log(`Changing language to: ${languageCode}`);
     
     try {
