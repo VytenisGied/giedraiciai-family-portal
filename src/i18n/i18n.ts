@@ -12,6 +12,11 @@ i18n
     fallbackLng: "en", // fallback language
     interpolation: {
       escapeValue: false // react already safes from xss
+    },
+    // Add these options to help with debugging
+    debug: process.env.NODE_ENV === 'development',
+    react: {
+      useSuspense: false // Set to false to avoid issues with Suspense
     }
   });
 
