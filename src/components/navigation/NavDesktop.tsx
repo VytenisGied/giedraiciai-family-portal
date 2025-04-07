@@ -1,64 +1,68 @@
 
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { NavDropdown, DropdownOption } from "@/components/ui/dropdown";
 import { NavLink } from "./NavLink";
-import { useLocalizedPath } from "@/hooks/useLocalizedPath";
+import { NavItem } from "@/data/navigation";
 
 interface NavDesktopProps {
+  navItems: (NavItem & { label: string, children?: (NavItem & { label: string })[] })[];
   officialOptions: DropdownOption[];
   associationOptions: DropdownOption[];
   isPathActive: (paths: string[]) => boolean;
 }
 
 export const NavDesktop: React.FC<NavDesktopProps> = ({ 
+  navItems,
   officialOptions, 
   associationOptions,
   isPathActive
 }) => {
   const location = useLocation();
-  const { t } = useTranslation();
-  const localizedPath = useLocalizedPath();
   
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path?: string) => path ? location.pathname === path : false;
 
   return (
     <nav className="flex items-center gap-2">
-      <NavLink 
-        to={localizedPath("home")} 
-        isActive={isActive(localizedPath("home"))}
-      >
-        {t('nav.home')}
-      </NavLink>
-      
-      <NavLink 
-        to={localizedPath("history")} 
-        isActive={isActive(localizedPath("history"))}
-      >
-        {t('nav.history')}
-      </NavLink>
-      
-      <NavDropdown
-        label={t('nav.official.title')}
-        options={officialOptions}
-        isActive={isPathActive(["/official", "/oficialus", "/oficjalne"])}
-        className="nav-dropdown-enhanced"
-      />
-      
-      <NavDropdown
-        label={t('nav.association.title')}
-        options={associationOptions}
-        isActive={isPathActive(["/association", "/asociacija", "/stowarzyszenie"])}
-        className="nav-dropdown-enhanced"
-      />
-      
-      <NavLink 
-        to={localizedPath("blog")} 
-        isActive={isActive(localizedPath("blog"))}
-      >
-        {t('nav.blog')}
-      </NavLink>
+      {navItems.map(item => {
+        // Skip items with children as they'll be rendered as dropdowns
+        if (item.children && item.children.length > 0) {
+          if (item.key === "official") {
+            return (
+              <NavDropdown
+                key={item.key}
+                label={item.label}
+                options={officialOptions}
+                isActive={isPathActive(["/official", "/oficialus", "/oficjalne"])}
+                className="nav-dropdown-enhanced"
+              />
+            );
+          }
+          if (item.key === "association") {
+            return (
+              <NavDropdown
+                key={item.key}
+                label={item.label}
+                options={associationOptions}
+                isActive={isPathActive(["/association", "/asociacija", "/stowarzyszenie"])}
+                className="nav-dropdown-enhanced"
+              />
+            );
+          }
+          return null;
+        }
+        
+        // Render regular nav links
+        return (
+          <NavLink 
+            key={item.key}
+            to={item.path || "/"}
+            isActive={isActive(item.path)}
+          >
+            {item.label}
+          </NavLink>
+        );
+      })}
     </nav>
   );
 };
