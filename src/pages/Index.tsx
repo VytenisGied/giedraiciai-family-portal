@@ -46,56 +46,56 @@ const Index = () => {
         <div className="container mx-auto">
           <h2 className="text-3xl font-serif text-[#8B1E3F] mb-10 text-center">{t('home.explore.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all">
+            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all flex flex-col">
               <CardHeader>
                 <CardTitle>{t('home.explore.history.title')}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <p>{t('home.explore.history.description')}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4">
                 <Link to={localizedPath("history")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.history.button')}</Button>
                 </Link>
               </CardFooter>
             </Card>
             
-            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all">
+            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all flex flex-col">
               <CardHeader>
                 <CardTitle>{t('home.explore.coatOfArms.title')}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <p>{t('home.explore.coatOfArms.description')}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4">
                 <Link to={localizedPath("coatOfArms")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.coatOfArms.button')}</Button>
                 </Link>
               </CardFooter>
             </Card>
             
-            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all">
+            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all flex flex-col">
               <CardHeader>
                 <CardTitle>{t('home.explore.join.title')}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <p>{t('home.explore.join.description')}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4">
                 <Link to={localizedPath("membership")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.join.button')}</Button>
                 </Link>
               </CardFooter>
             </Card>
             
-            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all">
+            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all flex flex-col">
               <CardHeader>
                 <CardTitle>{t('home.explore.genealogy.title')}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <p>{t('home.explore.genealogy.description')}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4">
                 <Link to={localizedPath("submitGenealogy")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.genealogy.button')}</Button>
                 </Link>
@@ -110,16 +110,16 @@ const Index = () => {
         <div className="container mx-auto">
           <h2 className="text-3xl font-serif text-[#8B1E3F] mb-10 text-center">{t('home.latest.title')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all">
+            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all flex flex-col">
               <CardHeader>
                 <CardTitle>{t('blog.annual')}</CardTitle>
                 <CardDescription>April 5, 2025</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <div className="aspect-video bg-gray-100 mb-4 rounded-md"></div>
                 <p>{t('blog.annual.description')}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4">
                 <Link to={`${localizedPath("blog")}/annual-gathering`} className="w-full">
                   <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                     {t('home.latest.readMore')}
@@ -128,16 +128,16 @@ const Index = () => {
               </CardFooter>
             </Card>
             
-            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all">
+            <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all flex flex-col">
               <CardHeader>
                 <CardTitle>{t('blog.documents')}</CardTitle>
                 <CardDescription>March 20, 2025</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <div className="aspect-video bg-gray-100 mb-4 rounded-md"></div>
                 <p>{t('blog.documents.description')}</p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="pt-4">
                 <Link to={`${localizedPath("blog")}/historical-documents-discovery`} className="w-full">
                   <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                     {t('home.latest.readMore')}
