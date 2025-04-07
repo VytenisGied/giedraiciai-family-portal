@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -23,10 +24,27 @@ const Membership = () => {
           </p>
           
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="mb-16">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="types">{t("membership.types")}</TabsTrigger>
-              <TabsTrigger value="benefits">{t("membership.benefits")}</TabsTrigger>
-              <TabsTrigger value="process">{t("membership.process")}</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 border border-[#C9A13B]/30 bg-ivory-white rounded-lg p-1.5 relative overflow-hidden">
+              <TabsTrigger 
+                value="types" 
+                className="font-serif text-base h-11 data-[state=active]:bg-[#C9A13B] data-[state=active]:text-white data-[state=active]:font-medium data-[state=active]:shadow-none text-dark-text border-0 rounded-md transition-all duration-300"
+              >
+                {t("membership.types")}
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="benefits" 
+                className="font-serif text-base h-11 data-[state=active]:bg-[#C9A13B] data-[state=active]:text-white data-[state=active]:font-medium data-[state=active]:shadow-none text-dark-text border-0 rounded-md transition-all duration-300"
+              >
+                {t("membership.benefits")}
+              </TabsTrigger>
+              
+              <TabsTrigger 
+                value="process" 
+                className="font-serif text-base h-11 data-[state=active]:bg-[#C9A13B] data-[state=active]:text-white data-[state=active]:font-medium data-[state=active]:shadow-none text-dark-text border-0 rounded-md transition-all duration-300"
+              >
+                {t("membership.process")}
+              </TabsTrigger>
             </TabsList>
             
             {/* Membership Types Tab */}
