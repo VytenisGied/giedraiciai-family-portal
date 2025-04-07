@@ -79,7 +79,7 @@ export const plTranslations = {
   "coatOfArms.episcopal": "Gałąź biskupia",
   "coatOfArms.episcopalDescription": "Członkowie rodziny, którzy wstąpili do służby kościelnej, szczególnie ci, którzy zostali biskupami, używali wariantu herbu, który zawierał elementy kościelne, takie jak mitry, pastorały lub kapelusze kardynalskie, w zależności od ich rangi.",
   "coatOfArms.polish": "Gałąź polska",
-  "coatOfArms.polishDescription": "Po Unii Lubelskiej w 1569 r., gałęzie rodziny, które bardziej integrowały się z polską szlachtą, czasami ćwiarkowały swój herb z herbami rodzin, w które się wżenili, tworząc charakterystyczne warianty.",
+  "coatOfArms.polishDescription": "Po Unii Lubelskiej w 1569 r., gałęzie rodziny, które bardziej integrowały się z polską szlachtą, czasami ćwiartowały swój herb z herbami rodzin, w które się wżenili, tworząc charakterystyczne warianty.",
   
   // Documents Page
   "documents.title": "Dokumenty historyczne",
@@ -92,7 +92,7 @@ export const plTranslations = {
   "documents.landGrantsDescription1": "Dokumenty te rejestrują nadania ziemskie, zakupy majątków i transfery własności związane z posiadłościami terytorialnymi rodziny. Dostarczają cennych informacji o geograficznym zasięgu wpływów rodziny i zasobach ekonomicznych.",
   "documents.landGrantsDescription2": "Kolekcja obejmuje nadania na Litwie, w Polsce oraz na terytoriach dzisiejszej Białorusi i Ukrainy, datowane od XV do początku XX wieku.",
   "documents.ecclesiastical": "Dokumenty kościelne",
-  "documents.ecclesiasticalDescription1": "Biorąc pod uwagę znaczącą liczbę członków rodziny Giedroyć, kt��rzy służyli w Kościele, kolekcja ta obejmuje bulle papieskie, nominacje biskupie oraz zapisy fundacji kościelnych i darowizn sponsorowanych przez rodzinę.",
+  "documents.ecclesiasticalDescription1": "Biorąc pod uwagę znaczącą liczbę członków rodziny Giedroyć, ktrzy służyli w Kościele, kolekcja ta obejmuje bulle papieskie, nominacje biskupie oraz zapisy fundacji kościelnych i darowizn sponsorowanych przez rodzinę.",
   "documents.ecclesiasticalDescription2": "Szczególnie ważne są dokumenty związane z Melchiorem Giedroyćem, Biskupem Żmudzkim (1576-1609), który odegrał kluczową rolę w kontrreformacji na Litwie.",
   "documents.military": "Nominacje i rejestry wojskowe",
   "documents.militaryDescription1": "Dokumenty te rejestrują służbę wojskową członków rodziny, w tym nominacje, awanse i odznaczenia. Kolekcja obejmuje okres od XVI do XX wieku, obejmując służbę w siłach zbrojnych litewskich, polskich, rosyjskich i innych.",
@@ -284,5 +284,9 @@ export const plTranslations = {
   "submitGenealogy.missingInformation": "Brakujące informacje",
   "submitGenealogy.fillRequired": "Proszę wypełnić wszystkie wymagane pola.",
   "submitGenealogy.submissionSuccessful": "Przesłanie pomyślne",
-  "submitGenealogy.infoSubmitted": "Twoje informacje genealogiczne zostały przesłane."
-};
+  "submitGenealogy.infoSubmitted": "Twoje informacje genealogiczne zostały przesłane.",
+  
+  // History Page
+  "history.title": "Nasza Historia",
+  "history.intro": "Ród Giedroyć wywodzi swoje korzenie z XIII wieku, w okresie formowania się Wielkiego Księstwa Litewskiego. Na przestrzeni wieków członkowie tego szlacheckiego rodu służyli jako dowódcy wojskowi, duchowni, politycy i działacze kulturalni, pozostawiając niezatarty ślad w historii Litwy.",
+  "history.origins": "
