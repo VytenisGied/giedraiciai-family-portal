@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -236,339 +235,337 @@ const Blog = () => {
   const hasActiveFilters = selectedLanguages.length > 0 || selectedCategories.length > 0 || searchInputValue.trim() !== "";
   
   return (
-    <Layout>
-      <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-8 text-center">{t('blog.title')}</h1>
-        
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-10 bg-white rounded-lg shadow-md border border-gray-100 p-5 md:p-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-              <h2 className="text-lg font-medium text-gray-800 flex items-center gap-2">
-                <Filter size={18} className="text-[#8B1E3F]" /> 
-                {t('blog.filters')}
-              </h2>
-              
-              <div className="relative w-full md:w-auto md:min-w-[280px]">
-                <Input
-                  placeholder={t('blog.searchPlaceholder') || "Search posts..."}
-                  value={searchInputValue}
-                  onChange={handleSearchChange}
-                  className="pr-10 border-[#C9A13B] focus-visible:ring-[#8B1E3F]"
-                />
-                {searchInputValue ? (
-                  <button 
-                    onClick={() => setSearchInputValue('')}
-                    className="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    <X size={16} />
-                  </button>
-                ) : null}
-                <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              </div>
-            </div>
+    <div className="container mx-auto py-12 px-4">
+      <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-8 text-center">{t('blog.title')}</h1>
+      
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-10 bg-white rounded-lg shadow-md border border-gray-100 p-5 md:p-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <h2 className="text-lg font-medium text-gray-800 flex items-center gap-2">
+              <Filter size={18} className="text-[#8B1E3F]" /> 
+              {t('blog.filters')}
+            </h2>
             
-            <div className="flex flex-col sm:flex-row gap-3 mb-3">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className="w-full sm:w-auto border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center justify-between"
-                  >
-                    <span className="truncate">{getLanguageSelectionLabel()}</span>
-                    <ChevronDown className="h-4 w-4 opacity-70 flex-shrink-0" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-56 bg-white" align="start">
-                  <div className="p-2 border-b">
-                    <h3 className="font-medium text-sm text-gray-700 px-2 py-1.5">
-                      {t('blog.language')}
-                    </h3>
+            <div className="relative w-full md:w-auto md:min-w-[280px]">
+              <Input
+                placeholder={t('blog.searchPlaceholder') || "Search posts..."}
+                value={searchInputValue}
+                onChange={handleSearchChange}
+                className="pr-10 border-[#C9A13B] focus-visible:ring-[#8B1E3F]"
+              />
+              {searchInputValue ? (
+                <button 
+                  onClick={() => setSearchInputValue('')}
+                  className="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  <X size={16} />
+                </button>
+              ) : null}
+              <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-3 mb-3">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full sm:w-auto border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center justify-between"
+                >
+                  <span className="truncate">{getLanguageSelectionLabel()}</span>
+                  <ChevronDown className="h-4 w-4 opacity-70 flex-shrink-0" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0 w-56 bg-white" align="start">
+                <div className="p-2 border-b">
+                  <h3 className="font-medium text-sm text-gray-700 px-2 py-1.5">
+                    {t('blog.language')}
+                  </h3>
+                </div>
+                <div className="p-2">
+                  <div className="grid grid-cols-1 gap-1">
+                    <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                      <Checkbox 
+                        id="en-lang" 
+                        checked={selectedLanguages.includes("EN")} 
+                        onCheckedChange={() => toggleLanguage("EN")}
+                        className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                      />
+                      <label htmlFor="en-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                        English
+                      </label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                      <Checkbox 
+                        id="lt-lang" 
+                        checked={selectedLanguages.includes("LT")} 
+                        onCheckedChange={() => toggleLanguage("LT")}
+                        className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                      />
+                      <label htmlFor="lt-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                        Lietuvių
+                      </label>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                      <Checkbox 
+                        id="pl-lang" 
+                        checked={selectedLanguages.includes("PL")} 
+                        onCheckedChange={() => toggleLanguage("PL")}
+                        className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                      />
+                      <label htmlFor="pl-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                        Polski
+                      </label>
+                    </div>
+                    
+                    {selectedLanguages.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        onClick={() => setSelectedLanguages([])} 
+                        className="text-xs text-[#8B1E3F] mt-1 hover:text-[#8B1E3F]/90 hover:bg-[#8B1E3F]/5"
+                      >
+                        {t('blog.clearSelection') || "Clear selection"}
+                      </Button>
+                    )}
                   </div>
-                  <div className="p-2">
-                    <div className="grid grid-cols-1 gap-1">
-                      <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                </div>
+              </PopoverContent>
+            </Popover>
+            
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full sm:w-auto border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center justify-between"
+                >
+                  <span className="truncate">{getCategoriesSelectionLabel()}</span>
+                  <ChevronDown className="h-4 w-4 opacity-70 flex-shrink-0" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0 w-56 bg-white" align="start">
+                <div className="p-2 border-b">
+                  <h3 className="font-medium text-sm text-gray-700 px-2 py-1.5">
+                    {t('blog.category')}
+                  </h3>
+                </div>
+                <div className="p-2">
+                  <div className="grid grid-cols-1 gap-1">
+                    {categories.slice(1).map((category) => (
+                      <div key={category} className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
                         <Checkbox 
-                          id="en-lang" 
-                          checked={selectedLanguages.includes("EN")} 
-                          onCheckedChange={() => toggleLanguage("EN")}
+                          id={`category-${category}`} 
+                          checked={selectedCategories.includes(category)} 
+                          onCheckedChange={() => toggleCategory(category)}
                           className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
                         />
-                        <label htmlFor="en-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                          English
-                        </label>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
-                        <Checkbox 
-                          id="lt-lang" 
-                          checked={selectedLanguages.includes("LT")} 
-                          onCheckedChange={() => toggleLanguage("LT")}
-                          className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
-                        />
-                        <label htmlFor="lt-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                          Lietuvių
-                        </label>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
-                        <Checkbox 
-                          id="pl-lang" 
-                          checked={selectedLanguages.includes("PL")} 
-                          onCheckedChange={() => toggleLanguage("PL")}
-                          className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
-                        />
-                        <label htmlFor="pl-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                          Polski
-                        </label>
-                      </div>
-                      
-                      {selectedLanguages.length > 0 && (
-                        <Button 
-                          variant="ghost" 
-                          onClick={() => setSelectedLanguages([])} 
-                          className="text-xs text-[#8B1E3F] mt-1 hover:text-[#8B1E3F]/90 hover:bg-[#8B1E3F]/5"
+                        <label 
+                          htmlFor={`category-${category}`} 
+                          className="text-sm font-medium leading-none cursor-pointer"
                         >
-                          {t('blog.clearSelection') || "Clear selection"}
-                        </Button>
-                      )}
+                          {t(`blog.categories.${category.toLowerCase()}`)}
+                        </label>
+                      </div>
+                    ))}
+                    
+                    {selectedCategories.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        onClick={() => setSelectedCategories([])} 
+                        className="text-xs text-[#8B1E3F] mt-1 hover:text-[#8B1E3F]/90 hover:bg-[#8B1E3F]/5"
+                      >
+                        {t('blog.clearSelection') || "Clear selection"}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+            
+            {hasActiveFilters && (
+              <Button 
+                variant="ghost" 
+                onClick={clearFilters}
+                className="text-[#8B1E3F] hover:bg-[#8B1E3F]/5 border border-dashed border-[#C9A13B]/40"
+              >
+                <X className="h-4 w-4 mr-2" />
+                {t('blog.clearAllFilters') || "Clear all filters"}
+              </Button>
+            )}
+          </div>
+          
+          {selectedCategories.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {selectedCategories.map(category => (
+                <Badge 
+                  key={category} 
+                  variant="outline" 
+                  className="bg-[#8B1E3F]/5 text-[#8B1E3F] border-[#C9A13B]/30 hover:bg-[#8B1E3F]/10 cursor-pointer flex items-center gap-1 px-2 py-1"
+                  onClick={() => toggleCategory(category)}
+                >
+                  {t(`blog.categories.${category.toLowerCase()}`)}
+                  <X size={14} />
+                </Badge>
+              ))}
+            </div>
+          )}
+          
+          <div className="block sm:hidden mt-3 mb-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="w-full border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/10 justify-between">
+                  {t('blog.moreFilters') || "More Filters"}
+                  <ChevronDown className="h-4 w-4 opacity-70" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white w-[94vw] max-w-sm mx-auto">
+                <DropdownMenuLabel>{t('blog.language')}</DropdownMenuLabel>
+                <DropdownMenuCheckboxItem 
+                  checked={selectedLanguages.includes("EN")}
+                  onCheckedChange={() => toggleLanguage("EN")}
+                >
+                  English
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem 
+                  checked={selectedLanguages.includes("LT")}
+                  onCheckedChange={() => toggleLanguage("LT")}
+                >
+                  Lietuvių
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem 
+                  checked={selectedLanguages.includes("PL")}
+                  onCheckedChange={() => toggleLanguage("PL")}
+                >
+                  Polski
+                </DropdownMenuCheckboxItem>
+                
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>{t('blog.category')}</DropdownMenuLabel>
+                
+                {categories.slice(1).map((category) => (
+                  <DropdownMenuCheckboxItem 
+                    key={category}
+                    checked={selectedCategories.includes(category)}
+                    onCheckedChange={() => toggleCategory(category)}
+                  >
+                    {t(`blog.categories.${category.toLowerCase()}`)}
+                  </DropdownMenuCheckboxItem>
+                ))}
+                
+                {hasActiveFilters && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                      onClick={clearFilters}
+                      className="text-center justify-center text-[#8B1E3F] font-medium"
+                    >
+                      {t('blog.clearAllFilters') || "Clear all filters"}
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          
+          <div className="mt-4 pt-3 border-t border-gray-100">
+            <div className="text-sm text-gray-600">
+              {filteredPosts.length} {filteredPosts.length === 1 ? t('blog.resultFound') : t('blog.resultsFound')}
+            </div>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          {currentPosts.length > 0 ? (
+            currentPosts.map(post => (
+              <Card key={post.id} className="border-[#C9A13B]/20 overflow-hidden hover:shadow-md transition-all">
+                <div className="aspect-video bg-gray-100">
+                  <img src={post.image} alt={post.title[language]} className="w-full h-full object-cover" />
+                </div>
+                <CardContent className="pt-6">
+                  <div className="flex justify-between items-start mb-2">
+                    <Badge variant="outline" className="border-[#C9A13B] text-[#8B1E3F]">
+                      {t(`blog.categories.${post.category.toLowerCase()}`)}
+                    </Badge>
+                    <div className="flex items-center">
+                      <span className="text-sm text-gray-500 mr-2">{post.date}</span>
+                      <div className="flex gap-1">
+                        {post.languages.map(lang => (
+                          <Badge key={lang} variant="secondary" className="text-xs">
+                            {lang}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </PopoverContent>
-              </Popover>
-              
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button 
-                    variant="outline" 
-                    className="w-full sm:w-auto border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center justify-between"
-                  >
-                    <span className="truncate">{getCategoriesSelectionLabel()}</span>
-                    <ChevronDown className="h-4 w-4 opacity-70 flex-shrink-0" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-56 bg-white" align="start">
-                  <div className="p-2 border-b">
-                    <h3 className="font-medium text-sm text-gray-700 px-2 py-1.5">
-                      {t('blog.category')}
-                    </h3>
-                  </div>
-                  <div className="p-2">
-                    <div className="grid grid-cols-1 gap-1">
-                      {categories.slice(1).map((category) => (
-                        <div key={category} className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
-                          <Checkbox 
-                            id={`category-${category}`} 
-                            checked={selectedCategories.includes(category)} 
-                            onCheckedChange={() => toggleCategory(category)}
-                            className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
-                          />
-                          <label 
-                            htmlFor={`category-${category}`} 
-                            className="text-sm font-medium leading-none cursor-pointer"
-                          >
-                            {t(`blog.categories.${category.toLowerCase()}`)}
-                          </label>
-                        </div>
-                      ))}
-                      
-                      {selectedCategories.length > 0 && (
-                        <Button 
-                          variant="ghost" 
-                          onClick={() => setSelectedCategories([])} 
-                          className="text-xs text-[#8B1E3F] mt-1 hover:text-[#8B1E3F]/90 hover:bg-[#8B1E3F]/5"
-                        >
-                          {t('blog.clearSelection') || "Clear selection"}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
-              
+                  <CardTitle className="text-2xl font-serif text-[#8B1E3F] mb-2">
+                    {post.title[language]}
+                  </CardTitle>
+                  <CardDescription className="text-base text-gray-700 mb-4">
+                    {post.excerpt[language]}
+                  </CardDescription>
+                </CardContent>
+                <CardFooter>
+                  <Link to={getLocalizedBlogPostUrl(post.slug, language)} className="w-full">
+                    <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
+                      {t('blog.readMore')}
+                    </Button>
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))
+          ) : (
+            <div className="col-span-2 text-center py-12">
+              <p className="text-lg text-gray-500">{t('blog.noPostsFound')}</p>
               {hasActiveFilters && (
                 <Button 
-                  variant="ghost" 
+                  variant="outline" 
                   onClick={clearFilters}
-                  className="text-[#8B1E3F] hover:bg-[#8B1E3F]/5 border border-dashed border-[#C9A13B]/40"
+                  className="mt-4 border-[#C9A13B] text-[#8B1E3F]"
                 >
-                  <X className="h-4 w-4 mr-2" />
-                  {t('blog.clearAllFilters') || "Clear all filters"}
+                  {t('blog.clearFilters') || "Clear filters"}
                 </Button>
               )}
             </div>
-            
-            {selectedCategories.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {selectedCategories.map(category => (
-                  <Badge 
-                    key={category} 
-                    variant="outline" 
-                    className="bg-[#8B1E3F]/5 text-[#8B1E3F] border-[#C9A13B]/30 hover:bg-[#8B1E3F]/10 cursor-pointer flex items-center gap-1 px-2 py-1"
-                    onClick={() => toggleCategory(category)}
-                  >
-                    {t(`blog.categories.${category.toLowerCase()}`)}
-                    <X size={14} />
-                  </Badge>
-                ))}
-              </div>
-            )}
-            
-            <div className="block sm:hidden mt-3 mb-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="w-full border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/10 justify-between">
-                    {t('blog.moreFilters') || "More Filters"}
-                    <ChevronDown className="h-4 w-4 opacity-70" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-white w-[94vw] max-w-sm mx-auto">
-                  <DropdownMenuLabel>{t('blog.language')}</DropdownMenuLabel>
-                  <DropdownMenuCheckboxItem 
-                    checked={selectedLanguages.includes("EN")}
-                    onCheckedChange={() => toggleLanguage("EN")}
-                  >
-                    English
-                  </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem 
-                    checked={selectedLanguages.includes("LT")}
-                    onCheckedChange={() => toggleLanguage("LT")}
-                  >
-                    Lietuvių
-                  </DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem 
-                    checked={selectedLanguages.includes("PL")}
-                    onCheckedChange={() => toggleLanguage("PL")}
-                  >
-                    Polski
-                  </DropdownMenuCheckboxItem>
-                  
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel>{t('blog.category')}</DropdownMenuLabel>
-                  
-                  {categories.slice(1).map((category) => (
-                    <DropdownMenuCheckboxItem 
-                      key={category}
-                      checked={selectedCategories.includes(category)}
-                      onCheckedChange={() => toggleCategory(category)}
-                    >
-                      {t(`blog.categories.${category.toLowerCase()}`)}
-                    </DropdownMenuCheckboxItem>
-                  ))}
-                  
-                  {hasActiveFilters && (
-                    <>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        onClick={clearFilters}
-                        className="text-center justify-center text-[#8B1E3F] font-medium"
-                      >
-                        {t('blog.clearAllFilters') || "Clear all filters"}
-                      </DropdownMenuItem>
-                    </>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            
-            <div className="mt-4 pt-3 border-t border-gray-100">
-              <div className="text-sm text-gray-600">
-                {filteredPosts.length} {filteredPosts.length === 1 ? t('blog.resultFound') : t('blog.resultsFound')}
-              </div>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {currentPosts.length > 0 ? (
-              currentPosts.map(post => (
-                <Card key={post.id} className="border-[#C9A13B]/20 overflow-hidden hover:shadow-md transition-all">
-                  <div className="aspect-video bg-gray-100">
-                    <img src={post.image} alt={post.title[language]} className="w-full h-full object-cover" />
-                  </div>
-                  <CardContent className="pt-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <Badge variant="outline" className="border-[#C9A13B] text-[#8B1E3F]">
-                        {t(`blog.categories.${post.category.toLowerCase()}`)}
-                      </Badge>
-                      <div className="flex items-center">
-                        <span className="text-sm text-gray-500 mr-2">{post.date}</span>
-                        <div className="flex gap-1">
-                          {post.languages.map(lang => (
-                            <Badge key={lang} variant="secondary" className="text-xs">
-                              {lang}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    <CardTitle className="text-2xl font-serif text-[#8B1E3F] mb-2">
-                      {post.title[language]}
-                    </CardTitle>
-                    <CardDescription className="text-base text-gray-700 mb-4">
-                      {post.excerpt[language]}
-                    </CardDescription>
-                  </CardContent>
-                  <CardFooter>
-                    <Link to={getLocalizedBlogPostUrl(post.slug, language)} className="w-full">
-                      <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
-                        {t('blog.readMore')}
-                      </Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))
-            ) : (
-              <div className="col-span-2 text-center py-12">
-                <p className="text-lg text-gray-500">{t('blog.noPostsFound')}</p>
-                {hasActiveFilters && (
-                  <Button 
-                    variant="outline" 
-                    onClick={clearFilters}
-                    className="mt-4 border-[#C9A13B] text-[#8B1E3F]"
-                  >
-                    {t('blog.clearFilters') || "Clear filters"}
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
-          
-          {totalPages > 1 && (
-            <div className="flex justify-center gap-2">
-              <Button
-                variant="outline"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="border-[#C9A13B]"
-              >
-                {t('blog.previous')}
-              </Button>
-              
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <Button
-                  key={index}
-                  variant={currentPage === index + 1 ? "default" : "outline"}
-                  onClick={() => handlePageChange(index + 1)}
-                  className={currentPage === index + 1 
-                    ? "bg-[#8B1E3F]" 
-                    : "border-[#C9A13B]"}
-                >
-                  {index + 1}
-                </Button>
-              ))}
-              
-              <Button
-                variant="outline"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="border-[#C9A13B]"
-              >
-                {t('blog.next')}
-              </Button>
-            </div>
           )}
         </div>
+        
+        {totalPages > 1 && (
+          <div className="flex justify-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="border-[#C9A13B]"
+            >
+              {t('blog.previous')}
+            </Button>
+            
+            {Array.from({ length: totalPages }).map((_, index) => (
+              <Button
+                key={index}
+                variant={currentPage === index + 1 ? "default" : "outline"}
+                onClick={() => handlePageChange(index + 1)}
+                className={currentPage === index + 1 
+                  ? "bg-[#8B1E3F]" 
+                  : "border-[#C9A13B]"}
+              >
+                {index + 1}
+              </Button>
+            ))}
+            
+            <Button
+              variant="outline"
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="border-[#C9A13B]"
+            >
+              {t('blog.next')}
+            </Button>
+          </div>
+        )}
       </div>
-    </Layout>
+    </div>
   );
 };
 

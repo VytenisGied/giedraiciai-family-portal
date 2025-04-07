@@ -101,8 +101,8 @@ export const extractBlogSlugFromUrl = (pathname: string): string | null => {
 
 // Get localized blog post URL
 export const getLocalizedBlogPostUrl = (slug: string, language: SupportedLanguage): string => {
-  const blogPath = urlPaths.blog[language];
-  return blogPath ? `/${blogPath}/${slug}` : `/blog/${slug}`;
+  const blogPath = getLocalizedPath("blog", language);
+  return `${blogPath}/${slug}`;
 };
 
 // Handle special cases like blog posts and other dynamic routes

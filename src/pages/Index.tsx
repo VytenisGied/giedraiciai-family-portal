@@ -1,9 +1,7 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
-import Layout from "@/components/Layout";
 import { useTranslation } from "react-i18next";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
@@ -12,7 +10,7 @@ const Index = () => {
   const localizedPath = useLocalizedPath();
   
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
       <div className="bg-gradient-to-b from-white to-[#FAF8F4] py-20 px-4">
         <div className="container mx-auto max-w-4xl text-center">
@@ -157,7 +155,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
