@@ -1,7 +1,7 @@
 
 export const ltTranslations = {
   // Navbar
-  "nav.title": "Giedraičių namai",
+  "nav.title": "Giedraičių giminė",
   "nav.home": "Pagrindinis",
   "nav.history": "Istorija",
   "nav.official": "Oficialūs",
@@ -14,16 +14,16 @@ export const ltTranslations = {
   "nav.blog": "Tinklaraštis",
   
   // Footer
-  "footer.title": "Giedraičių namai",
+  "footer.title": "Giedraičių giminė",
   "footer.description": "Išsaugant vienos iš kilmingiausių Lietuvos giminių paveldą ir palikimą nuo XIII amžiaus.",
   "footer.quickLinks": "Greitos nuorodos",
   "footer.association": "Asociacija",
   "footer.language": "Kalba",
   "footer.contact": "Kontaktai",
-  "footer.rights": "© {{year}} Giedraičių namai. Visos teisės saugomos.",
+  "footer.rights": "© {{year}} Giedraičių giminė. Visos teisės saugomos.",
   
   // Hero Section
-  "hero.title": "Giedraičių namai",
+  "hero.title": "Giedraičių giminė",
   "hero.motto": "\"Garbė, Kilmingumas, Palikimas\"",
   "hero.description": "Išsaugant vienos iš kilmingiausių Lietuvos giminių paveldą ir palikimą nuo XIII amžiaus.",
   
@@ -50,7 +50,7 @@ export const ltTranslations = {
   
   // Blog
   "blog.annual": "Metinis susitikimas Vilniuje",
-  "blog.annual.description": "Metinis Giedraičių namų susitikimas vyks Vilniuje šią vasarą. Prisijunkite prie mūsų trijų dienų istorinėms prezentacijoms, bendravimui ir šventėms.",
+  "blog.annual.description": "Metinis Giedraičių giminės susitikimas vyks Vilniuje šią vasarą. Prisijunkite prie mūsų trijų dienų istorinėms prezentacijoms, bendravimui ir šventėms.",
   "blog.documents": "Rasti istoriniai dokumentai",
   "blog.documents.description": "Nacionaliniame archyve buvo rasta anksčiau nežinomų dokumentų, susijusių su Giedraičių gimine. Šie dokumentai datuojami XVI amžiumi.",
   
