@@ -11,7 +11,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [language, setLanguage] = useState<"EN" | "LT" | "PL">("EN");
   
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F4]">
+    <div className="min-h-screen flex flex-col bg-ivory-white">
       {/* Header/Navigation */}
       <Navbar language={language} setLanguage={setLanguage} />
       
@@ -21,11 +21,11 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
       
       {/* Footer */}
-      <footer className="bg-[#1A1A1A] text-white py-12 px-4">
+      <footer className="bg-dark-text text-white py-12 px-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-serif mb-4 text-[#C9A13B]">House of Giedraičiai</h3>
+              <h3 className="text-xl font-serif mb-4 text-gold">House of Giedraičiai</h3>
               <p className="text-sm text-gray-300">Preserving the heritage and legacy of one of Lithuania's most noble houses since the 13th century.</p>
             </div>
             
@@ -54,19 +54,19 @@ const Layout = ({ children }: LayoutProps) => {
               <div className="flex gap-4">
                 <button 
                   onClick={() => setLanguage("EN")} 
-                  className={`px-2 py-1 text-sm ${language === "EN" ? "font-bold text-[#C9A13B]" : "text-gray-300"}`}
+                  className={`px-2 py-1 text-sm ${language === "EN" ? "font-bold text-gold" : "text-gray-300"}`}
                 >
                   English
                 </button>
                 <button 
                   onClick={() => setLanguage("LT")}
-                  className={`px-2 py-1 text-sm ${language === "LT" ? "font-bold text-[#C9A13B]" : "text-gray-300"}`}
+                  className={`px-2 py-1 text-sm ${language === "LT" ? "font-bold text-gold" : "text-gray-300"}`}
                 >
                   Lithuanian
                 </button>
                 <button 
                   onClick={() => setLanguage("PL")}
-                  className={`px-2 py-1 text-sm ${language === "PL" ? "font-bold text-[#C9A13B]" : "text-gray-300"}`}
+                  className={`px-2 py-1 text-sm ${language === "PL" ? "font-bold text-gold" : "text-gray-300"}`}
                 >
                   Polish
                 </button>

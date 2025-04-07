@@ -1,17 +1,25 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { Menu, Languages } from "lucide-react";
+import { 
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Menu, Languages } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   language: "EN" | "LT" | "PL";
@@ -19,187 +27,345 @@ interface NavbarProps {
 }
 
 const Navbar = ({ language, setLanguage }: NavbarProps) => {
-  const isMobile = useIsMobile();
   const location = useLocation();
+  const isMobile = useIsMobile();
   
-  // Custom NavItem component for regular navigation items
-  const NavItem = ({ to, children }: { to: string; children: React.ReactNode }) => {
-    const isActive = location.pathname === to;
-    
-    return (
-      <NavigationMenuItem>
-        <Link to={to}>
-          <div className={navigationMenuTriggerStyle() + (isActive ? " bg-accent/50" : "")}>
-            {children}
-          </div>
-        </Link>
-      </NavigationMenuItem>
-    );
-  };
+  const isActive = (path: string) => location.pathname === path;
   
   return (
-    <header className="border-b border-[#C9A13B]/20 bg-white">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-[#8B1E3F] rounded-full flex items-center justify-center">
-            <span className="text-white font-serif text-xl">G</span>
-          </div>
-          <span className="text-xl font-serif text-[#1A1A1A] hidden sm:inline-block">
-            House of Giedraičiai
-          </span>
-        </Link>
-        
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <div className="flex items-center">
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-gold/20 shadow-sm">
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-deep-red flex items-center justify-center">
+              <span className="text-white font-serif text-lg">G</span>
+            </div>
+            <span className="font-serif text-lg text-dark-text hidden sm:block">
+              House of Giedraičiai
+            </span>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          {!isMobile && (
             <NavigationMenu>
-              <NavigationMenuList>
-                <NavItem to="/">Home</NavItem>
-                <NavItem to="/history">History</NavItem>
+              <NavigationMenuList className="gap-1">
+                {/* Home */}
+                <NavigationMenuItem>
+                  <Link to="/">
+                    <NavigationMenuLink 
+                      className={cn(
+                        "inline-flex h-9 px-4 py-2 items-center justify-center rounded-md text-sm font-medium transition-colors",
+                        isActive("/") 
+                          ? "bg-accent text-accent-foreground" 
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      )}
+                    >
+                      Home
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
                 
-                <NavigationMenuItem className="relative">
-                  <NavigationMenuTrigger>Official</NavigationMenuTrigger>
-                  <NavigationMenuContent className="absolute left-0">
-                    <div className="w-[200px] p-2">
-                      <Link 
-                        to="/official/coat-of-arms" 
-                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Coat of Arms</div>
-                      </Link>
-                      <Link 
-                        to="/official/documents" 
-                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Documents</div>
-                      </Link>
-                    </div>
+                {/* History */}
+                <NavigationMenuItem>
+                  <Link to="/history">
+                    <NavigationMenuLink 
+                      className={cn(
+                        "inline-flex h-9 px-4 py-2 items-center justify-center rounded-md text-sm font-medium transition-colors",
+                        isActive("/history") 
+                          ? "bg-accent text-accent-foreground" 
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      )}
+                    >
+                      History
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                
+                {/* Official */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      isActive("/official/coat-of-arms") || isActive("/official/documents") 
+                        ? "bg-accent text-accent-foreground" 
+                        : ""
+                    )}
+                  >
+                    Official
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-1 p-2">
+                      <li>
+                        <Link 
+                          to="/official/coat-of-arms" 
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                            isActive("/official/coat-of-arms") 
+                              ? "bg-accent text-accent-foreground" 
+                              : "hover:bg-accent hover:text-accent-foreground"
+                          )}
+                        >
+                          <div className="text-sm font-medium">Coat of Arms</div>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link 
+                          to="/official/documents" 
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                            isActive("/official/documents") 
+                              ? "bg-accent text-accent-foreground" 
+                              : "hover:bg-accent hover:text-accent-foreground"
+                          )}
+                        >
+                          <div className="text-sm font-medium">Documents</div>
+                        </Link>
+                      </li>
+                    </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 
-                <NavigationMenuItem className="relative">
-                  <NavigationMenuTrigger>Association</NavigationMenuTrigger>
-                  <NavigationMenuContent className="absolute left-0">
-                    <div className="w-[200px] p-2">
-                      <Link 
-                        to="/association/about" 
-                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">About</div>
-                      </Link>
-                      <Link 
-                        to="/association/membership" 
-                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Membership</div>
-                      </Link>
-                      <Link 
-                        to="/association/submit-genealogy" 
-                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Submit Genealogy</div>
-                      </Link>
-                    </div>
+                {/* Association */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger
+                    className={cn(
+                      isActive("/association/about") || isActive("/association/membership") || isActive("/association/submit-genealogy") 
+                        ? "bg-accent text-accent-foreground" 
+                        : ""
+                    )}
+                  >
+                    Association
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-1 p-2">
+                      <li>
+                        <Link 
+                          to="/association/about" 
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                            isActive("/association/about") 
+                              ? "bg-accent text-accent-foreground" 
+                              : "hover:bg-accent hover:text-accent-foreground"
+                          )}
+                        >
+                          <div className="text-sm font-medium">About</div>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link 
+                          to="/association/membership" 
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                            isActive("/association/membership") 
+                              ? "bg-accent text-accent-foreground" 
+                              : "hover:bg-accent hover:text-accent-foreground"
+                          )}
+                        >
+                          <div className="text-sm font-medium">Membership</div>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link 
+                          to="/association/submit-genealogy" 
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors",
+                            isActive("/association/submit-genealogy") 
+                              ? "bg-accent text-accent-foreground" 
+                              : "hover:bg-accent hover:text-accent-foreground"
+                          )}
+                        >
+                          <div className="text-sm font-medium">Submit Genealogy</div>
+                        </Link>
+                      </li>
+                    </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 
-                <NavItem to="/blog">Blog</NavItem>
+                {/* Blog */}
+                <NavigationMenuItem>
+                  <Link to="/blog">
+                    <NavigationMenuLink 
+                      className={cn(
+                        "inline-flex h-9 px-4 py-2 items-center justify-center rounded-md text-sm font-medium transition-colors",
+                        isActive("/blog") 
+                          ? "bg-accent text-accent-foreground" 
+                          : "hover:bg-accent hover:text-accent-foreground"
+                      )}
+                    >
+                      Blog
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
-            
-            {/* Language dropdown using the same styling as navigation menu */}
-            <div className="relative ml-1">
+          )}
+          
+          {/* Language Selector - Shown on both mobile and desktop */}
+          <div className="flex items-center gap-2">
+            {!isMobile && (
               <DropdownMenu>
-                <DropdownMenuTrigger className={navigationMenuTriggerStyle()}>
-                  <Languages className="h-4 w-4 mr-1" />
-                  {language}
-                  <ChevronDown className="relative top-[1px] ml-1 h-3 w-3 transition duration-200" />
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center gap-1 h-9 px-3 border-gold">
+                    <Languages className="h-4 w-4" />
+                    <span>{language}</span>
+                  </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-[150px]">
+                <DropdownMenuContent align="end">
                   <DropdownMenuItem 
                     onClick={() => setLanguage("EN")}
-                    className={`${language === "EN" ? "bg-accent text-accent-foreground" : ""}`}
+                    className={language === "EN" ? "bg-accent text-accent-foreground" : ""}
                   >
                     English
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onClick={() => setLanguage("LT")}
-                    className={`${language === "LT" ? "bg-accent text-accent-foreground" : ""}`}
+                    className={language === "LT" ? "bg-accent text-accent-foreground" : ""}
                   >
                     Lithuanian
                   </DropdownMenuItem>
                   <DropdownMenuItem 
                     onClick={() => setLanguage("PL")}
-                    className={`${language === "PL" ? "bg-accent text-accent-foreground" : ""}`}
+                    className={language === "PL" ? "bg-accent text-accent-foreground" : ""}
                   >
                     Polish
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
+            )}
+            
+            {/* Mobile Menu */}
+            {isMobile && (
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-9 w-9">
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[280px]">
+                  <nav className="flex flex-col gap-5 mt-8">
+                    <Link 
+                      to="/" 
+                      className={cn(
+                        "px-2 py-1 text-base font-medium rounded-md",
+                        isActive("/") ? "bg-accent text-accent-foreground" : ""
+                      )}
+                    >
+                      Home
+                    </Link>
+                    
+                    <Link 
+                      to="/history" 
+                      className={cn(
+                        "px-2 py-1 text-base font-medium rounded-md",
+                        isActive("/history") ? "bg-accent text-accent-foreground" : ""
+                      )}
+                    >
+                      History
+                    </Link>
+                    
+                    <div className="space-y-3">
+                      <p className="font-medium text-base px-2">Official</p>
+                      <div className="ml-3 flex flex-col gap-2">
+                        <Link 
+                          to="/official/coat-of-arms" 
+                          className={cn(
+                            "px-2 py-1 text-sm rounded-md",
+                            isActive("/official/coat-of-arms") ? "bg-accent text-accent-foreground" : ""
+                          )}
+                        >
+                          Coat of Arms
+                        </Link>
+                        <Link 
+                          to="/official/documents" 
+                          className={cn(
+                            "px-2 py-1 text-sm rounded-md",
+                            isActive("/official/documents") ? "bg-accent text-accent-foreground" : ""
+                          )}
+                        >
+                          Documents
+                        </Link>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <p className="font-medium text-base px-2">Association</p>
+                      <div className="ml-3 flex flex-col gap-2">
+                        <Link 
+                          to="/association/about" 
+                          className={cn(
+                            "px-2 py-1 text-sm rounded-md",
+                            isActive("/association/about") ? "bg-accent text-accent-foreground" : ""
+                          )}
+                        >
+                          About
+                        </Link>
+                        <Link 
+                          to="/association/membership" 
+                          className={cn(
+                            "px-2 py-1 text-sm rounded-md",
+                            isActive("/association/membership") ? "bg-accent text-accent-foreground" : ""
+                          )}
+                        >
+                          Membership
+                        </Link>
+                        <Link 
+                          to="/association/submit-genealogy" 
+                          className={cn(
+                            "px-2 py-1 text-sm rounded-md",
+                            isActive("/association/submit-genealogy") ? "bg-accent text-accent-foreground" : ""
+                          )}
+                        >
+                          Submit Genealogy
+                        </Link>
+                      </div>
+                    </div>
+                    
+                    <Link 
+                      to="/blog" 
+                      className={cn(
+                        "px-2 py-1 text-base font-medium rounded-md",
+                        isActive("/blog") ? "bg-accent text-accent-foreground" : ""
+                      )}
+                    >
+                      Blog
+                    </Link>
+                    
+                    {/* Mobile Language Selector */}
+                    <div className="mt-4 pt-4 border-t">
+                      <p className="text-base font-medium px-2 mb-2">Language</p>
+                      <div className="flex gap-2 px-2">
+                        <Button 
+                          variant={language === "EN" ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setLanguage("EN")}
+                          className={language === "EN" ? "bg-gold hover:bg-gold/90" : "border-gold text-gold hover:bg-gold/10"}
+                        >
+                          EN
+                        </Button>
+                        <Button 
+                          variant={language === "LT" ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setLanguage("LT")}
+                          className={language === "LT" ? "bg-gold hover:bg-gold/90" : "border-gold text-gold hover:bg-gold/10"}
+                        >
+                          LT
+                        </Button>
+                        <Button 
+                          variant={language === "PL" ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setLanguage("PL")}
+                          className={language === "PL" ? "bg-gold hover:bg-gold/90" : "border-gold text-gold hover:bg-gold/10"}
+                        >
+                          PL
+                        </Button>
+                      </div>
+                    </div>
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            )}
           </div>
-        )}
-        
-        {/* Mobile Navigation */}
-        {isMobile && (
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu />
-              </Button>
-            </SheetTrigger>
-            <SheetContent>
-              <nav className="flex flex-col gap-4 mt-8">
-                <Link to="/" className="py-2 text-lg font-medium">Home</Link>
-                <Link to="/history" className="py-2 text-lg font-medium">History</Link>
-                
-                <div className="py-2">
-                  <h3 className="text-lg font-medium mb-2">Official</h3>
-                  <div className="pl-4 flex flex-col gap-2">
-                    <Link to="/official/coat-of-arms" className="text-sm">Coat of Arms</Link>
-                    <Link to="/official/documents" className="text-sm">Documents</Link>
-                  </div>
-                </div>
-                
-                <div className="py-2">
-                  <h3 className="text-lg font-medium mb-2">Association</h3>
-                  <div className="pl-4 flex flex-col gap-2">
-                    <Link to="/association/about" className="text-sm">About</Link>
-                    <Link to="/association/membership" className="text-sm">Membership</Link>
-                    <Link to="/association/submit-genealogy" className="text-sm">Submit Genealogy</Link>
-                  </div>
-                </div>
-                
-                <Link to="/blog" className="py-2 text-lg font-medium">Blog</Link>
-                
-                <div className="py-2">
-                  <h3 className="text-lg font-medium mb-2">Language</h3>
-                  <div className="pl-4 flex gap-4">
-                    <button 
-                      onClick={() => setLanguage("EN")} 
-                      className={`px-2 py-1 ${language === "EN" ? "font-bold text-[#8B1E3F]" : ""}`}
-                    >
-                      EN
-                    </button>
-                    <button 
-                      onClick={() => setLanguage("LT")}
-                      className={`px-2 py-1 ${language === "LT" ? "font-bold text-[#8B1E3F]" : ""}`}
-                    >
-                      LT
-                    </button>
-                    <button 
-                      onClick={() => setLanguage("PL")}
-                      className={`px-2 py-1 ${language === "PL" ? "font-bold text-[#8B1E3F]" : ""}`}
-                    >
-                      PL
-                    </button>
-                  </div>
-                </div>
-              </nav>
-            </SheetContent>
-          </Sheet>
-        )}
+        </div>
       </div>
     </header>
   );
