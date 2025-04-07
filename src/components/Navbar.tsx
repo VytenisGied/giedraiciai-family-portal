@@ -1,12 +1,17 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, Languages } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 interface NavbarProps {
   language: "EN" | "LT" | "PL";
@@ -15,17 +20,22 @@ interface NavbarProps {
 
 const Navbar = ({ language, setLanguage }: NavbarProps) => {
   const isMobile = useIsMobile();
-
+  const location = useLocation();
+  
   // Custom NavItem component for regular navigation items
-  const NavItem = ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <NavigationMenuItem>
-      <Link to={to}>
-        <div className={navigationMenuTriggerStyle()}>
-          {children}
-        </div>
-      </Link>
-    </NavigationMenuItem>
-  );
+  const NavItem = ({ to, children }: { to: string; children: React.ReactNode }) => {
+    const isActive = location.pathname === to;
+    
+    return (
+      <NavigationMenuItem>
+        <Link to={to}>
+          <div className={navigationMenuTriggerStyle() + (isActive ? " bg-accent/50" : "")}>
+            {children}
+          </div>
+        </Link>
+      </NavigationMenuItem>
+    );
+  };
   
   return (
     <header className="border-b border-[#C9A13B]/20 bg-white">
@@ -48,19 +58,19 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                 <NavItem to="/">Home</NavItem>
                 <NavItem to="/history">History</NavItem>
                 
-                <NavigationMenuItem>
+                <NavigationMenuItem className="relative">
                   <NavigationMenuTrigger>Official</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="grid w-[200px] gap-3 p-4">
+                  <NavigationMenuContent className="absolute left-0">
+                    <div className="w-[200px] p-2">
                       <Link 
                         to="/official/coat-of-arms" 
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">Coat of Arms</div>
                       </Link>
                       <Link 
                         to="/official/documents" 
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">Documents</div>
                       </Link>
@@ -68,25 +78,25 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 
-                <NavigationMenuItem>
+                <NavigationMenuItem className="relative">
                   <NavigationMenuTrigger>Association</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <div className="grid w-[200px] gap-3 p-4">
+                  <NavigationMenuContent className="absolute left-0">
+                    <div className="w-[200px] p-2">
                       <Link 
                         to="/association/about" 
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">About</div>
                       </Link>
                       <Link 
                         to="/association/membership" 
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">Membership</div>
                       </Link>
                       <Link 
                         to="/association/submit-genealogy" 
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">Submit Genealogy</div>
                       </Link>
@@ -98,33 +108,36 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
               </NavigationMenuList>
             </NavigationMenu>
             
-            {/* Language dropdown using DropdownMenu */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="ml-2 inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium">
-                {language}
-                <ChevronDown className="ml-1 h-3 w-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[150px]">
-                <DropdownMenuItem 
-                  onClick={() => setLanguage("EN")}
-                  className={`${language === "EN" ? "bg-accent text-accent-foreground" : ""}`}
-                >
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => setLanguage("LT")}
-                  className={`${language === "LT" ? "bg-accent text-accent-foreground" : ""}`}
-                >
-                  Lithuanian
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => setLanguage("PL")}
-                  className={`${language === "PL" ? "bg-accent text-accent-foreground" : ""}`}
-                >
-                  Polish
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Language dropdown using the same styling as navigation menu */}
+            <div className="relative ml-1">
+              <DropdownMenu>
+                <DropdownMenuTrigger className={navigationMenuTriggerStyle()}>
+                  <Languages className="h-4 w-4 mr-1" />
+                  {language}
+                  <ChevronDown className="relative top-[1px] ml-1 h-3 w-3 transition duration-200" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-[150px]">
+                  <DropdownMenuItem 
+                    onClick={() => setLanguage("EN")}
+                    className={`${language === "EN" ? "bg-accent text-accent-foreground" : ""}`}
+                  >
+                    English
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => setLanguage("LT")}
+                    className={`${language === "LT" ? "bg-accent text-accent-foreground" : ""}`}
+                  >
+                    Lithuanian
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    onClick={() => setLanguage("PL")}
+                    className={`${language === "PL" ? "bg-accent text-accent-foreground" : ""}`}
+                  >
+                    Polish
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         )}
         
