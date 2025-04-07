@@ -64,6 +64,23 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [language]);
 
+  // Effect for redirecting to localized URL when URL changes or on initial load
+  useEffect(() => {
+    // Skip this effect during the initial render since other effects are still setting up
+    const shouldRedirect = document.readyState === 'complete';
+    
+    if (shouldRedirect) {
+      const currentUrl = location.pathname;
+      const localizedUrl = getLocalizedUrl(currentUrl, language, language);
+      
+      // Only navigate if we're not already on the localized URL
+      if (localizedUrl !== currentUrl) {
+        console.log(`Redirecting from ${currentUrl} to localized URL: ${localizedUrl}`);
+        navigate(localizedUrl, { replace: true });
+      }
+    }
+  }, [location.pathname, language, navigate]);
+
   const contextValue = useMemo(() => ({
     language,
     setLanguage: handleLanguageChange
