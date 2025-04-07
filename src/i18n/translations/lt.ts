@@ -1,4 +1,36 @@
+
 export const ltTranslations = {
+  // Navigation translations
+  nav: {
+    home: "Pradžia",
+    history: "Istorija",
+    official: {
+      title: "Oficialu",
+      coatOfArms: "Herbas",
+      documents: "Dokumentai"
+    },
+    association: {
+      title: "Asociacija",
+      about: "Apie mus",
+      membership: "Narystė",
+      submitGenealogy: "Pateikti genealogiją"
+    },
+    blog: "Tinklaraštis",
+    language: "Kalba",
+    search: "Ieškoti..."
+  },
+
+  // Footer translations
+  footer: {
+    title: "Giedraičių giminė",
+    description: "Istorija, paveldas ir bendruomenė",
+    quickLinks: "Greitosios nuorodos",
+    association: "Asociacija",
+    language: "Kalba",
+    contact: "Kontaktai",
+    rights: "Visos teisės saugomos © {year}",
+  },
+  
   // General translations
   "All rights reserved": "Visos teisės saugomos",
   "House of Giedraičiai": "Giedraičių giminė",
@@ -7,7 +39,6 @@ export const ltTranslations = {
   "Close": "Uždaryti",
   "About us": "Apie mus",
   "History": "Istorija",
-  "Coat of Arms": "Herbas",
   "Documents": "Dokumentai",
   "Genealogy": "Genealogija",
   "Contact": "Kontaktai",
@@ -19,8 +50,6 @@ export const ltTranslations = {
   "English": "Anglų",
   "Lithuanian": "Lietuvių",
   "Polish": "Lenkų",
-  "Blog": "Tinklaraštis",
-  "Back": "Atgal",
   "404": "Puslapis nerastas",
   "Go Home": "Grįžti į pagrindinį puslapį",
   "Page not found": "Puslapis nerastas",
@@ -35,7 +64,6 @@ export const ltTranslations = {
   "Coat of Arms": "Herbas",
   "Learn about the symbolism and history of our coat of arms.": "Sužinokite apie mūsų herbo simboliką ir istoriją.",
   "Explore Coat of Arms": "Naršyti herbą",
-  "Documents": "Dokumentai",
   "View historical documents related to the Giedraičiai family.": "Peržiūrėkite istorinius dokumentus, susijusius su Giedraičių gimine.",
   "Explore Documents": "Naršyti dokumentus",
 

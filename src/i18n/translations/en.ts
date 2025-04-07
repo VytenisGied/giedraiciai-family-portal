@@ -1,5 +1,7 @@
+
 export const enTranslations = {
-  navigation: {
+  // Navigation translations
+  nav: {
     home: "Home",
     history: "History",
     official: {
@@ -14,14 +16,25 @@ export const enTranslations = {
       submitGenealogy: "Submit Genealogy"
     },
     blog: "Blog",
-    language: "Language"
+    language: "Language",
+    search: "Search...",
+    title: "House of Giedraičiai"
   },
+  
+  // Footer translations
   footer: {
-    rights: "All Rights Reserved",
+    rights: "All Rights Reserved © {year}",
     contact: "Contact Us",
     privacy: "Privacy Policy",
-    terms: "Terms of Use"
+    terms: "Terms of Use",
+    title: "House of Giedraičiai",
+    description: "History, Heritage and Community",
+    quickLinks: "Quick Links",
+    association: "Association",
+    language: "Language"
   },
+  
+  // Home page translations
   home: {
     hero: {
       title: "House of Giedraičiai",
