@@ -52,12 +52,12 @@ const Membership = () => {
             {/* Membership Types Tab */}
             <TabsContent value="types" className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <Card className="border-[#C9A13B]/20">
+                <Card className="border-[#C9A13B]/20 flex flex-col">
                   <CardHeader>
                     <CardTitle className="text-center text-2xl font-serif text-[#8B1E3F]">{t("membership.fullMember")}</CardTitle>
                     <CardDescription className="text-center">{t("membership.forDirectDescendants")}</CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex-grow">
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-[#C9A13B] shrink-0 mt-0.5" />
@@ -76,22 +76,22 @@ const Membership = () => {
                         <span>{t("membership.fullArchiveAccess")}</span>
                       </li>
                     </ul>
-                    <div className="mt-6 text-center">
+                  </CardContent>
+                  <div className="mt-auto px-6">
+                    <div className="text-center mb-4">
                       <div className="text-2xl font-bold text-[#8B1E3F]">€75</div>
                       <div className="text-sm text-gray-500">{t("membership.annualDues")}</div>
                     </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F]">{t("membership.apply")}</Button>
-                  </CardFooter>
+                    <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] mb-6">{t("membership.apply")}</Button>
+                  </div>
                 </Card>
                 
-                <Card className="border-[#C9A13B]/20">
+                <Card className="border-[#C9A13B]/20 flex flex-col">
                   <CardHeader>
                     <CardTitle className="text-center text-2xl font-serif text-[#8B1E3F]">{t("membership.associateMember")}</CardTitle>
                     <CardDescription className="text-center">{t("membership.forExtendedFamily")}</CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex-grow">
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-[#C9A13B] shrink-0 mt-0.5" />
@@ -110,22 +110,22 @@ const Membership = () => {
                         <span>{t("membership.mostArchiveAccess")}</span>
                       </li>
                     </ul>
-                    <div className="mt-6 text-center">
+                  </CardContent>
+                  <div className="mt-auto px-6">
+                    <div className="text-center mb-4">
                       <div className="text-2xl font-bold text-[#8B1E3F]">€50</div>
                       <div className="text-sm text-gray-500">{t("membership.annualDues")}</div>
                     </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F]">{t("membership.apply")}</Button>
-                  </CardFooter>
+                    <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] mb-6">{t("membership.apply")}</Button>
+                  </div>
                 </Card>
                 
-                <Card className="border-[#C9A13B]/20">
+                <Card className="border-[#C9A13B]/20 flex flex-col">
                   <CardHeader>
                     <CardTitle className="text-center text-2xl font-serif text-[#8B1E3F]">{t("membership.friendMember")}</CardTitle>
                     <CardDescription className="text-center">{t("membership.forResearchers")}</CardDescription>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="flex-grow">
                     <ul className="space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-5 w-5 text-[#C9A13B] shrink-0 mt-0.5" />
@@ -144,14 +144,14 @@ const Membership = () => {
                         <span>{t("membership.limitedArchiveAccess")}</span>
                       </li>
                     </ul>
-                    <div className="mt-6 text-center">
+                  </CardContent>
+                  <div className="mt-auto px-6">
+                    <div className="text-center mb-4">
                       <div className="text-2xl font-bold text-[#8B1E3F]">€30</div>
                       <div className="text-sm text-gray-500">{t("membership.annualDues")}</div>
                     </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F]">{t("membership.apply")}</Button>
-                  </CardFooter>
+                    <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] mb-6">{t("membership.apply")}</Button>
+                  </div>
                 </Card>
               </div>
               <div className="mt-8 text-center">
