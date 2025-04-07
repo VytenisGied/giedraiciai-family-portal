@@ -6,7 +6,6 @@ export interface NavItemDropdown {
   name: string;
   caption: string;
   path: string;
-  label?: string; // Add label property to fix TypeScript errors
 }
 
 export interface NavItem {
@@ -14,6 +13,12 @@ export interface NavItem {
   caption: string;
   path?: string;
   dropdown?: NavItemDropdown[];
+}
+
+// Create a type for translated navigation items
+export interface TranslatedNavItem extends NavItem {
+  label: string;
+  dropdown?: (NavItemDropdown & { label: string })[];
 }
 
 export const useNavigation = () => {
@@ -76,7 +81,7 @@ export const useNavigation = () => {
   ];
 
   // Transform the navStructure to include translated labels
-  const getTranslatedNav = () => {
+  const getTranslatedNav = (): TranslatedNavItem[] => {
     return navStructure.map(item => ({
       ...item,
       label: t(item.caption),

@@ -9,13 +9,10 @@ import { cn } from "@/lib/utils";
 import { SupportedLanguage } from "@/utils/languageUtils";
 import { LanguageSelector } from "./LanguageSelector";
 import { MobileNavLink } from "./NavLink";
-import { NavItem, NavItemDropdown } from "@/data/navigation";
+import { TranslatedNavItem } from "@/data/navigation";
 
 interface NavMobileProps {
-  navItems: (NavItem & { 
-    label: string, 
-    dropdown?: (NavItemDropdown & { label: string })[] 
-  })[];
+  navItems: TranslatedNavItem[];
   language: SupportedLanguage;
   setLanguage: (language: SupportedLanguage) => void;
 }
