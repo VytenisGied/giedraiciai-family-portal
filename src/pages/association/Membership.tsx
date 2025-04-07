@@ -24,28 +24,30 @@ const Membership = () => {
           </p>
           
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="mb-16">
-            <TabsList className="grid w-full grid-cols-3 border border-[#C9A13B]/30 bg-ivory-white rounded-lg p-1.5 relative overflow-hidden">
-              <TabsTrigger 
-                value="types" 
-                className="font-serif text-base h-11 data-[state=active]:bg-[#C9A13B] data-[state=active]:text-white data-[state=active]:font-medium data-[state=active]:shadow-none text-dark-text border-0 rounded-md transition-all duration-300"
-              >
-                {t("membership.types")}
-              </TabsTrigger>
-              
-              <TabsTrigger 
-                value="benefits" 
-                className="font-serif text-base h-11 data-[state=active]:bg-[#C9A13B] data-[state=active]:text-white data-[state=active]:font-medium data-[state=active]:shadow-none text-dark-text border-0 rounded-md transition-all duration-300"
-              >
-                {t("membership.benefits")}
-              </TabsTrigger>
-              
-              <TabsTrigger 
-                value="process" 
-                className="font-serif text-base h-11 data-[state=active]:bg-[#C9A13B] data-[state=active]:text-white data-[state=active]:font-medium data-[state=active]:shadow-none text-dark-text border-0 rounded-md transition-all duration-300"
-              >
-                {t("membership.process")}
-              </TabsTrigger>
-            </TabsList>
+            <div className="border-b mb-4 border-[#C9A13B]/30 pb-1">
+              <TabsList className="w-full bg-transparent shadow-none p-0 h-auto space-x-6">
+                <TabsTrigger 
+                  value="types" 
+                  className="font-serif text-lg py-3 px-2 border-b-2 border-transparent data-[state=active]:border-[#C9A13B] data-[state=active]:text-[#8B1E3F] data-[state=active]:font-medium data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none transition-all duration-300 text-dark-text/80"
+                >
+                  {t("membership.types")}
+                </TabsTrigger>
+                
+                <TabsTrigger 
+                  value="benefits" 
+                  className="font-serif text-lg py-3 px-2 border-b-2 border-transparent data-[state=active]:border-[#C9A13B] data-[state=active]:text-[#8B1E3F] data-[state=active]:font-medium data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none transition-all duration-300 text-dark-text/80"
+                >
+                  {t("membership.benefits")}
+                </TabsTrigger>
+                
+                <TabsTrigger 
+                  value="process" 
+                  className="font-serif text-lg py-3 px-2 border-b-2 border-transparent data-[state=active]:border-[#C9A13B] data-[state=active]:text-[#8B1E3F] data-[state=active]:font-medium data-[state=active]:bg-transparent data-[state=active]:shadow-none rounded-none transition-all duration-300 text-dark-text/80"
+                >
+                  {t("membership.process")}
+                </TabsTrigger>
+              </TabsList>
+            </div>
             
             {/* Membership Types Tab */}
             <TabsContent value="types" className="mt-6">
