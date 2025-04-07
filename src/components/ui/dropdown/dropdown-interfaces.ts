@@ -2,7 +2,7 @@
 import { ReactNode } from "react";
 
 export interface DropdownOption {
-  label: string;
+  label: string | ReactNode;
   value: string;
   href?: string;
   onClick?: () => void;
