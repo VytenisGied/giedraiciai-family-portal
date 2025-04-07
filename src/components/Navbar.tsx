@@ -96,13 +96,13 @@ const Navbar = () => {
               </Link>
               
               <NavDropdown
-                label={t('nav.official')}
+                label={t('nav.official.title')}
                 options={officialOptions}
-                isActive={isPathActive(["/official", "/oficjalus", "/oficjalne"])}
+                isActive={isPathActive(["/official", "/oficialus", "/oficjalne"])}
               />
               
               <NavDropdown
-                label={t('nav.association')}
+                label={t('nav.association.title')}
                 options={associationOptions}
                 isActive={isPathActive(["/association", "/asociacija", "/stowarzyszenie"])}
               />
@@ -161,7 +161,7 @@ const Navbar = () => {
                     </Link>
                     
                     <div className="space-y-3">
-                      <p className="font-medium text-base px-2">{t('nav.official')}</p>
+                      <p className="font-medium text-base px-2">{t('nav.official.title')}</p>
                       <div className="ml-3 flex flex-col gap-2">
                         <Link 
                           to={localizedPath("coatOfArms")} 
@@ -185,7 +185,7 @@ const Navbar = () => {
                     </div>
                     
                     <div className="space-y-3">
-                      <p className="font-medium text-base px-2">{t('nav.association')}</p>
+                      <p className="font-medium text-base px-2">{t('nav.association.title')}</p>
                       <div className="ml-3 flex flex-col gap-2">
                         <Link 
                           to={localizedPath("about")} 

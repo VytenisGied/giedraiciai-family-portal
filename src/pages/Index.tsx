@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import Layout from "@/components/Layout";
 import { useTranslation } from "react-i18next";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 const Index = () => {
   const { t } = useTranslation();
+  const localizedPath = useLocalizedPath();
   
   return (
     <Layout>
@@ -17,9 +19,9 @@ const Index = () => {
           <div className="w-32 h-32 bg-[#8B1E3F] rounded-full mx-auto mb-8 flex items-center justify-center">
             <span className="text-white font-serif text-4xl">G</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-serif text-[#1A1A1A] mb-4">{t('hero.title')}</h1>
-          <p className="text-xl italic text-[#8B1E3F] mb-8">{t('hero.motto')}</p>
-          <p className="text-lg mb-8">{t('hero.description')}</p>
+          <h1 className="text-4xl md:text-6xl font-serif text-[#1A1A1A] mb-4">{t('home.hero.title')}</h1>
+          <p className="text-xl italic text-[#8B1E3F] mb-8">{t('home.hero.motto')}</p>
+          <p className="text-lg mb-8">{t('home.hero.description')}</p>
         </div>
       </div>
       
@@ -29,7 +31,7 @@ const Index = () => {
           <h2 className="text-3xl font-serif text-[#8B1E3F] mb-6 text-center">{t('home.legacy.title')}</h2>
           <p className="text-lg text-center mb-8">{t('home.legacy.description')}</p>
           <div className="text-center">
-            <Link to="/history">
+            <Link to={localizedPath("history")}>
               <Button className="bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">
                 {t('home.legacy.button')}
                 <ChevronRight className="ml-2 h-4 w-4" />
@@ -52,7 +54,7 @@ const Index = () => {
                 <p>{t('home.explore.history.description')}</p>
               </CardContent>
               <CardFooter>
-                <Link to="/history" className="w-full">
+                <Link to={localizedPath("history")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.history.button')}</Button>
                 </Link>
               </CardFooter>
@@ -66,7 +68,7 @@ const Index = () => {
                 <p>{t('home.explore.coatOfArms.description')}</p>
               </CardContent>
               <CardFooter>
-                <Link to="/official/coat-of-arms" className="w-full">
+                <Link to={localizedPath("coatOfArms")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.coatOfArms.button')}</Button>
                 </Link>
               </CardFooter>
@@ -80,7 +82,7 @@ const Index = () => {
                 <p>{t('home.explore.join.description')}</p>
               </CardContent>
               <CardFooter>
-                <Link to="/association/membership" className="w-full">
+                <Link to={localizedPath("membership")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.join.button')}</Button>
                 </Link>
               </CardFooter>
@@ -94,7 +96,7 @@ const Index = () => {
                 <p>{t('home.explore.genealogy.description')}</p>
               </CardContent>
               <CardFooter>
-                <Link to="/association/submit-genealogy" className="w-full">
+                <Link to={localizedPath("submitGenealogy")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.genealogy.button')}</Button>
                 </Link>
               </CardFooter>
@@ -118,7 +120,7 @@ const Index = () => {
                 <p>{t('blog.annual.description')}</p>
               </CardContent>
               <CardFooter>
-                <Link to="/blog/annual-gathering" className="w-full">
+                <Link to={`${localizedPath("blog")}/annual-gathering`} className="w-full">
                   <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                     {t('home.latest.readMore')}
                   </Button>
@@ -136,7 +138,7 @@ const Index = () => {
                 <p>{t('blog.documents.description')}</p>
               </CardContent>
               <CardFooter>
-                <Link to="/blog/historical-documents-discovery" className="w-full">
+                <Link to={`${localizedPath("blog")}/historical-documents-discovery`} className="w-full">
                   <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                     {t('home.latest.readMore')}
                   </Button>
@@ -146,7 +148,7 @@ const Index = () => {
           </div>
           
           <div className="mt-10 text-center">
-            <Link to="/blog">
+            <Link to={localizedPath("blog")}>
               <Button variant="outline" className="border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                 {t('home.latest.viewAll')}
                 <ChevronRight className="ml-2 h-4 w-4" />
