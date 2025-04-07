@@ -15,11 +15,12 @@ import {
   DropdownMenuContent, 
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuCheckboxItem
+  DropdownMenuCheckboxItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel
 } from "@/components/ui/dropdown-menu";
-import { Filter, ChevronDown, Check, Search } from "lucide-react";
+import { Filter, ChevronDown, Check, Search, X } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // Enhanced blog data structure with language support
@@ -137,7 +138,7 @@ const blogPosts = [
 const categories = ["All", "History", "Events", "Projects", "Genealogy", "Association"];
 
 const Blog = () => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedLanguages, setSelectedLanguages] = useState<SupportedLanguage[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -145,9 +146,12 @@ const Blog = () => {
   const { language } = useLanguage();
   const { t } = useTranslation();
   
-  // Filter posts by category, languages and search query
+  // Filter posts by categories, languages and search query
   const filteredPosts = blogPosts
-    .filter(post => selectedCategory === "All" || post.category === selectedCategory)
+    .filter(post => {
+      if (selectedCategories.length === 0) return true;
+      return selectedCategories.includes(post.category);
+    })
     .filter(post => selectedLanguages.length === 0 || 
       post.languages.some(lang => selectedLanguages.includes(lang)))
     .filter(post => {
@@ -183,6 +187,17 @@ const Blog = () => {
     setCurrentPage(1);
   };
 
+  const toggleCategory = (category: string) => {
+    setSelectedCategories(prev => {
+      if (prev.includes(category)) {
+        return prev.filter(c => c !== category);
+      } else {
+        return [...prev, category];
+      }
+    });
+    setCurrentPage(1);
+  };
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1); // Reset to first page when search changes
@@ -190,7 +205,7 @@ const Blog = () => {
 
   const clearFilters = () => {
     setSelectedLanguages([]);
-    setSelectedCategory("All");
+    setSelectedCategories([]);
     setSearchQuery("");
     setCurrentPage(1);
   };
@@ -207,7 +222,18 @@ const Blog = () => {
     }
   };
 
-  const hasActiveFilters = selectedLanguages.length > 0 || selectedCategory !== "All" || searchQuery.trim() !== "";
+  // Helper function to display selected categories
+  const getCategoriesSelectionLabel = () => {
+    if (selectedCategories.length === 0) {
+      return t('blog.allCategories') || "All Categories";
+    } else if (selectedCategories.length === 1) {
+      return t(`blog.categories.${selectedCategories[0].toLowerCase()}`);
+    } else {
+      return `${selectedCategories.length} ${t('blog.categoriesSelected') || "categories selected"}`;
+    }
+  };
+
+  const hasActiveFilters = selectedLanguages.length > 0 || selectedCategories.length > 0 || searchQuery.trim() !== "";
   
   return (
     <Layout>
@@ -216,7 +242,7 @@ const Blog = () => {
         
         <div className="max-w-6xl mx-auto">
           {/* Redesigned Filters Section */}
-          <div className="mb-10 bg-white rounded-lg shadow-sm border border-gray-100 p-4 md:p-6">
+          <div className="mb-10 bg-white rounded-lg shadow-md border border-gray-100 p-5 md:p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
               <h2 className="text-lg font-medium text-gray-800 flex items-center gap-2">
                 <Filter size={18} className="text-[#8B1E3F]" /> 
@@ -229,195 +255,234 @@ const Blog = () => {
                   placeholder={t('blog.searchPlaceholder') || "Search posts..."}
                   value={searchQuery}
                   onChange={handleSearchChange}
-                  className="pr-8 border-[#C9A13B]"
+                  className="pr-10 border-[#C9A13B] focus-visible:ring-[#8B1E3F]"
                 />
+                {searchQuery ? (
+                  <button 
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <X size={16} />
+                  </button>
+                ) : null}
                 <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
               </div>
-              
-              {/* Mobile: Filters in Dropdown */}
-              <div className="md:hidden w-full">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full border-[#C9A13B] text-[#8B1E3F] justify-between">
-                      {t('blog.filters')}
-                      <ChevronDown className="h-4 w-4 opacity-50" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-full min-w-[200px] bg-white">
-                    <div className="px-2 py-1.5 text-sm font-medium text-gray-500">
-                      {t('blog.language')}
-                    </div>
-                    
-                    {/* Multiple language selection */}
-                    <DropdownMenuCheckboxItem 
-                      checked={selectedLanguages.includes("EN")}
-                      onCheckedChange={() => toggleLanguage("EN")}
-                    >
-                      English
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem 
-                      checked={selectedLanguages.includes("LT")}
-                      onCheckedChange={() => toggleLanguage("LT")}
-                    >
-                      Lietuvių
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem 
-                      checked={selectedLanguages.includes("PL")}
-                      onCheckedChange={() => toggleLanguage("PL")}
-                    >
-                      Polski
-                    </DropdownMenuCheckboxItem>
-                    
-                    <div className="px-2 py-1.5 text-sm font-medium text-gray-500 mt-2">
-                      {t('blog.category')}
-                    </div>
-                    {categories.map(category => (
-                      <DropdownMenuItem 
-                        key={category}
-                        className={selectedCategory === category ? "bg-[#8B1E3F]/10" : ""}
-                        onClick={() => {
-                          setSelectedCategory(category);
-                          setCurrentPage(1);
-                        }}
-                      >
-                        <Check 
-                          className={`mr-2 h-4 w-4 ${selectedCategory === category ? "opacity-100" : "opacity-0"}`} 
-                        />
-                        {t(`blog.categories.${category.toLowerCase()}`)}
-                      </DropdownMenuItem>
-                    ))}
-                    
-                    {hasActiveFilters && (
-                      <Button 
-                        variant="ghost" 
-                        onClick={clearFilters} 
-                        className="w-full text-xs text-[#8B1E3F] mt-2 justify-center"
-                      >
-                        {t('blog.clearFilters') || "Clear filters"}
-                      </Button>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              
-              {/* Desktop: Language Filter in Popover */}
-              <div className="hidden md:flex items-center gap-3">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      className="border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center"
-                    >
-                      {getLanguageSelectionLabel()}
-                      <ChevronDown className="h-4 w-4 opacity-70" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="p-0 w-48 bg-white">
-                    <div className="px-2 py-1.5 text-sm font-medium text-gray-500 border-b">
-                      {t('blog.language')}
-                    </div>
-                    <div className="p-2">
-                      <div className="grid grid-cols-1 gap-1">
-                        {/* Multiple language selection */}
-                        <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
-                          <Checkbox 
-                            id="en-lang" 
-                            checked={selectedLanguages.includes("EN")} 
-                            onCheckedChange={() => toggleLanguage("EN")}
-                          />
-                          <label htmlFor="en-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                            English
-                          </label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
-                          <Checkbox 
-                            id="lt-lang" 
-                            checked={selectedLanguages.includes("LT")} 
-                            onCheckedChange={() => toggleLanguage("LT")}
-                          />
-                          <label htmlFor="lt-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                            Lietuvių
-                          </label>
-                        </div>
-                        
-                        <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
-                          <Checkbox 
-                            id="pl-lang" 
-                            checked={selectedLanguages.includes("PL")} 
-                            onCheckedChange={() => toggleLanguage("PL")}
-                          />
-                          <label htmlFor="pl-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
-                            Polski
-                          </label>
-                        </div>
-                        
-                        {selectedLanguages.length > 0 && (
-                          <Button 
-                            variant="link" 
-                            onClick={() => setSelectedLanguages([])} 
-                            className="text-xs text-[#8B1E3F] mt-1"
-                          >
-                            {t('blog.clearFilters') || "Clear languages"}
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
             </div>
             
-            {/* Desktop: Category Filter as Toggle Group */}
-            <div className="hidden md:block">
-              <div className="px-1 py-1 mb-2 text-sm font-medium text-gray-600">
-                {t('blog.category')}
-              </div>
-              <ToggleGroup 
-                type="single" 
-                variant="outline"
-                value={selectedCategory}
-                onValueChange={(value) => {
-                  if (value) {
-                    setSelectedCategory(value);
-                    setCurrentPage(1);
-                  }
-                }}
-                className="justify-start flex-wrap"
-              >
-                {categories.map((category) => (
-                  <ToggleGroupItem 
-                    key={category} 
-                    value={category}
-                    className={`
-                      border-[#C9A13B] text-gray-700 
-                      data-[state=on]:text-white 
-                      data-[state=on]:bg-[#8B1E3F]
-                      data-[state=on]:border-[#8B1E3F]
-                      hover:text-[#8B1E3F]
-                    `}
+            {/* Filters Row */}
+            <div className="flex flex-col sm:flex-row gap-3 mb-3">
+              {/* Language Filter */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="w-full sm:w-auto border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center justify-between"
                   >
-                    {t(`blog.categories.${category.toLowerCase()}`)}
-                  </ToggleGroupItem>
-                ))}
-              </ToggleGroup>
-            </div>
-            
-            {/* Active filters and clear button */}
-            <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
-              <div className="text-sm text-gray-500">
-                {filteredPosts.length} {t('blog.resultsFound')}
-              </div>
+                    <span className="truncate">{getLanguageSelectionLabel()}</span>
+                    <ChevronDown className="h-4 w-4 opacity-70 flex-shrink-0" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="p-0 w-56 bg-white" align="start">
+                  <div className="p-2 border-b">
+                    <h3 className="font-medium text-sm text-gray-700 px-2 py-1.5">
+                      {t('blog.language')}
+                    </h3>
+                  </div>
+                  <div className="p-2">
+                    <div className="grid grid-cols-1 gap-1">
+                      <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                        <Checkbox 
+                          id="en-lang" 
+                          checked={selectedLanguages.includes("EN")} 
+                          onCheckedChange={() => toggleLanguage("EN")}
+                          className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                        />
+                        <label htmlFor="en-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                          English
+                        </label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                        <Checkbox 
+                          id="lt-lang" 
+                          checked={selectedLanguages.includes("LT")} 
+                          onCheckedChange={() => toggleLanguage("LT")}
+                          className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                        />
+                        <label htmlFor="lt-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                          Lietuvių
+                        </label>
+                      </div>
+                      
+                      <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                        <Checkbox 
+                          id="pl-lang" 
+                          checked={selectedLanguages.includes("PL")} 
+                          onCheckedChange={() => toggleLanguage("PL")}
+                          className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                        />
+                        <label htmlFor="pl-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                          Polski
+                        </label>
+                      </div>
+                      
+                      {selectedLanguages.length > 0 && (
+                        <Button 
+                          variant="ghost" 
+                          onClick={() => setSelectedLanguages([])} 
+                          className="text-xs text-[#8B1E3F] mt-1 hover:text-[#8B1E3F]/90 hover:bg-[#8B1E3F]/5"
+                        >
+                          {t('blog.clearSelection') || "Clear selection"}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+              
+              {/* Category Filter */}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="w-full sm:w-auto border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center justify-between"
+                  >
+                    <span className="truncate">{getCategoriesSelectionLabel()}</span>
+                    <ChevronDown className="h-4 w-4 opacity-70 flex-shrink-0" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="p-0 w-56 bg-white" align="start">
+                  <div className="p-2 border-b">
+                    <h3 className="font-medium text-sm text-gray-700 px-2 py-1.5">
+                      {t('blog.category')}
+                    </h3>
+                  </div>
+                  <div className="p-2">
+                    <div className="grid grid-cols-1 gap-1">
+                      {categories.slice(1).map((category) => (
+                        <div key={category} className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                          <Checkbox 
+                            id={`category-${category}`} 
+                            checked={selectedCategories.includes(category)} 
+                            onCheckedChange={() => toggleCategory(category)}
+                            className="border-[#C9A13B] data-[state=checked]:bg-[#8B1E3F] data-[state=checked]:border-[#8B1E3F]"
+                          />
+                          <label 
+                            htmlFor={`category-${category}`} 
+                            className="text-sm font-medium leading-none cursor-pointer"
+                          >
+                            {t(`blog.categories.${category.toLowerCase()}`)}
+                          </label>
+                        </div>
+                      ))}
+                      
+                      {selectedCategories.length > 0 && (
+                        <Button 
+                          variant="ghost" 
+                          onClick={() => setSelectedCategories([])} 
+                          className="text-xs text-[#8B1E3F] mt-1 hover:text-[#8B1E3F]/90 hover:bg-[#8B1E3F]/5"
+                        >
+                          {t('blog.clearSelection') || "Clear selection"}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+              
+              {/* Active Filters */}
               {hasActiveFilters && (
                 <Button 
-                  variant="outline" 
-                  size="sm" 
+                  variant="ghost" 
                   onClick={clearFilters}
-                  className="text-sm text-[#8B1E3F] border-[#C9A13B]"
+                  className="text-[#8B1E3F] hover:bg-[#8B1E3F]/5 border border-dashed border-[#C9A13B]/40"
                 >
+                  <X className="h-4 w-4 mr-2" />
                   {t('blog.clearAllFilters') || "Clear all filters"}
                 </Button>
               )}
+            </div>
+            
+            {/* Selected Categories Display */}
+            {selectedCategories.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {selectedCategories.map(category => (
+                  <Badge 
+                    key={category} 
+                    variant="outline" 
+                    className="bg-[#8B1E3F]/5 text-[#8B1E3F] border-[#C9A13B]/30 hover:bg-[#8B1E3F]/10 cursor-pointer flex items-center gap-1 px-2 py-1"
+                    onClick={() => toggleCategory(category)}
+                  >
+                    {t(`blog.categories.${category.toLowerCase()}`)}
+                    <X size={14} />
+                  </Badge>
+                ))}
+              </div>
+            )}
+            
+            {/* Mobile Filter Dropdown for small screens */}
+            <div className="block sm:hidden mt-3 mb-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="w-full border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/10 justify-between">
+                    {t('blog.moreFilters') || "More Filters"}
+                    <ChevronDown className="h-4 w-4 opacity-70" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-white w-[94vw] max-w-sm mx-auto">
+                  <DropdownMenuLabel>{t('blog.language')}</DropdownMenuLabel>
+                  <DropdownMenuCheckboxItem 
+                    checked={selectedLanguages.includes("EN")}
+                    onCheckedChange={() => toggleLanguage("EN")}
+                  >
+                    English
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem 
+                    checked={selectedLanguages.includes("LT")}
+                    onCheckedChange={() => toggleLanguage("LT")}
+                  >
+                    Lietuvių
+                  </DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem 
+                    checked={selectedLanguages.includes("PL")}
+                    onCheckedChange={() => toggleLanguage("PL")}
+                  >
+                    Polski
+                  </DropdownMenuCheckboxItem>
+                  
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel>{t('blog.category')}</DropdownMenuLabel>
+                  
+                  {categories.slice(1).map((category) => (
+                    <DropdownMenuCheckboxItem 
+                      key={category}
+                      checked={selectedCategories.includes(category)}
+                      onCheckedChange={() => toggleCategory(category)}
+                    >
+                      {t(`blog.categories.${category.toLowerCase()}`)}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                  
+                  {hasActiveFilters && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem 
+                        onClick={clearFilters}
+                        className="text-center justify-center text-[#8B1E3F] font-medium"
+                      >
+                        {t('blog.clearAllFilters') || "Clear all filters"}
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            
+            {/* Results Count */}
+            <div className="mt-4 pt-3 border-t border-gray-100">
+              <div className="text-sm text-gray-600">
+                {filteredPosts.length} {filteredPosts.length === 1 ? t('blog.resultFound') : t('blog.resultsFound')}
+              </div>
             </div>
           </div>
           
@@ -464,13 +529,13 @@ const Blog = () => {
             ) : (
               <div className="col-span-2 text-center py-12">
                 <p className="text-lg text-gray-500">{t('blog.noPostsFound')}</p>
-                {searchQuery && (
+                {hasActiveFilters && (
                   <Button 
                     variant="outline" 
                     onClick={clearFilters}
                     className="mt-4 border-[#C9A13B] text-[#8B1E3F]"
                   >
-                    {t('blog.clearSearch') || "Clear search"}
+                    {t('blog.clearFilters') || "Clear filters"}
                   </Button>
                 )}
               </div>
