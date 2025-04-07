@@ -9,7 +9,7 @@ import {
   saveLanguage, 
   getLowercaseCode 
 } from "../utils/languageUtils";
-import { getLocalizedUrl } from "../utils/urlUtils";
+import { getLocalizedUrl, getPageKeyFromUrl } from "../utils/urlUtils";
 
 type LanguageContextType = {
   language: SupportedLanguage;
@@ -27,14 +27,23 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   
   // Update i18n language when language state changes and save to localStorage
   const handleLanguageChange = useMemo(() => (newLanguage: SupportedLanguage) => {
-    const currentUrl = `${location.pathname}${location.search}${location.hash}`;
-    const newUrl = getLocalizedUrl(currentUrl, language, newLanguage);
+    // Get the current page key from URL
+    const pageKey = getPageKeyFromUrl(location.pathname);
     
-    setLanguage(newLanguage);
-    
-    // Navigate to the localized URL
-    if (newUrl !== currentUrl) {
-      navigate(newUrl);
+    // If we found a matching page key, get the localized URL for the new language
+    if (pageKey) {
+      const currentUrl = location.pathname;
+      const newUrl = getLocalizedUrl(currentUrl, language, newLanguage);
+      
+      setLanguage(newLanguage);
+      
+      // Navigate to the localized URL
+      if (newUrl !== currentUrl) {
+        navigate(newUrl);
+      }
+    } else {
+      // If we couldn't determine a page key, just set the language but don't navigate
+      setLanguage(newLanguage);
     }
   }, [language, location, navigate]);
   

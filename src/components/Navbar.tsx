@@ -9,46 +9,48 @@ import { cn } from "@/lib/utils";
 import { NavDropdown, LanguageDropdown, DropdownOption } from "@/components/ui/custom-dropdown";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "react-i18next";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 const Navbar = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const { language, setLanguage } = useLanguage();
   const { t } = useTranslation();
+  const localizedPath = useLocalizedPath();
   
   const isActive = (path: string) => location.pathname === path;
   const isPathActive = (paths: string[]) => paths.some(path => location.pathname.includes(path));
   
-  // Official dropdown options
+  // Official dropdown options with localized paths
   const officialOptions: DropdownOption[] = [
     {
       label: t('nav.official.coatOfArms'),
       value: "coat-of-arms",
-      href: "/official/coat-of-arms"
+      href: localizedPath("coatOfArms")
     },
     {
       label: t('nav.official.documents'),
       value: "documents",
-      href: "/official/documents"
+      href: localizedPath("documents")
     }
   ];
   
-  // Association dropdown options
+  // Association dropdown options with localized paths
   const associationOptions: DropdownOption[] = [
     {
       label: t('nav.association.about'),
       value: "about",
-      href: "/association/about"
+      href: localizedPath("about")
     },
     {
       label: t('nav.association.membership'),
       value: "membership",
-      href: "/association/membership"
+      href: localizedPath("membership")
     },
     {
       label: t('nav.association.submitGenealogy'),
       value: "submit-genealogy",
-      href: "/association/submit-genealogy"
+      href: localizedPath("submitGenealogy")
     }
   ];
   
@@ -57,7 +59,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to={localizedPath("home")} className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full bg-deep-red flex items-center justify-center">
               <span className="text-white font-serif text-lg">G</span>
             </div>
@@ -69,24 +71,24 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           {!isMobile && (
             <nav className="flex items-center gap-2">
-              <Link to="/">
+              <Link to={localizedPath("home")}>
                 <Button
                   variant="ghost"
                   className={cn(
                     "h-9",
-                    isActive("/") ? "bg-accent text-accent-foreground" : ""
+                    isActive(localizedPath("home")) ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
                   {t('nav.home')}
                 </Button>
               </Link>
               
-              <Link to="/history">
+              <Link to={localizedPath("history")}>
                 <Button
                   variant="ghost"
                   className={cn(
                     "h-9",
-                    isActive("/history") ? "bg-accent text-accent-foreground" : ""
+                    isActive(localizedPath("history")) ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
                   {t('nav.history')}
@@ -96,21 +98,21 @@ const Navbar = () => {
               <NavDropdown
                 label={t('nav.official')}
                 options={officialOptions}
-                isActive={isPathActive(["/official"])}
+                isActive={isPathActive(["/official", "/oficjalus", "/oficjalne"])}
               />
               
               <NavDropdown
                 label={t('nav.association')}
                 options={associationOptions}
-                isActive={isPathActive(["/association"])}
+                isActive={isPathActive(["/association", "/asociacija", "/stowarzyszenie"])}
               />
               
-              <Link to="/blog">
+              <Link to={localizedPath("blog")}>
                 <Button
                   variant="ghost"
                   className={cn(
                     "h-9",
-                    isActive("/blog") ? "bg-accent text-accent-foreground" : ""
+                    isActive(localizedPath("blog")) ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
                   {t('nav.blog')}
@@ -139,20 +141,20 @@ const Navbar = () => {
                 <SheetContent side="right" className="w-[280px]">
                   <nav className="flex flex-col gap-5 mt-8">
                     <Link 
-                      to="/" 
+                      to={localizedPath("home")} 
                       className={cn(
                         "px-2 py-1 text-base font-medium rounded-md",
-                        isActive("/") ? "bg-accent text-accent-foreground" : ""
+                        isActive(localizedPath("home")) ? "bg-accent text-accent-foreground" : ""
                       )}
                     >
                       {t('nav.home')}
                     </Link>
                     
                     <Link 
-                      to="/history" 
+                      to={localizedPath("history")} 
                       className={cn(
                         "px-2 py-1 text-base font-medium rounded-md",
-                        isActive("/history") ? "bg-accent text-accent-foreground" : ""
+                        isActive(localizedPath("history")) ? "bg-accent text-accent-foreground" : ""
                       )}
                     >
                       {t('nav.history')}
@@ -162,19 +164,19 @@ const Navbar = () => {
                       <p className="font-medium text-base px-2">{t('nav.official')}</p>
                       <div className="ml-3 flex flex-col gap-2">
                         <Link 
-                          to="/official/coat-of-arms" 
+                          to={localizedPath("coatOfArms")} 
                           className={cn(
                             "px-2 py-1 text-sm rounded-md",
-                            isActive("/official/coat-of-arms") ? "bg-accent text-accent-foreground" : ""
+                            isActive(localizedPath("coatOfArms")) ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
                           {t('nav.official.coatOfArms')}
                         </Link>
                         <Link 
-                          to="/official/documents" 
+                          to={localizedPath("documents")} 
                           className={cn(
                             "px-2 py-1 text-sm rounded-md",
-                            isActive("/official/documents") ? "bg-accent text-accent-foreground" : ""
+                            isActive(localizedPath("documents")) ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
                           {t('nav.official.documents')}
@@ -186,28 +188,28 @@ const Navbar = () => {
                       <p className="font-medium text-base px-2">{t('nav.association')}</p>
                       <div className="ml-3 flex flex-col gap-2">
                         <Link 
-                          to="/association/about" 
+                          to={localizedPath("about")} 
                           className={cn(
                             "px-2 py-1 text-sm rounded-md",
-                            isActive("/association/about") ? "bg-accent text-accent-foreground" : ""
+                            isActive(localizedPath("about")) ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
                           {t('nav.association.about')}
                         </Link>
                         <Link 
-                          to="/association/membership" 
+                          to={localizedPath("membership")} 
                           className={cn(
                             "px-2 py-1 text-sm rounded-md",
-                            isActive("/association/membership") ? "bg-accent text-accent-foreground" : ""
+                            isActive(localizedPath("membership")) ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
                           {t('nav.association.membership')}
                         </Link>
                         <Link 
-                          to="/association/submit-genealogy" 
+                          to={localizedPath("submitGenealogy")} 
                           className={cn(
                             "px-2 py-1 text-sm rounded-md",
-                            isActive("/association/submit-genealogy") ? "bg-accent text-accent-foreground" : ""
+                            isActive(localizedPath("submitGenealogy")) ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
                           {t('nav.association.submitGenealogy')}
@@ -216,10 +218,10 @@ const Navbar = () => {
                     </div>
                     
                     <Link 
-                      to="/blog" 
+                      to={localizedPath("blog")} 
                       className={cn(
                         "px-2 py-1 text-base font-medium rounded-md",
-                        isActive("/blog") ? "bg-accent text-accent-foreground" : ""
+                        isActive(localizedPath("blog")) ? "bg-accent text-accent-foreground" : ""
                       )}
                     >
                       {t('nav.blog')}
