@@ -189,7 +189,7 @@ export const ltTranslations = {
     sword: "Kalavijas",
     swordDescription: "Reiškia apsaugą, teisingumą ir pasiryžimą ginti savo įsitikinimus.",
     cross: "Kryžius",
-    crossDescription: "Atspindi giminės gilų religinį įsipareigojimą ir krikščioniškąsias vertybes.",
+    crossDescription: "Atspindi giminės gilų religinį įsipareigojimą ir krikščioniškasias vertybes.",
     history: "Istorinis kontekstas",
     historyParagraph1: "Giedraičių herbas buvo suteiktas XIV amžiuje ir yra vienas seniausių Lietuvos Didžiosios Kunigaikštystės herbų.",
     historyParagraph2: "Per šimtmečius herbas išliko nepakitęs, simbolizuodamas šeimos tęstinumą ir pastovumą neramiais laikais.",

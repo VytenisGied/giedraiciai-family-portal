@@ -8,12 +8,14 @@ import { NavDesktop } from "./navigation/NavDesktop";
 import { NavMobile } from "./navigation/NavMobile";
 import { LanguageSelector } from "./navigation/LanguageSelector";
 import { useNavigation } from "@/data/navigation";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
   const { language, setLanguage } = useLanguage();
   const { navItems } = useNavigation();
+  const { t } = useTranslation();
   
   const isPathActive = (paths: string[]) => paths.some(path => location.pathname.includes(path));
   
@@ -27,7 +29,7 @@ const Navbar = () => {
               <span className="text-white font-serif text-lg">G</span>
             </div>
             <span className="font-serif text-lg text-dark-text hidden sm:block group-hover:text-deep-red transition-colors duration-300">
-              House of Giedraičiai
+              {t('nav.title')}
             </span>
           </Link>
           
