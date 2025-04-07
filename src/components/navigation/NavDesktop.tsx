@@ -2,7 +2,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { NavDropdown, DropdownOption } from "@/components/ui/custom-dropdown";
+import { NavDropdown, DropdownOption } from "@/components/ui/dropdown";
 import { NavLink } from "./NavLink";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 

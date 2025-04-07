@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { DropdownOption } from "@/components/ui/custom-dropdown";
+import { DropdownOption } from "@/components/ui/dropdown";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "react-i18next";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
