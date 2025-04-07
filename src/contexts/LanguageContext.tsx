@@ -15,7 +15,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Update i18n language when language state changes
   useEffect(() => {
-    i18n.changeLanguage(language);
+    i18n.changeLanguage(language.toLowerCase());
   }, [language, i18n]);
 
   return (

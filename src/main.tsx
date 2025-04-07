@@ -8,7 +8,11 @@ import './i18n/i18n';
 const root = document.getElementById("root");
 
 if (root) {
-  createRoot(root).render(<App />);
+  createRoot(root).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
 } else {
   console.error("Root element not found");
 }
