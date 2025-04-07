@@ -1,20 +1,22 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageDropdown } from "@/components/ui/custom-dropdown";
+import { useTranslation } from "react-i18next";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const [language, setLanguage] = useState<"EN" | "LT" | "PL">("EN");
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   
   return (
     <div className="min-h-screen flex flex-col bg-ivory-white">
       {/* Header/Navigation */}
-      <Navbar language={language} setLanguage={setLanguage} />
+      <Navbar />
       
       {/* Main Content */}
       <main className="flex-1">
@@ -26,32 +28,32 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-serif mb-4 text-gold">House of Giedraičiai</h3>
-              <p className="text-sm text-gray-300">Preserving the heritage and legacy of one of Lithuania's most noble houses since the 13th century.</p>
+              <h3 className="text-xl font-serif mb-4 text-gold">{t('footer.title')}</h3>
+              <p className="text-sm text-gray-300">{t('footer.description')}</p>
             </div>
             
             <div>
-              <h3 className="text-lg font-medium mb-4">Quick Links</h3>
+              <h3 className="text-lg font-medium mb-4">{t('footer.quickLinks')}</h3>
               <nav className="flex flex-col gap-2">
-                <Link to="/" className="text-sm text-gray-300 hover:text-white">Home</Link>
-                <Link to="/history" className="text-sm text-gray-300 hover:text-white">History</Link>
-                <Link to="/official/coat-of-arms" className="text-sm text-gray-300 hover:text-white">Coat of Arms</Link>
-                <Link to="/official/documents" className="text-sm text-gray-300 hover:text-white">Documents</Link>
+                <Link to="/" className="text-sm text-gray-300 hover:text-white">{t('nav.home')}</Link>
+                <Link to="/history" className="text-sm text-gray-300 hover:text-white">{t('nav.history')}</Link>
+                <Link to="/official/coat-of-arms" className="text-sm text-gray-300 hover:text-white">{t('nav.official.coatOfArms')}</Link>
+                <Link to="/official/documents" className="text-sm text-gray-300 hover:text-white">{t('nav.official.documents')}</Link>
               </nav>
             </div>
             
             <div>
-              <h3 className="text-lg font-medium mb-4">Association</h3>
+              <h3 className="text-lg font-medium mb-4">{t('footer.association')}</h3>
               <nav className="flex flex-col gap-2">
-                <Link to="/association/about" className="text-sm text-gray-300 hover:text-white">About</Link>
-                <Link to="/association/membership" className="text-sm text-gray-300 hover:text-white">Membership</Link>
-                <Link to="/association/submit-genealogy" className="text-sm text-gray-300 hover:text-white">Submit Genealogy</Link>
-                <Link to="/blog" className="text-sm text-gray-300 hover:text-white">Blog</Link>
+                <Link to="/association/about" className="text-sm text-gray-300 hover:text-white">{t('nav.association.about')}</Link>
+                <Link to="/association/membership" className="text-sm text-gray-300 hover:text-white">{t('nav.association.membership')}</Link>
+                <Link to="/association/submit-genealogy" className="text-sm text-gray-300 hover:text-white">{t('nav.association.submitGenealogy')}</Link>
+                <Link to="/blog" className="text-sm text-gray-300 hover:text-white">{t('nav.blog')}</Link>
               </nav>
             </div>
             
             <div>
-              <h3 className="text-lg font-medium mb-4">Language</h3>
+              <h3 className="text-lg font-medium mb-4">{t('footer.language')}</h3>
               <LanguageDropdown 
                 currentLanguage={language}
                 onLanguageChange={setLanguage}
@@ -59,14 +61,14 @@ const Layout = ({ children }: LayoutProps) => {
               />
               
               <div className="mt-6">
-                <h3 className="text-lg font-medium mb-2">Contact</h3>
+                <h3 className="text-lg font-medium mb-2">{t('footer.contact')}</h3>
                 <p className="text-sm text-gray-300">info@giedraiciai.org</p>
               </div>
             </div>
           </div>
           
           <div className="mt-12 pt-4 border-t border-gray-800 text-center text-sm text-gray-400">
-            <p>© {new Date().getFullYear()} House of Giedraičiai. All rights reserved.</p>
+            <p>{t('footer.rights', { year: new Date().getFullYear() })}</p>
           </div>
         </div>
       </footer>

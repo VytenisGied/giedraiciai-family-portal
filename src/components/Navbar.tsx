@@ -1,21 +1,20 @@
 
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, Languages } from "lucide-react";
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { NavDropdown, LanguageDropdown, DropdownOption } from "@/components/ui/custom-dropdown";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslation } from "react-i18next";
 
-interface NavbarProps {
-  language: "EN" | "LT" | "PL";
-  setLanguage: (language: "EN" | "LT" | "PL") => void;
-}
-
-const Navbar = ({ language, setLanguage }: NavbarProps) => {
+const Navbar = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
+  const { language, setLanguage } = useLanguage();
+  const { t } = useTranslation();
   
   const isActive = (path: string) => location.pathname === path;
   const isPathActive = (paths: string[]) => paths.some(path => location.pathname.includes(path));
@@ -23,12 +22,12 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
   // Official dropdown options
   const officialOptions: DropdownOption[] = [
     {
-      label: "Coat of Arms",
+      label: t('nav.official.coatOfArms'),
       value: "coat-of-arms",
       href: "/official/coat-of-arms"
     },
     {
-      label: "Documents",
+      label: t('nav.official.documents'),
       value: "documents",
       href: "/official/documents"
     }
@@ -37,17 +36,17 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
   // Association dropdown options
   const associationOptions: DropdownOption[] = [
     {
-      label: "About",
+      label: t('nav.association.about'),
       value: "about",
       href: "/association/about"
     },
     {
-      label: "Membership",
+      label: t('nav.association.membership'),
       value: "membership",
       href: "/association/membership"
     },
     {
-      label: "Submit Genealogy",
+      label: t('nav.association.submitGenealogy'),
       value: "submit-genealogy",
       href: "/association/submit-genealogy"
     }
@@ -63,7 +62,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
               <span className="text-white font-serif text-lg">G</span>
             </div>
             <span className="font-serif text-lg text-dark-text hidden sm:block">
-              House of Giedraičiai
+              {t('footer.title')}
             </span>
           </Link>
           
@@ -78,7 +77,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     isActive("/") ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
-                  Home
+                  {t('nav.home')}
                 </Button>
               </Link>
               
@@ -90,18 +89,18 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     isActive("/history") ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
-                  History
+                  {t('nav.history')}
                 </Button>
               </Link>
               
               <NavDropdown
-                label="Official"
+                label={t('nav.official')}
                 options={officialOptions}
                 isActive={isPathActive(["/official"])}
               />
               
               <NavDropdown
-                label="Association"
+                label={t('nav.association')}
                 options={associationOptions}
                 isActive={isPathActive(["/association"])}
               />
@@ -114,7 +113,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                     isActive("/blog") ? "bg-accent text-accent-foreground" : ""
                   )}
                 >
-                  Blog
+                  {t('nav.blog')}
                 </Button>
               </Link>
             </nav>
@@ -146,7 +145,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                         isActive("/") ? "bg-accent text-accent-foreground" : ""
                       )}
                     >
-                      Home
+                      {t('nav.home')}
                     </Link>
                     
                     <Link 
@@ -156,11 +155,11 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                         isActive("/history") ? "bg-accent text-accent-foreground" : ""
                       )}
                     >
-                      History
+                      {t('nav.history')}
                     </Link>
                     
                     <div className="space-y-3">
-                      <p className="font-medium text-base px-2">Official</p>
+                      <p className="font-medium text-base px-2">{t('nav.official')}</p>
                       <div className="ml-3 flex flex-col gap-2">
                         <Link 
                           to="/official/coat-of-arms" 
@@ -169,7 +168,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                             isActive("/official/coat-of-arms") ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
-                          Coat of Arms
+                          {t('nav.official.coatOfArms')}
                         </Link>
                         <Link 
                           to="/official/documents" 
@@ -178,13 +177,13 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                             isActive("/official/documents") ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
-                          Documents
+                          {t('nav.official.documents')}
                         </Link>
                       </div>
                     </div>
                     
                     <div className="space-y-3">
-                      <p className="font-medium text-base px-2">Association</p>
+                      <p className="font-medium text-base px-2">{t('nav.association')}</p>
                       <div className="ml-3 flex flex-col gap-2">
                         <Link 
                           to="/association/about" 
@@ -193,7 +192,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                             isActive("/association/about") ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
-                          About
+                          {t('nav.association.about')}
                         </Link>
                         <Link 
                           to="/association/membership" 
@@ -202,7 +201,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                             isActive("/association/membership") ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
-                          Membership
+                          {t('nav.association.membership')}
                         </Link>
                         <Link 
                           to="/association/submit-genealogy" 
@@ -211,7 +210,7 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                             isActive("/association/submit-genealogy") ? "bg-accent text-accent-foreground" : ""
                           )}
                         >
-                          Submit Genealogy
+                          {t('nav.association.submitGenealogy')}
                         </Link>
                       </div>
                     </div>
@@ -223,12 +222,12 @@ const Navbar = ({ language, setLanguage }: NavbarProps) => {
                         isActive("/blog") ? "bg-accent text-accent-foreground" : ""
                       )}
                     >
-                      Blog
+                      {t('nav.blog')}
                     </Link>
                     
                     {/* Mobile Language Selector */}
                     <div className="mt-4 pt-4 border-t">
-                      <p className="text-base font-medium px-2 mb-2">Language</p>
+                      <p className="text-base font-medium px-2 mb-2">{t('footer.language')}</p>
                       <div className="flex gap-2 px-2">
                         <Button 
                           variant={language === "EN" ? "default" : "outline"}
