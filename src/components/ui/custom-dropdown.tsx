@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -61,7 +62,7 @@ export const CustomDropdown = ({
       {isOpen && (
         <div 
           className={cn(
-            "absolute z-50 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1",
+            "absolute z-50 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black/5 py-1 transition-all duration-300 animate-in fade-in-50 slide-in-from-top-5",
             align === "right" ? "right-0" : "left-0",
             menuClassName
           )}
@@ -73,19 +74,21 @@ export const CustomDropdown = ({
                   key={index}
                   to={option.href}
                   onClick={() => handleItemClick(option)}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gold/10 hover:text-deep-red transition-all duration-200 relative group overflow-hidden"
                   role="menuitem"
                 >
                   {option.label}
+                  <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-gold transition-all duration-300 group-hover:w-full"></span>
                 </Link>
               ) : (
                 <button
                   key={index}
                   onClick={() => handleItemClick(option)}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gold/10 hover:text-deep-red transition-all duration-200 relative group overflow-hidden"
                   role="menuitem"
                 >
                   {option.label}
+                  <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-gold transition-all duration-300 group-hover:w-full"></span>
                 </button>
               )
             ))}
@@ -122,12 +125,12 @@ export const DropdownButton = ({
       trigger={
         <button
           className={cn(
-            "inline-flex items-center justify-center gap-1 px-4 py-2 text-sm font-medium rounded-md",
+            "inline-flex items-center justify-center gap-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-300",
             buttonClassName
           )}
         >
           {children}
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
         </button>
       }
     />
@@ -144,16 +147,20 @@ interface NavDropdownProps {
 export const NavDropdown = ({ label, options, isActive, className }: NavDropdownProps) => {
   return (
     <DropdownButton
-      className={className}
+      className={cn("nav-dropdown", className)}
       buttonClassName={cn(
-        "transition-colors inline-flex h-9 items-center justify-center rounded-md px-4 py-2",
+        "transition-all duration-300 inline-flex h-9 items-center justify-center rounded-md px-4 py-2 relative overflow-hidden group",
         isActive 
-          ? "bg-accent text-accent-foreground"
-          : "hover:bg-accent hover:text-accent-foreground"
+          ? "text-deep-red font-medium"
+          : "hover:text-deep-red"
       )}
       options={options}
     >
-      {label}
+      <span className="relative z-10">{label}</span>
+      {isActive && (
+        <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold" />
+      )}
+      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gold transition-all duration-300 ease-in-out group-hover:w-full" />
     </DropdownButton>
   );
 };
@@ -190,7 +197,8 @@ export const LanguageDropdown = ({
   return (
     <DropdownButton
       align={align}
-      buttonClassName="border border-gold text-gold hover:bg-gold/10"
+      buttonClassName="border border-gold text-gold hover:bg-gold/10 transition-all duration-300 rounded-full px-3"
+      menuClassName="animate-in fade-in-50 slide-in-from-top-5"
       options={languageOptions}
     >
       {currentLanguage}
