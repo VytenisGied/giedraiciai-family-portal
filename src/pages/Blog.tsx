@@ -5,6 +5,7 @@ import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getLocalizedBlogPostUrl } from "@/utils/urlUtils";
 import { useTranslation } from "react-i18next";
@@ -16,7 +17,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuCheckboxItem
 } from "@/components/ui/dropdown-menu";
-import { Filter, ChevronDown, Check } from "lucide-react";
+import { Filter, ChevronDown, Check, Search } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -138,16 +139,27 @@ const categories = ["All", "History", "Events", "Projects", "Genealogy", "Associ
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedLanguages, setSelectedLanguages] = useState<SupportedLanguage[]>([]); // Changed to array
+  const [selectedLanguages, setSelectedLanguages] = useState<SupportedLanguage[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const postsPerPage = 4;
   const { language } = useLanguage();
   const { t } = useTranslation();
   
-  // Filter posts by category and languages
+  // Filter posts by category, languages and search query
   const filteredPosts = blogPosts
     .filter(post => selectedCategory === "All" || post.category === selectedCategory)
     .filter(post => selectedLanguages.length === 0 || 
-      post.languages.some(lang => selectedLanguages.includes(lang)));
+      post.languages.some(lang => selectedLanguages.includes(lang)))
+    .filter(post => {
+      if (!searchQuery.trim()) return true;
+      
+      const query = searchQuery.toLowerCase();
+      const title = post.title[language]?.toLowerCase() || "";
+      const excerpt = post.excerpt[language]?.toLowerCase() || "";
+      const category = post.category.toLowerCase();
+      
+      return title.includes(query) || excerpt.includes(query) || category.includes(query);
+    });
   
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -171,6 +183,18 @@ const Blog = () => {
     setCurrentPage(1);
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    setCurrentPage(1); // Reset to first page when search changes
+  };
+
+  const clearFilters = () => {
+    setSelectedLanguages([]);
+    setSelectedCategory("All");
+    setSearchQuery("");
+    setCurrentPage(1);
+  };
+
   // Helper function to display selected languages
   const getLanguageSelectionLabel = () => {
     if (selectedLanguages.length === 0) {
@@ -182,6 +206,8 @@ const Blog = () => {
       return `${selectedLanguages.length} ${t('blog.languagesSelected')}`;
     }
   };
+
+  const hasActiveFilters = selectedLanguages.length > 0 || selectedCategory !== "All" || searchQuery.trim() !== "";
   
   return (
     <Layout>
@@ -197,6 +223,17 @@ const Blog = () => {
                 {t('blog.filters')}
               </h2>
               
+              {/* Search Input */}
+              <div className="relative w-full md:w-auto md:min-w-[280px]">
+                <Input
+                  placeholder={t('blog.searchPlaceholder') || "Search posts..."}
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className="pr-8 border-[#C9A13B]"
+                />
+                <Search size={16} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              </div>
+              
               {/* Mobile: Filters in Dropdown */}
               <div className="md:hidden w-full">
                 <DropdownMenu>
@@ -206,7 +243,7 @@ const Blog = () => {
                       <ChevronDown className="h-4 w-4 opacity-50" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-full min-w-[200px]">
+                  <DropdownMenuContent className="w-full min-w-[200px] bg-white">
                     <div className="px-2 py-1.5 text-sm font-medium text-gray-500">
                       {t('blog.language')}
                     </div>
@@ -243,9 +280,22 @@ const Blog = () => {
                           setCurrentPage(1);
                         }}
                       >
+                        <Check 
+                          className={`mr-2 h-4 w-4 ${selectedCategory === category ? "opacity-100" : "opacity-0"}`} 
+                        />
                         {t(`blog.categories.${category.toLowerCase()}`)}
                       </DropdownMenuItem>
                     ))}
+                    
+                    {hasActiveFilters && (
+                      <Button 
+                        variant="ghost" 
+                        onClick={clearFilters} 
+                        className="w-full text-xs text-[#8B1E3F] mt-2 justify-center"
+                      >
+                        {t('blog.clearFilters') || "Clear filters"}
+                      </Button>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -262,7 +312,7 @@ const Blog = () => {
                       <ChevronDown className="h-4 w-4 opacity-70" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="p-0 w-48">
+                  <PopoverContent className="p-0 w-48 bg-white">
                     <div className="px-2 py-1.5 text-sm font-medium text-gray-500 border-b">
                       {t('blog.language')}
                     </div>
@@ -308,7 +358,7 @@ const Blog = () => {
                             onClick={() => setSelectedLanguages([])} 
                             className="text-xs text-[#8B1E3F] mt-1"
                           >
-                            {t('blog.clearFilters')}
+                            {t('blog.clearFilters') || "Clear languages"}
                           </Button>
                         )}
                       </div>
@@ -353,9 +403,21 @@ const Blog = () => {
               </ToggleGroup>
             </div>
             
-            {/* Results count */}
-            <div className="mt-4 pt-3 border-t border-gray-100 text-sm text-gray-500">
-              {filteredPosts.length} {t('blog.resultsFound')}
+            {/* Active filters and clear button */}
+            <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
+              <div className="text-sm text-gray-500">
+                {filteredPosts.length} {t('blog.resultsFound')}
+              </div>
+              {hasActiveFilters && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={clearFilters}
+                  className="text-sm text-[#8B1E3F] border-[#C9A13B]"
+                >
+                  {t('blog.clearAllFilters') || "Clear all filters"}
+                </Button>
+              )}
             </div>
           </div>
           
@@ -402,6 +464,15 @@ const Blog = () => {
             ) : (
               <div className="col-span-2 text-center py-12">
                 <p className="text-lg text-gray-500">{t('blog.noPostsFound')}</p>
+                {searchQuery && (
+                  <Button 
+                    variant="outline" 
+                    onClick={clearFilters}
+                    className="mt-4 border-[#C9A13B] text-[#8B1E3F]"
+                  >
+                    {t('blog.clearSearch') || "Clear search"}
+                  </Button>
+                )}
               </div>
             )}
           </div>
