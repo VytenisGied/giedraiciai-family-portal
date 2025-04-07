@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -78,7 +77,7 @@ export const CustomDropdown = ({
                   role="menuitem"
                 >
                   <span className="relative z-10">{option.label}</span>
-                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[1px] w-0 bg-gold transition-all duration-300 group-hover:w-full origin-center"></span>
+                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[1px] w-0 bg-gold transition-all duration-300 ease-in-out group-hover:w-full origin-center"></span>
                 </Link>
               ) : (
                 <button
@@ -88,7 +87,7 @@ export const CustomDropdown = ({
                   role="menuitem"
                 >
                   <span className="relative z-10">{option.label}</span>
-                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[1px] w-0 bg-gold transition-all duration-300 group-hover:w-full origin-center"></span>
+                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[1px] w-0 bg-gold transition-all duration-300 ease-in-out group-hover:w-full origin-center"></span>
                 </button>
               )
             ))}
