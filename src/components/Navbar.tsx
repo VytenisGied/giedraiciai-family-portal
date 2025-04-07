@@ -81,9 +81,9 @@ const Navbar = () => {
                 >
                   <span className="relative z-10">{t('nav.home')}</span>
                   {isActive(localizedPath("home")) && (
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold" />
+                    <span className="absolute bottom-0 left-0 right-0 mx-auto w-full h-[2px] bg-gold" />
                   )}
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gold transition-all duration-300 ease-in-out group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[2px] w-0 bg-gold transition-all duration-300 ease-in-out group-hover:w-full origin-center" />
                 </Button>
               </Link>
               
@@ -97,9 +97,9 @@ const Navbar = () => {
                 >
                   <span className="relative z-10">{t('nav.history')}</span>
                   {isActive(localizedPath("history")) && (
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold" />
+                    <span className="absolute bottom-0 left-0 right-0 mx-auto w-full h-[2px] bg-gold" />
                   )}
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gold transition-all duration-300 ease-in-out group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[2px] w-0 bg-gold transition-all duration-300 ease-in-out group-hover:w-full origin-center" />
                 </Button>
               </Link>
               
@@ -127,9 +127,9 @@ const Navbar = () => {
                 >
                   <span className="relative z-10">{t('nav.blog')}</span>
                   {isActive(localizedPath("blog")) && (
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold" />
+                    <span className="absolute bottom-0 left-0 right-0 mx-auto w-full h-[2px] bg-gold" />
                   )}
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gold transition-all duration-300 ease-in-out group-hover:w-full" />
+                  <span className="absolute bottom-0 left-0 right-0 mx-auto h-[2px] w-0 bg-gold transition-all duration-300 ease-in-out group-hover:w-full origin-center" />
                 </Button>
               </Link>
             </nav>
@@ -163,8 +163,8 @@ const Navbar = () => {
                     >
                       {t('nav.home')}
                       <span className={cn(
-                        "absolute bottom-0 left-0 h-[2px] bg-gold transition-all duration-300",
-                        isActive(localizedPath("home")) ? "w-full" : "w-0 group-hover:w-full"
+                        "absolute bottom-0 left-0 right-0 mx-auto h-[2px] bg-gold transition-all duration-300",
+                        isActive(localizedPath("home")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                       )} />
                     </Link>
                     
@@ -177,8 +177,8 @@ const Navbar = () => {
                     >
                       {t('nav.history')}
                       <span className={cn(
-                        "absolute bottom-0 left-0 h-[2px] bg-gold transition-all duration-300",
-                        isActive(localizedPath("history")) ? "w-full" : "w-0 group-hover:w-full"
+                        "absolute bottom-0 left-0 right-0 mx-auto h-[2px] bg-gold transition-all duration-300",
+                        isActive(localizedPath("history")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                       )} />
                     </Link>
                     
@@ -195,8 +195,8 @@ const Navbar = () => {
                         >
                           {t('nav.official.coatOfArms')}
                           <span className={cn(
-                            "absolute bottom-0 left-0 h-[1px] bg-gold transition-all duration-300",
-                            isActive(localizedPath("coatOfArms")) ? "w-full" : "w-0 group-hover:w-full"
+                            "absolute bottom-0 left-0 right-0 mx-auto h-[1px] bg-gold transition-all duration-300",
+                            isActive(localizedPath("coatOfArms")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                           )} />
                         </Link>
                         <Link 
@@ -208,8 +208,8 @@ const Navbar = () => {
                         >
                           {t('nav.official.documents')}
                           <span className={cn(
-                            "absolute bottom-0 left-0 h-[1px] bg-gold transition-all duration-300",
-                            isActive(localizedPath("documents")) ? "w-full" : "w-0 group-hover:w-full"
+                            "absolute bottom-0 left-0 right-0 mx-auto h-[1px] bg-gold transition-all duration-300",
+                            isActive(localizedPath("documents")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                           )} />
                         </Link>
                       </div>
@@ -228,8 +228,8 @@ const Navbar = () => {
                         >
                           {t('nav.association.about')}
                           <span className={cn(
-                            "absolute bottom-0 left-0 h-[1px] bg-gold transition-all duration-300",
-                            isActive(localizedPath("about")) ? "w-full" : "w-0 group-hover:w-full"
+                            "absolute bottom-0 left-0 right-0 mx-auto h-[1px] bg-gold transition-all duration-300",
+                            isActive(localizedPath("about")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                           )} />
                         </Link>
                         <Link 
@@ -241,8 +241,8 @@ const Navbar = () => {
                         >
                           {t('nav.association.membership')}
                           <span className={cn(
-                            "absolute bottom-0 left-0 h-[1px] bg-gold transition-all duration-300",
-                            isActive(localizedPath("membership")) ? "w-full" : "w-0 group-hover:w-full"
+                            "absolute bottom-0 left-0 right-0 mx-auto h-[1px] bg-gold transition-all duration-300",
+                            isActive(localizedPath("membership")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                           )} />
                         </Link>
                         <Link 
@@ -254,8 +254,8 @@ const Navbar = () => {
                         >
                           {t('nav.association.submitGenealogy')}
                           <span className={cn(
-                            "absolute bottom-0 left-0 h-[1px] bg-gold transition-all duration-300",
-                            isActive(localizedPath("submitGenealogy")) ? "w-full" : "w-0 group-hover:w-full"
+                            "absolute bottom-0 left-0 right-0 mx-auto h-[1px] bg-gold transition-all duration-300",
+                            isActive(localizedPath("submitGenealogy")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                           )} />
                         </Link>
                       </div>
@@ -270,8 +270,8 @@ const Navbar = () => {
                     >
                       {t('nav.blog')}
                       <span className={cn(
-                        "absolute bottom-0 left-0 h-[2px] bg-gold transition-all duration-300",
-                        isActive(localizedPath("blog")) ? "w-full" : "w-0 group-hover:w-full"
+                        "absolute bottom-0 left-0 right-0 mx-auto h-[2px] bg-gold transition-all duration-300",
+                        isActive(localizedPath("blog")) ? "w-full" : "w-0 group-hover:w-full origin-center"
                       )} />
                     </Link>
                     
