@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
@@ -22,8 +21,8 @@ import {
 import { Filter, ChevronDown, Check, Search, X } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useDebounce } from "@/hooks/useDebounce";
 
-// Enhanced blog data structure with language support
 const blogPosts = [
   {
     id: 1,
@@ -141,12 +140,12 @@ const Blog = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedLanguages, setSelectedLanguages] = useState<SupportedLanguage[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const debouncedSearchQuery = useDebounce(searchInputValue, 300);
   const postsPerPage = 4;
   const { language } = useLanguage();
   const { t } = useTranslation();
   
-  // Filter posts by categories, languages and search query
   const filteredPosts = blogPosts
     .filter(post => {
       if (selectedCategories.length === 0) return true;
@@ -155,15 +154,19 @@ const Blog = () => {
     .filter(post => selectedLanguages.length === 0 || 
       post.languages.some(lang => selectedLanguages.includes(lang)))
     .filter(post => {
-      if (!searchQuery.trim()) return true;
+      if (!debouncedSearchQuery.trim()) return true;
       
-      const query = searchQuery.toLowerCase();
+      const query = debouncedSearchQuery.toLowerCase();
       const title = post.title[language]?.toLowerCase() || "";
       const excerpt = post.excerpt[language]?.toLowerCase() || "";
       const category = post.category.toLowerCase();
       
       return title.includes(query) || excerpt.includes(query) || category.includes(query);
     });
+  
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchQuery]);
   
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -199,18 +202,16 @@ const Blog = () => {
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    setCurrentPage(1); // Reset to first page when search changes
+    setSearchInputValue(e.target.value);
   };
 
   const clearFilters = () => {
     setSelectedLanguages([]);
     setSelectedCategories([]);
-    setSearchQuery("");
+    setSearchInputValue("");
     setCurrentPage(1);
   };
 
-  // Helper function to display selected languages
   const getLanguageSelectionLabel = () => {
     if (selectedLanguages.length === 0) {
       return t('blog.allLanguages');
@@ -222,7 +223,6 @@ const Blog = () => {
     }
   };
 
-  // Helper function to display selected categories
   const getCategoriesSelectionLabel = () => {
     if (selectedCategories.length === 0) {
       return t('blog.allCategories') || "All Categories";
@@ -233,7 +233,7 @@ const Blog = () => {
     }
   };
 
-  const hasActiveFilters = selectedLanguages.length > 0 || selectedCategories.length > 0 || searchQuery.trim() !== "";
+  const hasActiveFilters = selectedLanguages.length > 0 || selectedCategories.length > 0 || searchInputValue.trim() !== "";
   
   return (
     <Layout>
@@ -241,7 +241,6 @@ const Blog = () => {
         <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-8 text-center">{t('blog.title')}</h1>
         
         <div className="max-w-6xl mx-auto">
-          {/* Redesigned Filters Section */}
           <div className="mb-10 bg-white rounded-lg shadow-md border border-gray-100 p-5 md:p-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
               <h2 className="text-lg font-medium text-gray-800 flex items-center gap-2">
@@ -249,17 +248,16 @@ const Blog = () => {
                 {t('blog.filters')}
               </h2>
               
-              {/* Search Input */}
               <div className="relative w-full md:w-auto md:min-w-[280px]">
                 <Input
                   placeholder={t('blog.searchPlaceholder') || "Search posts..."}
-                  value={searchQuery}
+                  value={searchInputValue}
                   onChange={handleSearchChange}
                   className="pr-10 border-[#C9A13B] focus-visible:ring-[#8B1E3F]"
                 />
-                {searchQuery ? (
+                {searchInputValue ? (
                   <button 
-                    onClick={() => setSearchQuery('')}
+                    onClick={() => setSearchInputValue('')}
                     className="absolute right-10 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                   >
                     <X size={16} />
@@ -269,9 +267,7 @@ const Blog = () => {
               </div>
             </div>
             
-            {/* Filters Row */}
             <div className="flex flex-col sm:flex-row gap-3 mb-3">
-              {/* Language Filter */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button 
@@ -340,7 +336,6 @@ const Blog = () => {
                 </PopoverContent>
               </Popover>
               
-              {/* Category Filter */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button 
@@ -390,7 +385,6 @@ const Blog = () => {
                 </PopoverContent>
               </Popover>
               
-              {/* Active Filters */}
               {hasActiveFilters && (
                 <Button 
                   variant="ghost" 
@@ -403,7 +397,6 @@ const Blog = () => {
               )}
             </div>
             
-            {/* Selected Categories Display */}
             {selectedCategories.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-3">
                 {selectedCategories.map(category => (
@@ -420,7 +413,6 @@ const Blog = () => {
               </div>
             )}
             
-            {/* Mobile Filter Dropdown for small screens */}
             <div className="block sm:hidden mt-3 mb-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -478,7 +470,6 @@ const Blog = () => {
               </DropdownMenu>
             </div>
             
-            {/* Results Count */}
             <div className="mt-4 pt-3 border-t border-gray-100">
               <div className="text-sm text-gray-600">
                 {filteredPosts.length} {filteredPosts.length === 1 ? t('blog.resultFound') : t('blog.resultsFound')}
@@ -486,7 +477,6 @@ const Blog = () => {
             </div>
           </div>
           
-          {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {currentPosts.length > 0 ? (
               currentPosts.map(post => (
@@ -542,7 +532,6 @@ const Blog = () => {
             )}
           </div>
           
-          {/* Pagination */}
           {totalPages > 1 && (
             <div className="flex justify-center gap-2">
               <Button
