@@ -22,7 +22,7 @@ i18n
     react: {
       useSuspense: false // Set to false to avoid issues with Suspense
     },
-    // Add this to ensure keys are found
+    // Make sure keys use the correct separators
     keySeparator: ".",
     nsSeparator: ":",
   });
