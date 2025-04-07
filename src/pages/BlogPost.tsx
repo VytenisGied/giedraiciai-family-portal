@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, Calendar, Clock, Share2 } from "lucide-react";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getLocalizedBlogPostUrl, getLocalizedPath } from "@/utils/urlUtils";
 
 // Mock blog post data
 const blogPostsData = {
@@ -113,6 +115,7 @@ const blogPostsData = {
 
 const BlogPost = () => {
   const { slug } = useParams();
+  const { language } = useLanguage();
   const post = slug ? blogPostsData[slug as keyof typeof blogPostsData] : null;
   
   if (!post) {
@@ -121,7 +124,7 @@ const BlogPost = () => {
         <div className="container mx-auto py-20 px-4 text-center">
           <h1 className="text-3xl font-serif text-[#8B1E3F] mb-6">Post Not Found</h1>
           <p className="mb-8">The blog post you're looking for doesn't exist or has been removed.</p>
-          <Link to="/blog">
+          <Link to={getLocalizedPath("blog", language)}>
             <Button className="bg-[#C9A13B] hover:bg-[#8B1E3F]">
               <ChevronLeft className="mr-2 h-4 w-4" />
               Back to Blog
@@ -136,7 +139,7 @@ const BlogPost = () => {
     <Layout>
       <div className="max-w-4xl mx-auto py-12 px-4">
         <div className="mb-8">
-          <Link to="/blog">
+          <Link to={getLocalizedPath("blog", language)}>
             <Button variant="outline" className="border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
               <ChevronLeft className="mr-2 h-4 w-4" />
               Back to Blog
@@ -203,7 +206,7 @@ const BlogPost = () => {
             <h2 className="text-2xl font-serif text-[#8B1E3F] mb-6">Related Articles</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {post.relatedPosts.map((relatedPost, index) => (
-                <Link to={`/blog/${relatedPost.slug}`} key={index}>
+                <Link to={getLocalizedBlogPostUrl(relatedPost.slug, language)} key={index}>
                   <Card className="border-[#C9A13B]/20 hover:shadow-md transition-all h-full">
                     <div className="aspect-video bg-gray-100">
                       <img src={relatedPost.image} alt={relatedPost.title} className="w-full h-full object-cover" />

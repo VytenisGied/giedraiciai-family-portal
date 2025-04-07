@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -57,6 +56,7 @@ const AppRoutes = () => (
     <Route path="/stowarzyszenie/o-nas" element={<About />} />
     <Route path="/stowarzyszenie/czlonkostwo" element={<Membership />} />
     <Route path="/stowarzyszenie/przeslij-genealogie" element={<SubmitGenealogy />} />
+    <Route path="/blog" element={<Blog />} />
     <Route path="/blog/:slug" element={<BlogPost />} />
     
     {/* 404 Route */}

@@ -1,10 +1,11 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { getLocalizedBlogPostUrl } from "@/utils/urlUtils";
 
 // Mock blog data
 const blogPosts = [
@@ -70,6 +71,7 @@ const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 4;
+  const { language } = useLanguage();
   
   const filteredPosts = selectedCategory === "All"
     ? blogPosts
@@ -134,7 +136,7 @@ const Blog = () => {
                     </CardDescription>
                   </CardContent>
                   <CardFooter>
-                    <Link to={`/blog/${post.slug}`} className="w-full">
+                    <Link to={getLocalizedBlogPostUrl(post.slug, language)} className="w-full">
                       <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                         Read More
                       </Button>

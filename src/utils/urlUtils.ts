@@ -52,6 +52,17 @@ export const getPageKeyFromUrl = (pathname: string): PageKey | null => {
   // Remove leading slash
   const path = pathname.startsWith('/') ? pathname.substring(1) : pathname;
   
+  // First check if it's a blog post
+  const segments = path.split('/');
+  if (segments.length > 1) {
+    // Check if the first segment is a blog path in any language
+    for (const [lang, blogPath] of Object.entries(urlPaths.blog)) {
+      if (segments[0] === blogPath) {
+        return 'blog';
+      }
+    }
+  }
+  
   // Check each page and each language
   for (const [pageKey, langPaths] of Object.entries(urlPaths)) {
     for (const [_, urlPath] of Object.entries(langPaths)) {
@@ -70,6 +81,30 @@ export const getLocalizedPath = (pageKey: PageKey, language: SupportedLanguage):
   return path ? `/${path}` : '/';
 };
 
+// Extract slug from blog post URL
+export const extractBlogSlugFromUrl = (pathname: string): string | null => {
+  const segments = pathname.split('/');
+  if (segments.length < 2) return null;
+  
+  // Check if path starts with any of the blog paths
+  for (const [_, blogPath] of Object.entries(urlPaths.blog)) {
+    if (segments[1] === blogPath && segments.length > 2) {
+      return segments[2];
+    }
+    if (segments[0] === blogPath && segments.length > 1) {
+      return segments[1];
+    }
+  }
+  
+  return null;
+};
+
+// Get localized blog post URL
+export const getLocalizedBlogPostUrl = (slug: string, language: SupportedLanguage): string => {
+  const blogPath = urlPaths.blog[language];
+  return blogPath ? `/${blogPath}/${slug}` : `/blog/${slug}`;
+};
+
 // Handle special cases like blog posts and other dynamic routes
 export const getLocalizedUrl = (currentUrl: string, currentLanguage: SupportedLanguage, newLanguage: SupportedLanguage): string => {
   // Extract the pathname
@@ -79,14 +114,23 @@ export const getLocalizedUrl = (currentUrl: string, currentLanguage: SupportedLa
   // First try to match to a known route
   const pageKey = getPageKeyFromUrl(pathname);
   if (pageKey) {
+    // Special handling for blog posts
+    if (pageKey === 'blog') {
+      const slug = extractBlogSlugFromUrl(pathname);
+      if (slug) {
+        return getLocalizedBlogPostUrl(slug, newLanguage);
+      }
+    }
     return getLocalizedPath(pageKey, newLanguage);
   }
   
   // Handle blog posts - we keep the slug but change the base path
-  if (pathname.startsWith('/blog/')) {
-    const slug = pathname.substring('/blog/'.length);
-    const blogPath = urlPaths.blog[newLanguage];
-    return `/${blogPath}/${slug}`;
+  for (const [lang, blogPath] of Object.entries(urlPaths.blog)) {
+    const prefix = blogPath ? `/${blogPath}/` : '/blog/';
+    if (pathname.startsWith(prefix)) {
+      const slug = pathname.substring(prefix.length);
+      return getLocalizedBlogPostUrl(slug, newLanguage);
+    }
   }
   
   // Default fallback - return home
