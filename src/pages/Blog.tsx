@@ -9,6 +9,16 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getLocalizedBlogPostUrl } from "@/utils/urlUtils";
 import { useTranslation } from "react-i18next";
 import { SupportedLanguage } from "@/utils/languageUtils";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { Filter, ChevronDown } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Slider } from "@/components/ui/slider";
 
 // Enhanced blog data structure with language support
 const blogPosts = [
@@ -151,78 +161,184 @@ const Blog = () => {
   return (
     <Layout>
       <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-6 text-center">{t('blog.title')}</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-8 text-center">{t('blog.title')}</h1>
         
         <div className="max-w-6xl mx-auto">
-          {/* Language Filter */}
-          <div className="mb-6 flex flex-wrap justify-center gap-2">
-            <Button
-              variant={languageFilter === "all" ? "default" : "outline"}
-              className={languageFilter === "all" 
-                ? "bg-[#C9A13B] hover:bg-[#C9A13B]/80" 
-                : "border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/20"}
-              onClick={() => {
-                setLanguageFilter("all");
-                setCurrentPage(1);
-              }}
-            >
-              {t('blog.allLanguages')}
-            </Button>
-            <Button
-              variant={languageFilter === "EN" ? "default" : "outline"}
-              className={languageFilter === "EN" 
-                ? "bg-[#C9A13B] hover:bg-[#C9A13B]/80" 
-                : "border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/20"}
-              onClick={() => {
-                setLanguageFilter("EN");
-                setCurrentPage(1);
-              }}
-            >
-              English
-            </Button>
-            <Button
-              variant={languageFilter === "LT" ? "default" : "outline"}
-              className={languageFilter === "LT" 
-                ? "bg-[#C9A13B] hover:bg-[#C9A13B]/80" 
-                : "border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/20"}
-              onClick={() => {
-                setLanguageFilter("LT");
-                setCurrentPage(1);
-              }}
-            >
-              Lietuvių
-            </Button>
-            <Button
-              variant={languageFilter === "PL" ? "default" : "outline"}
-              className={languageFilter === "PL" 
-                ? "bg-[#C9A13B] hover:bg-[#C9A13B]/80" 
-                : "border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/20"}
-              onClick={() => {
-                setLanguageFilter("PL");
-                setCurrentPage(1);
-              }}
-            >
-              Polski
-            </Button>
-          </div>
-          
-          {/* Category Filter */}
-          <div className="mb-10 flex flex-wrap justify-center gap-2">
-            {categories.map(category => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                className={selectedCategory === category 
-                  ? "bg-[#8B1E3F] hover:bg-[#8B1E3F]/80" 
-                  : "border-[#C9A13B] text-[#8B1E3F] hover:bg-[#C9A13B]/20"}
-                onClick={() => {
-                  setSelectedCategory(category);
-                  setCurrentPage(1);
+          {/* Redesigned Filters Section */}
+          <div className="mb-10 bg-white rounded-lg shadow-sm border border-gray-100 p-4 md:p-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+              <h2 className="text-lg font-medium text-gray-800 flex items-center gap-2">
+                <Filter size={18} className="text-[#8B1E3F]" /> 
+                {t('blog.filters')}
+              </h2>
+              
+              {/* Mobile: Filters in Dropdown */}
+              <div className="md:hidden w-full">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full border-[#C9A13B] text-[#8B1E3F] justify-between">
+                      {t('blog.filters')}
+                      <ChevronDown className="h-4 w-4 opacity-50" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-full min-w-[200px]">
+                    <div className="px-2 py-1.5 text-sm font-medium text-gray-500">
+                      {t('blog.language')}
+                    </div>
+                    <DropdownMenuItem 
+                      className={languageFilter === "all" ? "bg-[#C9A13B]/10" : ""}
+                      onClick={() => setLanguageFilter("all")}
+                    >
+                      {t('blog.allLanguages')}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className={languageFilter === "EN" ? "bg-[#C9A13B]/10" : ""}
+                      onClick={() => setLanguageFilter("EN")}
+                    >
+                      English
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className={languageFilter === "LT" ? "bg-[#C9A13B]/10" : ""}
+                      onClick={() => setLanguageFilter("LT")}
+                    >
+                      Lietuvių
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className={languageFilter === "PL" ? "bg-[#C9A13B]/10" : ""}
+                      onClick={() => setLanguageFilter("PL")}
+                    >
+                      Polski
+                    </DropdownMenuItem>
+                    
+                    <div className="px-2 py-1.5 text-sm font-medium text-gray-500 mt-2">
+                      {t('blog.category')}
+                    </div>
+                    {categories.map(category => (
+                      <DropdownMenuItem 
+                        key={category}
+                        className={selectedCategory === category ? "bg-[#8B1E3F]/10" : ""}
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setCurrentPage(1);
+                        }}
+                      >
+                        {t(`blog.categories.${category.toLowerCase()}`)}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              
+              {/* Desktop: Language Filter in Popover */}
+              <div className="hidden md:flex items-center gap-3">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button 
+                      variant="outline" 
+                      className="border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center"
+                    >
+                      {languageFilter === "all" 
+                        ? t('blog.allLanguages') 
+                        : languageFilter === "EN" 
+                          ? "English" 
+                          : languageFilter === "LT" 
+                            ? "Lietuvių" 
+                            : "Polski"}
+                      <ChevronDown className="h-4 w-4 opacity-70" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="p-0 w-48">
+                    <div className="px-2 py-1.5 text-sm font-medium text-gray-500 border-b">
+                      {t('blog.language')}
+                    </div>
+                    <div className="p-2">
+                      <div className="grid grid-cols-1 gap-1">
+                        <Button 
+                          variant={languageFilter === "all" ? "default" : "ghost"}
+                          className={languageFilter === "all" ? "bg-[#C9A13B] justify-start" : "justify-start"}
+                          onClick={() => {
+                            setLanguageFilter("all");
+                            setCurrentPage(1);
+                          }}
+                        >
+                          {t('blog.allLanguages')}
+                        </Button>
+                        <Button 
+                          variant={languageFilter === "EN" ? "default" : "ghost"}
+                          className={languageFilter === "EN" ? "bg-[#C9A13B] justify-start" : "justify-start"}
+                          onClick={() => {
+                            setLanguageFilter("EN");
+                            setCurrentPage(1);
+                          }}
+                        >
+                          English
+                        </Button>
+                        <Button 
+                          variant={languageFilter === "LT" ? "default" : "ghost"}
+                          className={languageFilter === "LT" ? "bg-[#C9A13B] justify-start" : "justify-start"}
+                          onClick={() => {
+                            setLanguageFilter("LT");
+                            setCurrentPage(1);
+                          }}
+                        >
+                          Lietuvių
+                        </Button>
+                        <Button 
+                          variant={languageFilter === "PL" ? "default" : "ghost"}
+                          className={languageFilter === "PL" ? "bg-[#C9A13B] justify-start" : "justify-start"}
+                          onClick={() => {
+                            setLanguageFilter("PL");
+                            setCurrentPage(1);
+                          }}
+                        >
+                          Polski
+                        </Button>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
+            
+            {/* Desktop: Category Filter as Toggle Group */}
+            <div className="hidden md:block">
+              <div className="px-1 py-1 mb-2 text-sm font-medium text-gray-600">
+                {t('blog.category')}
+              </div>
+              <ToggleGroup 
+                type="single" 
+                variant="outline"
+                value={selectedCategory}
+                onValueChange={(value) => {
+                  if (value) {
+                    setSelectedCategory(value);
+                    setCurrentPage(1);
+                  }
                 }}
+                className="justify-start flex-wrap"
               >
-                {t(`blog.categories.${category.toLowerCase()}`)}
-              </Button>
-            ))}
+                {categories.map((category) => (
+                  <ToggleGroupItem 
+                    key={category} 
+                    value={category}
+                    className={`
+                      border-[#C9A13B] text-gray-700 
+                      data-[state=on]:text-white 
+                      data-[state=on]:bg-[#8B1E3F]
+                      data-[state=on]:border-[#8B1E3F]
+                      hover:text-[#8B1E3F]
+                    `}
+                  >
+                    {t(`blog.categories.${category.toLowerCase()}`)}
+                  </ToggleGroupItem>
+                ))}
+              </ToggleGroup>
+            </div>
+            
+            {/* Results count */}
+            <div className="mt-4 pt-3 border-t border-gray-100 text-sm text-gray-500">
+              {filteredPosts.length} {t('blog.resultsFound')}
+            </div>
           </div>
           
           {/* Blog Posts Grid */}

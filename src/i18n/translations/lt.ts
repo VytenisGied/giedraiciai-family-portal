@@ -1,4 +1,3 @@
-
 export const ltTranslations = {
   // Navigation translations
   nav: {
@@ -94,14 +93,14 @@ export const ltTranslations = {
   blog: {
     title: "Tinklaraštis",
     readMore: "Skaityti daugiau",
-    allLanguages: "Visos kalbos",
-    noPostsFound: "Šioje kategorijoje įrašų nerasta.",
     previous: "Ankstesnis",
     next: "Kitas",
-    annual: "Metinis Giedraičių susitikimas",
-    documents: "Atrastas naujas istorinis dokumentų rinkinys",
-    "annual.description": "Informacija apie ateinantį metinį Giedraičių giminės susitikimą Vilniuje.",
-    "documents.description": "Naujai atrastas XVI amžiaus dokumentų rinkinys, susijęs su Giedraičių gimine.",
+    filters: "Filtrai",
+    language: "Kalba",
+    category: "Kategorija",
+    allLanguages: "Visos kalbos",
+    resultsFound: "rezultatai rasti",
+    noPostsFound: "Nerasta įrašų, atitinkančių jūsų filtrus",
     categories: {
       all: "Visi",
       history: "Istorija",
@@ -220,7 +219,7 @@ export const ltTranslations = {
     militaryDescription1: "Komisijos, apdovanojimai ir karinės tarnybos įrašai, susiję su Giedraičių šeimos nariais.",
     militaryDescription2: "Dokumentai, atspindintys šeimos karinį paveldą nuo viduramžių iki XX amžiaus.",
     genealogy: "Genealoginiai dokumentai",
-    genealogyDescription1: "Šeimos medžiai, genealoginės schemos ir kilmės įrašai.",
+    genealogyDescription1: "Šeimos medžio kūrimas ir plėtimas, naudojant istorinius šaltinius ir DNR technologijas.",
     genealogyDescription2: "Šie dokumentai buvo kruopščiai kaupiami ir saugomi, siekiant išsaugoti giminės tęstinumą.",
     correspondence: "Korespondencija",
     correspondenceDescription1: "Asmeniniai laiškai, užrašai ir dienoraščiai Giedraičių šeimos narių.",

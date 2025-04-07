@@ -1,4 +1,3 @@
-
 export const enTranslations = {
   // Navigation translations
   nav: {
@@ -94,14 +93,14 @@ export const enTranslations = {
   blog: {
     title: "Blog",
     readMore: "Read More",
-    allLanguages: "All Languages",
-    noPostsFound: "No posts found in this category.",
     previous: "Previous",
     next: "Next",
-    annual: "Annual Giedraičiai Gathering",
-    documents: "New Historical Document Collection Discovered",
-    "annual.description": "Information about the upcoming annual gathering of the Giedraičiai family in Vilnius.",
-    "documents.description": "A newly discovered collection of 16th century documents related to the Giedraičiai family.",
+    filters: "Filters",
+    language: "Language",
+    category: "Category",
+    allLanguages: "All Languages",
+    resultsFound: "results found",
+    noPostsFound: "No posts found matching your filters",
     categories: {
       all: "All",
       history: "History",

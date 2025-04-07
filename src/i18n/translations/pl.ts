@@ -1,4 +1,3 @@
-
 export const plTranslations = {
   // Navigation translations
   nav: {
@@ -94,14 +93,14 @@ export const plTranslations = {
   blog: {
     title: "Blog",
     readMore: "Czytaj więcej",
-    allLanguages: "Wszystkie języki",
-    noPostsFound: "Nie znaleziono wpisów w tej kategorii.",
     previous: "Poprzedni",
     next: "Następny",
-    annual: "Coroczne spotkanie rodziny Giedroyciów",
-    documents: "Odkryto nową kolekcję dokumentów historycznych",
-    "annual.description": "Informacje o nadchodzącym corocznym spotkaniu rodziny Giedroyciów w Wilnie.",
-    "documents.description": "Nowo odkryta kolekcja dokumentów z XVI wieku związanych z rodziną Giedroyciów.",
+    filters: "Filtry",
+    language: "Język",
+    category: "Kategoria",
+    allLanguages: "Wszystkie języki",
+    resultsFound: "znaleziono wyników",
+    noPostsFound: "Nie znaleziono postów pasujących do filtrów",
     categories: {
       all: "Wszystkie",
       history: "Historia",
