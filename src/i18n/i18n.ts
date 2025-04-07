@@ -13,11 +13,13 @@ i18n
     interpolation: {
       escapeValue: false // react already safes from xss
     },
-    // Add these options to help with debugging
     debug: process.env.NODE_ENV === 'development',
     react: {
       useSuspense: false // Set to false to avoid issues with Suspense
-    }
+    },
+    // Add this to ensure keys are found
+    keySeparator: ".",
+    nsSeparator: ":",
   });
 
 export default i18n;

@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import './i18n/i18n'; // Import i18n initialization FIRST before any components
 import App from './App.tsx';
 import './index.css';
-import './i18n/i18n'; // Import i18n initialization first
 
 const root = document.getElementById("root");
 

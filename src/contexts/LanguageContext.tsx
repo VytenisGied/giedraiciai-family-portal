@@ -12,17 +12,21 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<"EN" | "LT" | "PL">("EN");
+  const { t } = useTranslation();
   
   // Update i18n language when language state changes
   useEffect(() => {
     const languageCode = language.toLowerCase();
     console.log(`Changing language to: ${languageCode}`);
-    i18n.changeLanguage(languageCode).then(() => {
-      console.log(`Language changed successfully to: ${i18n.language}`);
-    }).catch(error => {
+    
+    try {
+      i18n.changeLanguage(languageCode);
+      console.log(`Language changed to: ${i18n.language}`);
+      console.log(`Translation test - hero.title: ${t('hero.title')}`);
+    } catch (error) {
       console.error("Error changing language:", error);
-    });
-  }, [language]);
+    }
+  }, [language, t]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
