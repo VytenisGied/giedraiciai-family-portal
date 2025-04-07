@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Layout from './components/Layout';
-import Home from './pages/Home';
+import Home from './pages/Index';
 import History from './pages/History';
 import CoatOfArms from './pages/official/CoatOfArms';
 import Documents from './pages/official/Documents';

@@ -25,34 +25,34 @@ const pathMap: Record<PageKey, Record<SupportedLanguage, string>> = {
     PL: "historia"
   },
   coatOfArms: {
-    EN: "official/coat-of-arms",
-    LT: "oficialus/herbas",
-    PL: "oficjalne/herb"
+    EN: "coat-of-arms",
+    LT: "herbas",
+    PL: "herb"
   },
   documents: {
-    EN: "official/documents",
-    LT: "oficialus/dokumentai",
-    PL: "oficjalne/dokumenty"
+    EN: "documents",
+    LT: "dokumentai",
+    PL: "dokumenty"
   },
   about: {
-    EN: "association/about",
-    LT: "asociacija/apie",
-    PL: "stowarzyszenie/o-nas"
+    EN: "about",
+    LT: "apie",
+    PL: "o-nas"
   },
   membership: {
-    EN: "association/membership",
-    LT: "asociacija/naryste",
-    PL: "stowarzyszenie/czlonkostwo"
+    EN: "membership",
+    LT: "narystė",
+    PL: "członkostwo"
   },
   submitGenealogy: {
-    EN: "association/submit-genealogy",
-    LT: "asociacija/pateikti-genealogija",
-    PL: "stowarzyszenie/przeslij-genealogie" 
+    EN: "submit-genealogy",
+    LT: "pateikti-genealogija",
+    PL: "przesłać-genealogię" 
   },
   portal: {
-    en: "portal",
-    lt: "portalas",
-    pl: "portal"
+    EN: "portal",
+    LT: "portalas",
+    PL: "portal"
   },
   blog: {
     EN: "blog",

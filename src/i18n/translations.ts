@@ -1,11 +1,11 @@
 
-import { enTranslations } from './translations/en';
+import { en } from './translations/en';
 import { ltTranslations } from './translations/lt';
 import { plTranslations } from './translations/pl';
 
 export const resources = {
   en: {
-    translation: enTranslations
+    translation: en
   },
   lt: {
     translation: ltTranslations
