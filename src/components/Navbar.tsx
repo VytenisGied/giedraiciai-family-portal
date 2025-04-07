@@ -3,14 +3,11 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { DropdownOption } from "@/components/ui/dropdown";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useTranslation } from "react-i18next";
-import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 import { NavDesktop } from "./navigation/NavDesktop";
 import { NavMobile } from "./navigation/NavMobile";
 import { LanguageSelector } from "./navigation/LanguageSelector";
-import { useNavigation, NavItem } from "@/data/navigation";
+import { useNavigation } from "@/data/navigation";
 
 const Navbar = () => {
   const location = useLocation();
@@ -19,23 +16,6 @@ const Navbar = () => {
   const { navItems } = useNavigation();
   
   const isPathActive = (paths: string[]) => paths.some(path => location.pathname.includes(path));
-  
-  // Convert navigation items to dropdown options
-  const convertToDropdownOptions = (items?: (NavItem & { label: string })[]) => {
-    if (!items) return [];
-    
-    return items.map(item => ({
-      label: item.label,
-      value: item.key,
-      href: item.path
-    })) as DropdownOption[];
-  };
-  
-  const officialDropdown = navItems.find(item => item.key === "official");
-  const associationDropdown = navItems.find(item => item.key === "association");
-  
-  const officialOptions = convertToDropdownOptions(officialDropdown?.children);
-  const associationOptions = convertToDropdownOptions(associationDropdown?.children);
   
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gold/20 shadow-sm">
@@ -55,8 +35,6 @@ const Navbar = () => {
           {!isMobile && (
             <NavDesktop 
               navItems={navItems}
-              officialOptions={officialOptions}
-              associationOptions={associationOptions}
               isPathActive={isPathActive}
             />
           )}

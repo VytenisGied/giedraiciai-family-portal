@@ -12,7 +12,10 @@ import { MobileNavLink } from "./NavLink";
 import { NavItem } from "@/data/navigation";
 
 interface NavMobileProps {
-  navItems: (NavItem & { label: string, children?: (NavItem & { label: string })[] })[];
+  navItems: (NavItem & { 
+    label: string, 
+    dropdown?: (NavItem['dropdown'] & { label: string })[],
+  })[];
   language: SupportedLanguage;
   setLanguage: (language: SupportedLanguage) => void;
 }
@@ -36,25 +39,25 @@ export const NavMobile: React.FC<NavMobileProps> = ({
       <SheetContent side="right" className="w-[280px] border-l border-gold/20">
         <nav className="flex flex-col gap-5 mt-8">
           {navItems.map(item => {
-            // If item has children, render them as a group
-            if (item.children && item.children.length > 0) {
+            // If item has dropdown items, render them as a group
+            if (item.dropdown && item.dropdown.length > 0) {
               return (
-                <div key={item.key} className="space-y-3">
+                <div key={item.name} className="space-y-3">
                   <p className="font-medium text-base px-2 text-deep-red">{item.label}</p>
                   <div className="ml-3 flex flex-col gap-2">
-                    {item.children.map(child => (
+                    {item.dropdown.map(dropdownItem => (
                       <Link 
-                        key={child.key}
-                        to={child.path || "/"}
+                        key={dropdownItem.name}
+                        to={dropdownItem.path || "/"}
                         className={cn(
                           "px-2 py-1 text-sm rounded-md relative group overflow-hidden transition-colors duration-300",
-                          isActive(child.path) ? "text-deep-red" : "text-dark-text hover:text-deep-red"
+                          isActive(dropdownItem.path) ? "text-deep-red" : "text-dark-text hover:text-deep-red"
                         )}
                       >
-                        {child.label}
+                        {dropdownItem.label}
                         <span className={cn(
                           "absolute bottom-0 left-0 right-0 mx-auto h-[1px] bg-gold transition-all duration-300",
-                          isActive(child.path) ? "w-full" : "w-0 group-hover:w-full origin-center"
+                          isActive(dropdownItem.path) ? "w-full" : "w-0 group-hover:w-full origin-center"
                         )} />
                       </Link>
                     ))}
@@ -66,7 +69,7 @@ export const NavMobile: React.FC<NavMobileProps> = ({
             // Render regular nav links
             return (
               <MobileNavLink
-                key={item.key}
+                key={item.name}
                 to={item.path || "/"}
                 isActive={isActive(item.path)}
               >

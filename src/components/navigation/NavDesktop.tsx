@@ -6,16 +6,15 @@ import { NavLink } from "./NavLink";
 import { NavItem } from "@/data/navigation";
 
 interface NavDesktopProps {
-  navItems: (NavItem & { label: string, children?: (NavItem & { label: string })[] })[];
-  officialOptions: DropdownOption[];
-  associationOptions: DropdownOption[];
+  navItems: (NavItem & { 
+    label: string, 
+    dropdown?: (NavItem['dropdown'] & { label: string })[],
+  })[];
   isPathActive: (paths: string[]) => boolean;
 }
 
 export const NavDesktop: React.FC<NavDesktopProps> = ({ 
   navItems,
-  officialOptions, 
-  associationOptions,
   isPathActive
 }) => {
   const location = useLocation();
@@ -25,37 +24,38 @@ export const NavDesktop: React.FC<NavDesktopProps> = ({
   return (
     <nav className="flex items-center gap-2">
       {navItems.map(item => {
-        // Skip items with children as they'll be rendered as dropdowns
-        if (item.children && item.children.length > 0) {
-          if (item.key === "official") {
-            return (
-              <NavDropdown
-                key={item.key}
-                label={item.label}
-                options={officialOptions}
-                isActive={isPathActive(["/official", "/oficialus", "/oficjalne"])}
-                className="nav-dropdown-enhanced"
-              />
+        // Items with dropdown
+        if (item.dropdown && item.dropdown.length > 0) {
+          const dropdownOptions: DropdownOption[] = item.dropdown.map(dropItem => ({
+            label: dropItem.label,
+            value: dropItem.name,
+            href: dropItem.path
+          }));
+          
+          // Path base detection for active state
+          const basePaths = item.dropdown.map(d => {
+            const path = d.path || '';
+            // Extract base path for each language
+            return ['/', '/oficialus/', '/oficjalne/'].map(prefix => 
+              prefix + path.split('/').filter(p => p).join('/')
             );
-          }
-          if (item.key === "association") {
-            return (
-              <NavDropdown
-                key={item.key}
-                label={item.label}
-                options={associationOptions}
-                isActive={isPathActive(["/association", "/asociacija", "/stowarzyszenie"])}
-                className="nav-dropdown-enhanced"
-              />
-            );
-          }
-          return null;
+          }).flat();
+          
+          return (
+            <NavDropdown
+              key={item.name}
+              label={item.label}
+              options={dropdownOptions}
+              isActive={isPathActive(basePaths)}
+              className="nav-dropdown-enhanced"
+            />
+          );
         }
         
-        // Render regular nav links
+        // Regular nav links
         return (
           <NavLink 
-            key={item.key}
+            key={item.name}
             to={item.path || "/"}
             isActive={isActive(item.path)}
           >

@@ -2,11 +2,17 @@
 import { useTranslation } from "react-i18next";
 import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
+export interface NavItemDropdown {
+  name: string;
+  caption: string;
+  path: string;
+}
+
 export interface NavItem {
-  key: string;
-  translationKey: string;
+  name: string;
+  caption: string;
   path?: string;
-  children?: NavItem[];
+  dropdown?: NavItemDropdown[];
 }
 
 export const useNavigation = () => {
@@ -15,55 +21,55 @@ export const useNavigation = () => {
 
   const navStructure: NavItem[] = [
     {
-      key: "home",
-      translationKey: "nav.home",
+      name: "Home",
+      caption: "nav.home",
       path: localizedPath("home")
     },
     {
-      key: "history",
-      translationKey: "nav.history",
+      name: "History",
+      caption: "nav.history",
       path: localizedPath("history")
     },
     {
-      key: "official",
-      translationKey: "nav.official.title",
-      children: [
+      name: "Official",
+      caption: "nav.official.title",
+      dropdown: [
         {
-          key: "coatOfArms",
-          translationKey: "nav.official.coatOfArms",
+          name: "Coat of Arms",
+          caption: "nav.official.coatOfArms",
           path: localizedPath("coatOfArms")
         },
         {
-          key: "documents",
-          translationKey: "nav.official.documents",
+          name: "Documents",
+          caption: "nav.official.documents",
           path: localizedPath("documents")
         }
       ]
     },
     {
-      key: "association",
-      translationKey: "nav.association.title",
-      children: [
+      name: "Association",
+      caption: "nav.association.title",
+      dropdown: [
         {
-          key: "about",
-          translationKey: "nav.association.about",
+          name: "About",
+          caption: "nav.association.about",
           path: localizedPath("about")
         },
         {
-          key: "membership",
-          translationKey: "nav.association.membership",
+          name: "Membership",
+          caption: "nav.association.membership",
           path: localizedPath("membership")
         },
         {
-          key: "submitGenealogy",
-          translationKey: "nav.association.submitGenealogy",
+          name: "Submit Genealogy",
+          caption: "nav.association.submitGenealogy",
           path: localizedPath("submitGenealogy")
         }
       ]
     },
     {
-      key: "blog",
-      translationKey: "nav.blog",
+      name: "Blog",
+      caption: "nav.blog",
       path: localizedPath("blog")
     }
   ];
@@ -72,10 +78,10 @@ export const useNavigation = () => {
   const getTranslatedNav = () => {
     return navStructure.map(item => ({
       ...item,
-      label: t(item.translationKey),
-      children: item.children?.map(child => ({
-        ...child,
-        label: t(child.translationKey)
+      label: t(item.caption),
+      dropdown: item.dropdown?.map(dropdownItem => ({
+        ...dropdownItem,
+        label: t(dropdownItem.caption)
       }))
     }));
   };
