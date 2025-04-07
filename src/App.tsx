@@ -6,7 +6,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
-import { AuthProvider } from "./hooks/useAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -18,12 +17,6 @@ import Membership from "./pages/association/Membership";
 import SubmitGenealogy from "./pages/association/SubmitGenealogy";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
-
-// Portal Routes
-import Login from "./pages/portal/Login";
-import Dashboard from "./pages/portal/Dashboard";
-import PortalDocuments from "./pages/portal/Documents";
-import Members from "./pages/portal/Members";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -68,12 +61,6 @@ const AppRoutes = () => (
     <Route path="/blog" element={<Blog />} />
     <Route path="/blog/:slug" element={<BlogPost />} />
     
-    {/* Portal Routes (Not translated - admin area) */}
-    <Route path="/portal/login" element={<Login />} />
-    <Route path="/portal/dashboard" element={<Dashboard />} />
-    <Route path="/portal/documents" element={<PortalDocuments />} />
-    <Route path="/portal/members" element={<Members />} />
-    
     {/* 404 Route */}
     <Route path="*" element={<NotFound />} />
   </Routes>
@@ -82,16 +69,14 @@ const AppRoutes = () => (
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <AuthProvider>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <ScrollToTop />
-            <AppRoutes />
-          </TooltipProvider>
-        </LanguageProvider>
-      </AuthProvider>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <ScrollToTop />
+          <AppRoutes />
+        </TooltipProvider>
+      </LanguageProvider>
     </BrowserRouter>
   </QueryClientProvider>
 );

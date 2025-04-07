@@ -22,7 +22,6 @@ import { Filter, ChevronDown, Check, Search, X } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 const blogPosts = [
   {
@@ -146,7 +145,6 @@ const Blog = () => {
   const postsPerPage = 4;
   const { language } = useLanguage();
   const { t } = useTranslation();
-  const getLocalizedPath = useLocalizedPath();
   
   const filteredPosts = blogPosts
     .filter(post => {

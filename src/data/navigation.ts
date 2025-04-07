@@ -23,18 +23,18 @@ export interface TranslatedNavItem extends NavItem {
 
 export const useNavigation = () => {
   const { t } = useTranslation();
-  const getLocalizedPath = useLocalizedPath();
+  const localizedPath = useLocalizedPath();
 
   const navStructure: NavItem[] = [
     {
       name: "Home",
       caption: "nav.home",
-      path: getLocalizedPath("home")
+      path: localizedPath("home")
     },
     {
       name: "History",
       caption: "nav.history",
-      path: getLocalizedPath("history")
+      path: localizedPath("history")
     },
     {
       name: "Official",
@@ -43,12 +43,12 @@ export const useNavigation = () => {
         {
           name: "Coat of Arms",
           caption: "nav.official.coatOfArms",
-          path: getLocalizedPath("coatOfArms")
+          path: localizedPath("coatOfArms")
         },
         {
           name: "Documents",
           caption: "nav.official.documents",
-          path: getLocalizedPath("documents")
+          path: localizedPath("documents")
         }
       ]
     },
@@ -59,24 +59,24 @@ export const useNavigation = () => {
         {
           name: "About",
           caption: "nav.association.about",
-          path: getLocalizedPath("about")
+          path: localizedPath("about")
         },
         {
           name: "Membership",
           caption: "nav.association.membership",
-          path: getLocalizedPath("membership")
+          path: localizedPath("membership")
         },
         {
           name: "Submit Genealogy",
           caption: "nav.association.submitGenealogy",
-          path: getLocalizedPath("submitGenealogy")
+          path: localizedPath("submitGenealogy")
         }
       ]
     },
     {
       name: "Blog",
       caption: "nav.blog",
-      path: getLocalizedPath("blog")
+      path: localizedPath("blog")
     }
   ];
 
