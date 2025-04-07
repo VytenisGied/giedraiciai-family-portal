@@ -70,6 +70,11 @@ export const useNavigation = () => {
           name: "Submit Genealogy",
           caption: "nav.association.submitGenealogy",
           path: localizedPath("submitGenealogy")
+        },
+        {
+          name: "Portal",
+          caption: "nav.association.portal",
+          path: "#"
         }
       ]
     },
