@@ -1,10 +1,19 @@
 import { SupportedLanguage, getLowercaseCode } from "./languageUtils";
 
 // URL paths mapped by page and language code
-export type PageKey = 'home' | 'history' | 'coatOfArms' | 'documents' | 'about' | 'membership' | 'submitGenealogy' | 'blog';
+export type PageKey = 
+  | "home" 
+  | "history" 
+  | "coatOfArms" 
+  | "documents" 
+  | "about" 
+  | "membership" 
+  | "submitGenealogy"
+  | "portal"
+  | "blog";
 
-// Define URL paths for each language
-export const urlPaths: Record<PageKey, Record<SupportedLanguage, string>> = {
+// Map page keys to their respective paths for each language
+const pathMap: Record<PageKey, Record<SupportedLanguage, string>> = {
   home: {
     EN: "",
     LT: "",
@@ -40,6 +49,11 @@ export const urlPaths: Record<PageKey, Record<SupportedLanguage, string>> = {
     LT: "asociacija/pateikti-genealogija",
     PL: "stowarzyszenie/przeslij-genealogie" 
   },
+  portal: {
+    en: "portal",
+    lt: "portalas",
+    pl: "portal"
+  },
   blog: {
     EN: "blog",
     LT: "tinklarastis",
@@ -56,7 +70,7 @@ export const getPageKeyFromUrl = (pathname: string): PageKey | null => {
   const segments = path.split('/');
   if (segments.length > 1) {
     // Check if the first segment is a blog path in any language
-    for (const [lang, blogPath] of Object.entries(urlPaths.blog)) {
+    for (const [lang, blogPath] of Object.entries(pathMap.blog)) {
       if (segments[0] === blogPath) {
         return 'blog';
       }
@@ -64,7 +78,7 @@ export const getPageKeyFromUrl = (pathname: string): PageKey | null => {
   }
   
   // Check each page and each language
-  for (const [pageKey, langPaths] of Object.entries(urlPaths)) {
+  for (const [pageKey, langPaths] of Object.entries(pathMap)) {
     for (const [_, urlPath] of Object.entries(langPaths)) {
       if (path === urlPath || `/${path}` === urlPath) {
         return pageKey as PageKey;
@@ -77,7 +91,7 @@ export const getPageKeyFromUrl = (pathname: string): PageKey | null => {
 
 // Get localized URL for a page based on language
 export const getLocalizedPath = (pageKey: PageKey, language: SupportedLanguage): string => {
-  const path = urlPaths[pageKey][language];
+  const path = pathMap[pageKey][language];
   return path ? `/${path}` : '/';
 };
 
@@ -87,7 +101,7 @@ export const extractBlogSlugFromUrl = (pathname: string): string | null => {
   if (segments.length < 2) return null;
   
   // Check if path starts with any of the blog paths
-  for (const [_, blogPath] of Object.entries(urlPaths.blog)) {
+  for (const [_, blogPath] of Object.entries(pathMap.blog)) {
     if (segments[1] === blogPath && segments.length > 2) {
       return segments[2];
     }
@@ -125,7 +139,7 @@ export const getLocalizedUrl = (currentUrl: string, currentLanguage: SupportedLa
   }
   
   // Handle blog posts - we keep the slug but change the base path
-  for (const [lang, blogPath] of Object.entries(urlPaths.blog)) {
+  for (const [lang, blogPath] of Object.entries(pathMap.blog)) {
     const prefix = blogPath ? `/${blogPath}/` : '/blog/';
     if (pathname.startsWith(prefix)) {
       const slug = pathname.substring(prefix.length);

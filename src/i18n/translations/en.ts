@@ -1,4 +1,4 @@
-export const enTranslations = {
+export const en = {
   // Navigation translations
   nav: {
     home: "Home",
@@ -237,7 +237,7 @@ export const enTranslations = {
     repository: "Creating a secure physical and digital repository",
     contactPreservation: "If you have historical documents related to the Giedraičiai family and would like to contribute to our preservation initiatives, please contact our archival team."
   },
-
+  
   // About page
   about: {
     title: "About the Giedraičiai Family Association",
@@ -412,5 +412,33 @@ export const enTranslations = {
     successMessage: "Your genealogical information has been successfully received and will be added to our research database.",
     confirmationEmail: "A confirmation email has been sent to:",
     submitAnother: "Submit Another Entry"
+  },
+  
+  // Portal translations
+  portal: {
+    title: "Member Portal",
+    description: "Access exclusive resources, connect with other members, and manage your genealogy data.",
+    memberLogin: "Member Login",
+    memberLoginDescription: "Sign in to access the portal",
+    email: "Email",
+    password: "Password",
+    login: "Sign In",
+    newMember: "New Member?",
+    registerDescription: "Register for a portal account",
+    registerBenefits: "As a member you'll get access to:",
+    benefit1: "Exclusive genealogy resources and documents",
+    benefit2: "Direct communication with other family members",
+    benefit3: "Personalized family tree and connection tools",
+    register: "Register Now",
+    loginNotAvailable: "Login not available",
+    registrationNotAvailable: "Registration not available",
+    comingSoon: "This feature is coming soon. Thank you for your patience.",
+    features: "Portal Features",
+    feature1Title: "Genealogy Database",
+    feature1Description: "Search and explore your family connections with our comprehensive database.",
+    feature2Title: "Document Archive",
+    feature2Description: "Access historical documents, photos, and records related to your family history.",
+    feature3Title: "Member Community",
+    feature3Description: "Connect with other family members and share stories and research.",
   }
 };

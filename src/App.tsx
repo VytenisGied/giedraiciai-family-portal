@@ -1,90 +1,75 @@
-
-import React from "react";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './contexts/LanguageContext';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import History from './pages/History';
+import CoatOfArms from './pages/official/CoatOfArms';
+import Documents from './pages/official/Documents';
+import About from './pages/association/About';
+import Membership from './pages/association/Membership';
+import SubmitGenealogy from './pages/association/SubmitGenealogy';
+import Portal from './pages/association/Portal';
+import Blog from './pages/Blog';
+import NotFound from './pages/NotFound';
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { LanguageProvider } from "./contexts/LanguageContext";
-import ScrollToTop from "./components/ScrollToTop";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import History from "./pages/History";
-import CoatOfArms from "./pages/official/CoatOfArms";
-import Documents from "./pages/official/Documents";
-import About from "./pages/association/About";
-import Membership from "./pages/association/Membership";
-import SubmitGenealogy from "./pages/association/SubmitGenealogy";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import Layout from "./components/Layout";
 
-// Create a client
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      retry: 1,
-    },
-  },
-});
-
-// Create a wrapper component that includes the Layout
-const LayoutWrapper = ({ children }: { children: React.ReactNode }) => (
-  <Layout>{children}</Layout>
-);
-
-const AppRoutes = () => (
-  <Routes>
-    {/* English Routes */}
-    <Route path="/" element={<LayoutWrapper><Index /></LayoutWrapper>} />
-    <Route path="/history" element={<LayoutWrapper><History /></LayoutWrapper>} />
-    <Route path="/official/coat-of-arms" element={<LayoutWrapper><CoatOfArms /></LayoutWrapper>} />
-    <Route path="/official/documents" element={<LayoutWrapper><Documents /></LayoutWrapper>} />
-    <Route path="/association/about" element={<LayoutWrapper><About /></LayoutWrapper>} />
-    <Route path="/association/membership" element={<LayoutWrapper><Membership /></LayoutWrapper>} />
-    <Route path="/association/submit-genealogy" element={<LayoutWrapper><SubmitGenealogy /></LayoutWrapper>} />
-    <Route path="/blog" element={<LayoutWrapper><Blog /></LayoutWrapper>} />
-    <Route path="/blog/:slug" element={<LayoutWrapper><BlogPost /></LayoutWrapper>} />
-    
-    {/* Lithuanian Routes */}
-    <Route path="/istorija" element={<LayoutWrapper><History /></LayoutWrapper>} />
-    <Route path="/oficialus/herbas" element={<LayoutWrapper><CoatOfArms /></LayoutWrapper>} />
-    <Route path="/oficialus/dokumentai" element={<LayoutWrapper><Documents /></LayoutWrapper>} />
-    <Route path="/asociacija/apie" element={<LayoutWrapper><About /></LayoutWrapper>} />
-    <Route path="/asociacija/naryste" element={<LayoutWrapper><Membership /></LayoutWrapper>} />
-    <Route path="/asociacija/pateikti-genealogija" element={<LayoutWrapper><SubmitGenealogy /></LayoutWrapper>} />
-    <Route path="/tinklarastis" element={<LayoutWrapper><Blog /></LayoutWrapper>} />
-    <Route path="/tinklarastis/:slug" element={<LayoutWrapper><BlogPost /></LayoutWrapper>} />
-    
-    {/* Polish Routes */}
-    <Route path="/historia" element={<LayoutWrapper><History /></LayoutWrapper>} />
-    <Route path="/oficjalne/herb" element={<LayoutWrapper><CoatOfArms /></LayoutWrapper>} />
-    <Route path="/oficjalne/dokumenty" element={<LayoutWrapper><Documents /></LayoutWrapper>} />
-    <Route path="/stowarzyszenie/o-nas" element={<LayoutWrapper><About /></LayoutWrapper>} />
-    <Route path="/stowarzyszenie/czlonkostwo" element={<LayoutWrapper><Membership /></LayoutWrapper>} />
-    <Route path="/stowarzyszenie/przeslij-genealogie" element={<LayoutWrapper><SubmitGenealogy /></LayoutWrapper>} />
-    <Route path="/blog" element={<LayoutWrapper><Blog /></LayoutWrapper>} />
-    <Route path="/blog/:slug" element={<LayoutWrapper><BlogPost /></LayoutWrapper>} />
-    
-    {/* 404 Route */}
-    <Route path="*" element={<NotFound />} />
-  </Routes>
-);
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <ScrollToTop />
-          <AppRoutes />
-        </TooltipProvider>
-      </LanguageProvider>
-    </BrowserRouter>
-  </QueryClientProvider>
-);
+function App() {
+  return (
+    <LanguageProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout><Home /></Layout>} />
+          <Route path="/en" element={<Layout><Home /></Layout>} />
+          <Route path="/lt" element={<Layout><Home /></Layout>} />
+          <Route path="/pl" element={<Layout><Home /></Layout>} />
+          
+          <Route path="/history" element={<Layout><History /></Layout>} />
+          <Route path="/en/history" element={<Layout><History /></Layout>} />
+          <Route path="/lt/istorija" element={<Layout><History /></Layout>} />
+          <Route path="/pl/historia" element={<Layout><History /></Layout>} />
+          
+          <Route path="/coat-of-arms" element={<Layout><CoatOfArms /></Layout>} />
+          <Route path="/en/coat-of-arms" element={<Layout><CoatOfArms /></Layout>} />
+          <Route path="/lt/herbas" element={<Layout><CoatOfArms /></Layout>} />
+          <Route path="/pl/herb" element={<Layout><CoatOfArms /></Layout>} />
+          
+          <Route path="/documents" element={<Layout><Documents /></Layout>} />
+          <Route path="/en/documents" element={<Layout><Documents /></Layout>} />
+          <Route path="/lt/dokumentai" element={<Layout><Documents /></Layout>} />
+          <Route path="/pl/dokumenty" element={<Layout><Documents /></Layout>} />
+          
+          <Route path="/about" element={<Layout><About /></Layout>} />
+          <Route path="/en/about" element={<Layout><About /></Layout>} />
+          <Route path="/lt/apie" element={<Layout><About /></Layout>} />
+          <Route path="/pl/o-nas" element={<Layout><About /></Layout>} />
+          
+          <Route path="/membership" element={<Layout><Membership /></Layout>} />
+          <Route path="/en/membership" element={<Layout><Membership /></Layout>} />
+          <Route path="/lt/narystė" element={<Layout><Membership /></Layout>} />
+          <Route path="/pl/członkostwo" element={<Layout><Membership /></Layout>} />
+          
+          <Route path="/submit-genealogy" element={<Layout><SubmitGenealogy /></Layout>} />
+          <Route path="/en/submit-genealogy" element={<Layout><SubmitGenealogy /></Layout>} />
+          <Route path="/lt/pateikti-genealogija" element={<Layout><SubmitGenealogy /></Layout>} />
+          <Route path="/pl/przesłać-genealogię" element={<Layout><SubmitGenealogy /></Layout>} />
+          
+          <Route path="/portal" element={<Layout><Portal /></Layout>} />
+          <Route path="/en/portal" element={<Layout><Portal /></Layout>} />
+          <Route path="/lt/portalas" element={<Layout><Portal /></Layout>} />
+          <Route path="/pl/portal" element={<Layout><Portal /></Layout>} />
+          
+          <Route path="/blog" element={<Layout><Blog /></Layout>} />
+          <Route path="/en/blog" element={<Layout><Blog /></Layout>} />
+          <Route path="/lt/blogas" element={<Layout><Blog /></Layout>} />
+          <Route path="/pl/blog" element={<Layout><Blog /></Layout>} />
+          
+          <Route path="*" element={<Layout><NotFound /></Layout>} />
+        </Routes>
+        <Toaster />
+      </Router>
+    </LanguageProvider>
+  );
+}
 
 export default App;
