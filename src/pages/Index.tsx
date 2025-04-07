@@ -9,7 +9,7 @@ import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 const Index = () => {
   const { t } = useTranslation();
-  const localizedPath = useLocalizedPath();
+  const getLocalizedPath = useLocalizedPath();
   
   return (
     <Layout>
@@ -31,7 +31,7 @@ const Index = () => {
           <h2 className="text-3xl font-serif text-[#8B1E3F] mb-6 text-center">{t('home.legacy.title')}</h2>
           <p className="text-lg text-center mb-8">{t('home.legacy.description')}</p>
           <div className="text-center">
-            <Link to={localizedPath("history")}>
+            <Link to={getLocalizedPath("history")}>
               <Button className="bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">
                 {t('home.legacy.button')}
                 <ChevronRight className="ml-2 h-4 w-4" />
@@ -54,7 +54,7 @@ const Index = () => {
                 <p>{t('home.explore.history.description')}</p>
               </CardContent>
               <CardFooter className="pt-4">
-                <Link to={localizedPath("history")} className="w-full">
+                <Link to={getLocalizedPath("history")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.history.button')}</Button>
                 </Link>
               </CardFooter>
@@ -68,7 +68,7 @@ const Index = () => {
                 <p>{t('home.explore.coatOfArms.description')}</p>
               </CardContent>
               <CardFooter className="pt-4">
-                <Link to={localizedPath("coatOfArms")} className="w-full">
+                <Link to={getLocalizedPath("coatOfArms")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.coatOfArms.button')}</Button>
                 </Link>
               </CardFooter>
@@ -82,7 +82,7 @@ const Index = () => {
                 <p>{t('home.explore.join.description')}</p>
               </CardContent>
               <CardFooter className="pt-4">
-                <Link to={localizedPath("membership")} className="w-full">
+                <Link to={getLocalizedPath("membership")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.join.button')}</Button>
                 </Link>
               </CardFooter>
@@ -96,7 +96,7 @@ const Index = () => {
                 <p>{t('home.explore.genealogy.description')}</p>
               </CardContent>
               <CardFooter className="pt-4">
-                <Link to={localizedPath("submitGenealogy")} className="w-full">
+                <Link to={getLocalizedPath("submitGenealogy")} className="w-full">
                   <Button className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white">{t('home.explore.genealogy.button')}</Button>
                 </Link>
               </CardFooter>
@@ -120,7 +120,7 @@ const Index = () => {
                 <p>{t('blog.annual.description')}</p>
               </CardContent>
               <CardFooter className="pt-4">
-                <Link to={`${localizedPath("blog")}/annual-gathering`} className="w-full">
+                <Link to={`${getLocalizedPath("blog")}/annual-gathering`} className="w-full">
                   <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                     {t('home.latest.readMore')}
                   </Button>
@@ -138,7 +138,7 @@ const Index = () => {
                 <p>{t('blog.documents.description')}</p>
               </CardContent>
               <CardFooter className="pt-4">
-                <Link to={`${localizedPath("blog")}/historical-documents-discovery`} className="w-full">
+                <Link to={`${getLocalizedPath("blog")}/historical-documents-discovery`} className="w-full">
                   <Button variant="outline" className="w-full border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                     {t('home.latest.readMore')}
                   </Button>
@@ -148,7 +148,7 @@ const Index = () => {
           </div>
           
           <div className="mt-10 text-center">
-            <Link to={localizedPath("blog")}>
+            <Link to={getLocalizedPath("blog")}>
               <Button variant="outline" className="border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
                 {t('home.latest.viewAll')}
                 <ChevronRight className="ml-2 h-4 w-4" />

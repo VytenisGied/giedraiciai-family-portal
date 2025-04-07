@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -9,7 +8,7 @@ import {
   saveLanguage, 
   getLowercaseCode 
 } from "../utils/languageUtils";
-import { getLocalizedUrl, getPageKeyFromUrl } from "../utils/urlUtils";
+import { getLocalizedUrl, getPageKeyFromUrl, isPortalRoute } from "../utils/urlUtils";
 
 type LanguageContextType = {
   language: SupportedLanguage;

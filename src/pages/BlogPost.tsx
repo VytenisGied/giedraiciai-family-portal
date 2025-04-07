@@ -1,4 +1,3 @@
-
 import { useParams, Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { getLocalizedBlogPostUrl, getLocalizedPath } from "@/utils/urlUtils";
 import { useTranslation } from "react-i18next";
 import { SupportedLanguage } from "@/utils/languageUtils";
+import { useLocalizedPath } from "@/hooks/useLocalizedPath";
 
 // Enhanced blog post data with multilingual support
 const blogPostsData = {
@@ -289,6 +289,7 @@ const BlogPost = () => {
   const { slug } = useParams();
   const { language } = useLanguage();
   const { t } = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
   const post = slug ? blogPostsData[slug as keyof typeof blogPostsData] : null;
   
   if (!post) {
@@ -297,7 +298,7 @@ const BlogPost = () => {
         <div className="container mx-auto py-20 px-4 text-center">
           <h1 className="text-3xl font-serif text-[#8B1E3F] mb-6">{t('blogPost.notFound')}</h1>
           <p className="mb-8">{t('blogPost.doesNotExist')}</p>
-          <Link to={getLocalizedPath("blog", language)}>
+          <Link to={getLocalizedPath("blog")}>
             <Button className="bg-[#C9A13B] hover:bg-[#8B1E3F]">
               <ChevronLeft className="mr-2 h-4 w-4" />
               {t('blogPost.backToBlog')}
@@ -318,7 +319,7 @@ const BlogPost = () => {
     <Layout>
       <div className="max-w-4xl mx-auto py-12 px-4">
         <div className="mb-8">
-          <Link to={getLocalizedPath("blog", language)}>
+          <Link to={getLocalizedPath("blog")}>
             <Button variant="outline" className="border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
               <ChevronLeft className="mr-2 h-4 w-4" />
               {t('blogPost.backToBlog')}
