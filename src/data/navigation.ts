@@ -6,6 +6,7 @@ export interface NavItemDropdown {
   name: string;
   caption: string;
   path: string;
+  label?: string; // Add label property to fix TypeScript errors
 }
 
 export interface NavItem {

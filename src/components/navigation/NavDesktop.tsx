@@ -3,12 +3,12 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { NavDropdown, DropdownOption } from "@/components/ui/dropdown";
 import { NavLink } from "./NavLink";
-import { NavItem } from "@/data/navigation";
+import { NavItem, NavItemDropdown } from "@/data/navigation";
 
 interface NavDesktopProps {
   navItems: (NavItem & { 
     label: string, 
-    dropdown?: (NavItem['dropdown'] & { label: string })[],
+    dropdown?: (NavItemDropdown & { label: string })[] 
   })[];
   isPathActive: (paths: string[]) => boolean;
 }
