@@ -27,7 +27,7 @@ const Navbar = () => {
               <span className="text-white font-serif text-lg">G</span>
             </div>
             <span className="font-serif text-lg text-dark-text hidden sm:block group-hover:text-deep-red transition-colors duration-300">
-              {navItems[0].label}
+              House of Giedraičiai
             </span>
           </Link>
           
