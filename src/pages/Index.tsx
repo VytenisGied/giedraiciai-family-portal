@@ -1,12 +1,24 @@
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Link } from "react-router-dom";
 import { ChevronRight, Menu } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+// Custom component to avoid nesting Links inside NavigationMenuLink
+const NavItem = ({ to, children }: { to: string, children: React.ReactNode }) => {
+  return (
+    <NavigationMenuItem>
+      <Link to={to}>
+        <div className={navigationMenuTriggerStyle()}>
+          {children}
+        </div>
+      </Link>
+    </NavigationMenuItem>
+  );
+};
 
 const Index = () => {
   const isMobile = useIsMobile();
@@ -31,20 +43,9 @@ const Index = () => {
           {!isMobile && (
             <NavigationMenu>
               <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Link to="/">
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Home
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link to="/history">
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      History
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
+                <NavItem to="/">Home</NavItem>
+                <NavItem to="/history">History</NavItem>
+                
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Official</NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -62,6 +63,7 @@ const Index = () => {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
+                
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Association</NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -84,13 +86,9 @@ const Index = () => {
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link to="/blog">
-                    <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                      Blog
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
+                
+                <NavItem to="/blog">Blog</NavItem>
+                
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>
                     {language}
