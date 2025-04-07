@@ -73,7 +73,7 @@ export const ltTranslations = {
   "coatOfArms.cross": "Patriarchalinis kryžius",
   "coatOfArms.crossDescription": "Vaizduoja giminės stiprų ryšį su Bažnyčia, daugelis šeimos narių tarnavo aukštose bažnytinėse pozicijose.",
   "coatOfArms.history": "Istorinis kontekstas",
-  "coatOfArms.historyParagraph1": "Giedraičių herbas yra „Pogonja" (arba „Vyčio") dizaino variantas, kuris yra centrinis Lietuvos heraldikoje. Giminė gavo oficialų patvirtinimą savo kilmingumo statusui ir herbui XIV amžiuje, didžiojo kunigaikščio Vytauto valdymo metu.",
+  "coatOfArms.historyParagraph1": "Giedraičių herbas yra \"Pogonja\" (arba \"Vyčio\") dizaino variantas, kuris yra centrinis Lietuvos heraldikoje. Giminė gavo oficialų patvirtinimą savo kilmingumo statusui ir herbui XIV amžiuje, didžiojo kunigaikščio Vytauto valdymo metu.",
   "coatOfArms.historyParagraph2": "Per šimtmečius herbas buvo naudojamas oficialiuose antspauduose, bažnyčių donacijose, pastatuose ir kariniuose vėliavose, susijusiuose su šeima. Jis tarnavo ne tik kaip tapatybės simbolis, bet ir kaip liudijimas apie giminės seną kilmę ir kilmingą statusą Lietuvos Didžiojoje Kunigaikštystėje ir vėliau Lenkijos-Lietuvos Respublikoje.",
   "coatOfArms.historyParagraph3": "Dabartinis herbo atvaizdavimas pagrįstas istoriniais antspaudais ir dokumentais, datuojamais XVI-XVIII amžiais, ypatingai remiantis tais, kuriuos naudojo Žemaitijos vyskupai iš Giedraičių linijos.",
   "coatOfArms.branches": "Giminės šakos ir variantai",
