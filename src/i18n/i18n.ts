@@ -2,20 +2,21 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { resources } from "./translations";
+import { getStoredLanguage, getLowercaseCode } from "../utils/languageUtils";
 
-// Get the saved language from localStorage or use default
-const savedLanguage = localStorage.getItem("preferredLanguage");
-const initialLanguage = savedLanguage ? savedLanguage.toLowerCase() : "en";
+// Get the saved language from storage utilities
+const savedLanguage = getStoredLanguage();
+const initialLanguage = getLowercaseCode(savedLanguage);
 
 // Initialize i18next
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
   .init({
     resources,
-    lng: initialLanguage, // use stored language or default to "en"
-    fallbackLng: "en", // fallback language
+    lng: initialLanguage,
+    fallbackLng: "en",
     interpolation: {
-      escapeValue: false // react already safes from xss
+      escapeValue: false // React already safes from xss
     },
     debug: process.env.NODE_ENV === 'development',
     react: {
