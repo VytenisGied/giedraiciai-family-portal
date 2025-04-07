@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -160,7 +159,7 @@ export const NavDropdown = ({ label, options, isActive, className }: NavDropdown
       {isActive && (
         <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gold" />
       )}
-      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gold transition-all duration-300 ease-in-out group-hover:w-full" />
+      <span className="absolute bottom-0 left-0 right-0 mx-auto h-[2px] w-0 bg-gold transition-all duration-300 ease-in-out group-hover:w-full origin-center" />
     </DropdownButton>
   );
 };
