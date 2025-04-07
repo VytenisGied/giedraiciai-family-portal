@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { UploadCloud, AlertTriangle, CheckCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const SubmitGenealogy = () => {
+  const { t } = useTranslation();
   const [formState, setFormState] = useState({
     fullName: "",
     email: "",
@@ -39,8 +41,8 @@ const SubmitGenealogy = () => {
     // Validation
     if (!formState.fullName || !formState.email || !formState.lineageInfo) {
       toast({
-        title: "Missing information",
-        description: "Please fill in all required fields.",
+        title: t("submitGenealogy.missingInformation"),
+        description: t("submitGenealogy.fillRequired"),
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -53,8 +55,8 @@ const SubmitGenealogy = () => {
       setIsSubmitting(false);
       setIsSubmitted(true);
       toast({
-        title: "Submission successful",
-        description: "Your genealogy information has been submitted.",
+        title: t("submitGenealogy.submissionSuccessful"),
+        description: t("submitGenealogy.infoSubmitted"),
       });
     }, 1500);
   };
@@ -63,25 +65,25 @@ const SubmitGenealogy = () => {
     <Layout>
       <div className="container mx-auto py-12 px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-6 text-center">Submit Genealogy</h1>
+          <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-6 text-center">{t("submitGenealogy.title")}</h1>
           
           {!isSubmitted ? (
             <>
               <p className="text-lg mb-8 text-center">
-                If you believe you may be connected to the Giedraičiai lineage, please submit your family information below. Our genealogy researchers will review your submission and contact you with any findings.
+                {t("submitGenealogy.description")}
               </p>
               
               <Card className="border-[#C9A13B]/20">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-serif text-[#8B1E3F]">Genealogy Submission Form</CardTitle>
+                  <CardTitle className="text-2xl font-serif text-[#8B1E3F]">{t("submitGenealogy.formTitle")}</CardTitle>
                   <CardDescription>
-                    Please provide as much detail as possible about your family connection to the House of Giedraičiai.
+                    {t("submitGenealogy.formDescription")}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
-                      <Label htmlFor="fullName">Full Name <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="fullName">{t("submitGenealogy.fullName")} <span className="text-red-500">*</span></Label>
                       <Input
                         id="fullName"
                         name="fullName"
@@ -93,7 +95,7 @@ const SubmitGenealogy = () => {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email Address <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="email">{t("submitGenealogy.emailAddress")} <span className="text-red-500">*</span></Label>
                       <Input
                         id="email"
                         name="email"
@@ -106,27 +108,27 @@ const SubmitGenealogy = () => {
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="lineageInfo">Lineage Information <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="lineageInfo">{t("submitGenealogy.lineageInfo")} <span className="text-red-500">*</span></Label>
                       <Textarea
                         id="lineageInfo"
                         name="lineageInfo"
                         value={formState.lineageInfo}
                         onChange={handleInputChange}
-                        placeholder="Please describe your known family lineage, including names, dates, and locations that may connect to the Giedraičiai family."
+                        placeholder={t("submitGenealogy.lineagePlaceholder")}
                         className="min-h-[150px]"
                         required
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="file">Supporting Documents (Optional)</Label>
+                      <Label htmlFor="file">{t("submitGenealogy.supportingDocuments")}</Label>
                       <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                         <UploadCloud className="mx-auto h-12 w-12 text-gray-400" />
                         <p className="mt-2 text-sm text-gray-600">
-                          Drag and drop files here, or click to select files
+                          {t("submitGenealogy.dragDrop")}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
-                          PDF, JPG, PNG up to 10MB
+                          {t("submitGenealogy.fileTypes")}
                         </p>
                         <input
                           id="file"
@@ -142,24 +144,24 @@ const SubmitGenealogy = () => {
                           className="mt-4"
                           onClick={() => document.getElementById("file")?.click()}
                         >
-                          Select File
+                          {t("submitGenealogy.selectFile")}
                         </Button>
                         {formState.file && (
                           <p className="mt-2 text-sm text-green-600">
-                            Selected: {formState.file.name}
+                            {t("submitGenealogy.selected")} {formState.file.name}
                           </p>
                         )}
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="notes">Additional Notes (Optional)</Label>
+                      <Label htmlFor="notes">{t("submitGenealogy.notes")}</Label>
                       <Textarea
                         id="notes"
                         name="notes"
                         value={formState.notes}
                         onChange={handleInputChange}
-                        placeholder="Any additional information you'd like to share"
+                        placeholder={t("submitGenealogy.notesPlaceholder")}
                         className="min-h-[100px]"
                       />
                     </div>
@@ -167,7 +169,7 @@ const SubmitGenealogy = () => {
                     <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-start">
                       <AlertTriangle className="text-amber-500 mr-3 mt-1 h-5 w-5 flex-shrink-0" />
                       <p className="text-sm text-amber-800">
-                        By submitting this form, you consent to our genealogy researchers reviewing your information and potentially contacting you regarding your family history. We respect your privacy and will not share your information with third parties.
+                        {t("submitGenealogy.privacyNotice")}
                       </p>
                     </div>
                     
@@ -176,7 +178,7 @@ const SubmitGenealogy = () => {
                       className="w-full bg-[#C9A13B] hover:bg-[#8B1E3F] text-white"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Submitting..." : "Submit Genealogy"}
+                      {isSubmitting ? t("submitGenealogy.submitting") : t("submitGenealogy.submit")}
                     </Button>
                   </form>
                 </CardContent>
@@ -185,12 +187,12 @@ const SubmitGenealogy = () => {
           ) : (
             <Card className="border-[#C9A13B]/20 text-center p-8">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
-              <CardTitle className="text-2xl font-serif text-[#8B1E3F] mb-4">Thank You for Your Submission</CardTitle>
+              <CardTitle className="text-2xl font-serif text-[#8B1E3F] mb-4">{t("submitGenealogy.thankYou")}</CardTitle>
               <CardDescription className="text-lg mb-6">
-                Your genealogy information has been successfully submitted to our researchers. We will review your information and contact you if we find connections to the Giedraičiai lineage.
+                {t("submitGenealogy.successMessage")}
               </CardDescription>
               <p className="text-gray-600 mb-8">
-                A confirmation email has been sent to {formState.email}.
+                {t("submitGenealogy.confirmationEmail")} {formState.email}.
               </p>
               <Button
                 className="bg-[#C9A13B] hover:bg-[#8B1E3F] text-white"
@@ -205,7 +207,7 @@ const SubmitGenealogy = () => {
                   setIsSubmitted(false);
                 }}
               >
-                Submit Another
+                {t("submitGenealogy.submitAnother")}
               </Button>
             </Card>
           )}

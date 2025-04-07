@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Download, Search, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 // Mock document data
 const documents = [
@@ -58,32 +59,34 @@ const documents = [
 ];
 
 const Documents = () => {
+  const { t } = useTranslation();
+  
   return (
     <Layout>
       <div className="container mx-auto py-12 px-4">
-        <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-6 text-center">Historical Documents</h1>
+        <h1 className="text-4xl md:text-5xl font-serif text-[#8B1E3F] mb-6 text-center">{t("documents.title")}</h1>
         
         <div className="max-w-4xl mx-auto">
           <p className="text-lg mb-12 text-center">
-            Explore the rich documentary heritage of the House of Giedraičiai, from medieval royal grants to modern association documents. These materials provide valuable insights into the family's history, status, and influence across centuries.
+            {t("documents.description")}
           </p>
           
           <div className="mb-12">
-            <h2 className="text-2xl font-serif text-[#8B1E3F] mb-4">Document Categories</h2>
+            <h2 className="text-2xl font-serif text-[#8B1E3F] mb-4">{t("documents.categories")}</h2>
             <Accordion type="single" collapsible>
               <AccordionItem value="noble-status" className="border-[#C9A13B]/20">
                 <AccordionTrigger className="hover:text-[#8B1E3F] py-4">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#C9A13B]" />
-                    <span>Noble Status Confirmations</span>
+                    <span>{t("documents.nobleStatus")}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-4">
-                    These documents officially confirm the noble status of the Giedraičiai family across different historical periods. They include royal letters patent, confirmations by successive rulers, and registrations in noble directories and matriculations.
+                    {t("documents.nobleStatusDescription1")}
                   </p>
                   <p>
-                    The earliest surviving confirmation dates from 1569, though historical records indicate the family's noble status was already well-established by the 14th century.
+                    {t("documents.nobleStatusDescription2")}
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -92,15 +95,15 @@ const Documents = () => {
                 <AccordionTrigger className="hover:text-[#8B1E3F] py-4">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#C9A13B]" />
-                    <span>Land Grants & Property Documents</span>
+                    <span>{t("documents.landGrants")}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-4">
-                    These documents record land grants, estate purchases, and property transfers related to the family's territorial holdings. They provide valuable information about the geographic extent of the family's influence and economic resources.
+                    {t("documents.landGrantsDescription1")}
                   </p>
                   <p>
-                    The collection includes grants in Lithuania, Poland, and territories of modern-day Belarus and Ukraine, dating from the 15th to the early 20th centuries.
+                    {t("documents.landGrantsDescription2")}
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -109,15 +112,15 @@ const Documents = () => {
                 <AccordionTrigger className="hover:text-[#8B1E3F] py-4">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#C9A13B]" />
-                    <span>Ecclesiastical Documents</span>
+                    <span>{t("documents.ecclesiastical")}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-4">
-                    Given the significant number of Giedraičiai family members who served in the Church, this collection includes papal bulls, episcopal appointments, and records of church foundations and donations sponsored by the family.
+                    {t("documents.ecclesiasticalDescription1")}
                   </p>
                   <p>
-                    Of particular importance are documents related to Merkelis Giedraitis, Bishop of Samogitia (1576-1609), who played a crucial role in the Counter-Reformation in Lithuania.
+                    {t("documents.ecclesiasticalDescription2")}
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -126,15 +129,15 @@ const Documents = () => {
                 <AccordionTrigger className="hover:text-[#8B1E3F] py-4">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#C9A13B]" />
-                    <span>Military Commissions & Records</span>
+                    <span>{t("documents.military")}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-4">
-                    These documents record the military service of family members, including commissions, promotions, and awards. The collection spans from the 16th to the 20th centuries, covering service in Lithuanian, Polish, Russian, and other armed forces.
+                    {t("documents.militaryDescription1")}
                   </p>
                   <p>
-                    Notable documents include records from the Livonian War, the Great Northern War, the Polish-Lithuanian uprisings of the 19th century, and the two World Wars.
+                    {t("documents.militaryDescription2")}
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -143,15 +146,15 @@ const Documents = () => {
                 <AccordionTrigger className="hover:text-[#8B1E3F] py-4">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#C9A13B]" />
-                    <span>Genealogical Records</span>
+                    <span>{t("documents.genealogy")}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-4">
-                    This collection includes family trees, birth and marriage records, and comprehensive genealogical documentation compiled at various points in history. Of particular value are the detailed genealogies prepared in the 19th century for confirmation of noble status under Russian Imperial rule.
+                    {t("documents.genealogyDescription1")}
                   </p>
                   <p>
-                    Modern additions include genealogical research conducted by the contemporary House of Giedraičiai Association, documenting branches of the family that settled across Europe, the Americas, and Australia.
+                    {t("documents.genealogyDescription2")}
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -160,15 +163,15 @@ const Documents = () => {
                 <AccordionTrigger className="hover:text-[#8B1E3F] py-4">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#C9A13B]" />
-                    <span>Personal Correspondence</span>
+                    <span>{t("documents.correspondence")}</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
                   <p className="mb-4">
-                    This collection includes personal letters, diaries, and memoirs of family members. These documents provide insights into the daily lives, personal relationships, and perspectives of individuals from different generations of the family.
+                    {t("documents.correspondenceDescription1")}
                   </p>
                   <p>
-                    The collection is particularly rich for the 18th-20th centuries, with notable correspondence from family members involved in political, cultural, and religious affairs.
+                    {t("documents.correspondenceDescription2")}
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -177,7 +180,7 @@ const Documents = () => {
           
           {/* Featured Documents */}
           <div className="mb-16">
-            <h2 className="text-2xl font-serif text-[#8B1E3F] mb-6">Featured Documents</h2>
+            <h2 className="text-2xl font-serif text-[#8B1E3F] mb-6">{t("documents.featured")}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {documents.slice(0, 4).map(document => (
                 <Card key={document.id} className="border-[#C9A13B]/20 hover:shadow-md transition-all">
@@ -190,10 +193,10 @@ const Documents = () => {
                     <p className="text-gray-600 mb-4">{document.description}</p>
                     <div className="flex gap-2">
                       <Button variant="outline" className="flex-1 border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
-                        <Search className="h-4 w-4 mr-2" /> View
+                        <Search className="h-4 w-4 mr-2" /> {t("documents.view")}
                       </Button>
                       <Button className="flex-1 bg-[#C9A13B] hover:bg-[#8B1E3F]">
-                        <Download className="h-4 w-4 mr-2" /> Download
+                        <Download className="h-4 w-4 mr-2" /> {t("documents.download")}
                       </Button>
                     </div>
                   </CardContent>
@@ -202,26 +205,26 @@ const Documents = () => {
             </div>
             <div className="mt-6 text-center">
               <Button variant="outline" className="border-[#C9A13B] text-[#C9A13B] hover:bg-[#C9A13B] hover:text-white">
-                View All Documents <ChevronRight className="ml-2 h-4 w-4" />
+                {t("documents.viewAll")} <ChevronRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
           
           {/* Document Preservation Note */}
           <div className="bg-[#FAF8F4] border border-[#C9A13B]/20 rounded-lg p-6">
-            <h3 className="text-xl font-serif text-[#8B1E3F] mb-4">Document Preservation Efforts</h3>
+            <h3 className="text-xl font-serif text-[#8B1E3F] mb-4">{t("documents.preservation")}</h3>
             <p className="mb-4">
-              The House of Giedraičiai Association is committed to preserving our documentary heritage for future generations. Our ongoing efforts include:
+              {t("documents.preservationDescription")}
             </p>
             <ul className="list-disc pl-5 mb-4 space-y-2">
-              <li>Digitizing fragile original documents</li>
-              <li>Professional conservation of physical documents</li>
-              <li>Translating documents from Latin, Old Polish, and other historical languages</li>
-              <li>Researching in archives across Europe to discover additional materials</li>
-              <li>Creating a secure digital repository accessible to family members and researchers</li>
+              <li>{t("documents.digitizing")}</li>
+              <li>{t("documents.conservation")}</li>
+              <li>{t("documents.translating")}</li>
+              <li>{t("documents.researching")}</li>
+              <li>{t("documents.repository")}</li>
             </ul>
             <p>
-              If you possess documents related to the Giedraičiai family history or are interested in supporting our preservation efforts, please contact our archival committee at archives@giedraiciai.org.
+              {t("documents.contactPreservation")}
             </p>
           </div>
         </div>
