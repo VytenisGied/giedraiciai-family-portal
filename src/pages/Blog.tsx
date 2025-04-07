@@ -13,12 +13,13 @@ import {
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem
 } from "@/components/ui/dropdown-menu";
-import { Filter, ChevronDown } from "lucide-react";
+import { Filter, ChevronDown, Check } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Enhanced blog data structure with language support
 const blogPosts = [
@@ -137,15 +138,16 @@ const categories = ["All", "History", "Events", "Projects", "Genealogy", "Associ
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const [languageFilter, setLanguageFilter] = useState<"all" | SupportedLanguage>("all");
+  const [selectedLanguages, setSelectedLanguages] = useState<SupportedLanguage[]>([]); // Changed to array
   const postsPerPage = 4;
   const { language } = useLanguage();
   const { t } = useTranslation();
   
-  // Filter posts by category and language
+  // Filter posts by category and languages
   const filteredPosts = blogPosts
     .filter(post => selectedCategory === "All" || post.category === selectedCategory)
-    .filter(post => languageFilter === "all" || post.languages.includes(languageFilter));
+    .filter(post => selectedLanguages.length === 0 || 
+      post.languages.some(lang => selectedLanguages.includes(lang)));
   
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -156,6 +158,29 @@ const Blog = () => {
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0);
+  };
+
+  const toggleLanguage = (lang: SupportedLanguage) => {
+    setSelectedLanguages(prev => {
+      if (prev.includes(lang)) {
+        return prev.filter(l => l !== lang);
+      } else {
+        return [...prev, lang];
+      }
+    });
+    setCurrentPage(1);
+  };
+
+  // Helper function to display selected languages
+  const getLanguageSelectionLabel = () => {
+    if (selectedLanguages.length === 0) {
+      return t('blog.allLanguages');
+    } else if (selectedLanguages.length === 1) {
+      return selectedLanguages[0] === "EN" ? "English" : 
+             selectedLanguages[0] === "LT" ? "Lietuvių" : "Polski";
+    } else {
+      return `${selectedLanguages.length} ${t('blog.languagesSelected')}`;
+    }
   };
   
   return (
@@ -185,30 +210,26 @@ const Blog = () => {
                     <div className="px-2 py-1.5 text-sm font-medium text-gray-500">
                       {t('blog.language')}
                     </div>
-                    <DropdownMenuItem 
-                      className={languageFilter === "all" ? "bg-[#C9A13B]/10" : ""}
-                      onClick={() => setLanguageFilter("all")}
-                    >
-                      {t('blog.allLanguages')}
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      className={languageFilter === "EN" ? "bg-[#C9A13B]/10" : ""}
-                      onClick={() => setLanguageFilter("EN")}
+                    
+                    {/* Multiple language selection */}
+                    <DropdownMenuCheckboxItem 
+                      checked={selectedLanguages.includes("EN")}
+                      onCheckedChange={() => toggleLanguage("EN")}
                     >
                       English
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      className={languageFilter === "LT" ? "bg-[#C9A13B]/10" : ""}
-                      onClick={() => setLanguageFilter("LT")}
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem 
+                      checked={selectedLanguages.includes("LT")}
+                      onCheckedChange={() => toggleLanguage("LT")}
                     >
                       Lietuvių
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      className={languageFilter === "PL" ? "bg-[#C9A13B]/10" : ""}
-                      onClick={() => setLanguageFilter("PL")}
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem 
+                      checked={selectedLanguages.includes("PL")}
+                      onCheckedChange={() => toggleLanguage("PL")}
                     >
                       Polski
-                    </DropdownMenuItem>
+                    </DropdownMenuCheckboxItem>
                     
                     <div className="px-2 py-1.5 text-sm font-medium text-gray-500 mt-2">
                       {t('blog.category')}
@@ -237,13 +258,7 @@ const Blog = () => {
                       variant="outline" 
                       className="border-[#C9A13B] bg-white text-[#8B1E3F] hover:bg-[#C9A13B]/10 flex gap-2 items-center"
                     >
-                      {languageFilter === "all" 
-                        ? t('blog.allLanguages') 
-                        : languageFilter === "EN" 
-                          ? "English" 
-                          : languageFilter === "LT" 
-                            ? "Lietuvių" 
-                            : "Polski"}
+                      {getLanguageSelectionLabel()}
                       <ChevronDown className="h-4 w-4 opacity-70" />
                     </Button>
                   </PopoverTrigger>
@@ -253,46 +268,49 @@ const Blog = () => {
                     </div>
                     <div className="p-2">
                       <div className="grid grid-cols-1 gap-1">
-                        <Button 
-                          variant={languageFilter === "all" ? "default" : "ghost"}
-                          className={languageFilter === "all" ? "bg-[#C9A13B] justify-start" : "justify-start"}
-                          onClick={() => {
-                            setLanguageFilter("all");
-                            setCurrentPage(1);
-                          }}
-                        >
-                          {t('blog.allLanguages')}
-                        </Button>
-                        <Button 
-                          variant={languageFilter === "EN" ? "default" : "ghost"}
-                          className={languageFilter === "EN" ? "bg-[#C9A13B] justify-start" : "justify-start"}
-                          onClick={() => {
-                            setLanguageFilter("EN");
-                            setCurrentPage(1);
-                          }}
-                        >
-                          English
-                        </Button>
-                        <Button 
-                          variant={languageFilter === "LT" ? "default" : "ghost"}
-                          className={languageFilter === "LT" ? "bg-[#C9A13B] justify-start" : "justify-start"}
-                          onClick={() => {
-                            setLanguageFilter("LT");
-                            setCurrentPage(1);
-                          }}
-                        >
-                          Lietuvių
-                        </Button>
-                        <Button 
-                          variant={languageFilter === "PL" ? "default" : "ghost"}
-                          className={languageFilter === "PL" ? "bg-[#C9A13B] justify-start" : "justify-start"}
-                          onClick={() => {
-                            setLanguageFilter("PL");
-                            setCurrentPage(1);
-                          }}
-                        >
-                          Polski
-                        </Button>
+                        {/* Multiple language selection */}
+                        <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                          <Checkbox 
+                            id="en-lang" 
+                            checked={selectedLanguages.includes("EN")} 
+                            onCheckedChange={() => toggleLanguage("EN")}
+                          />
+                          <label htmlFor="en-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                            English
+                          </label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                          <Checkbox 
+                            id="lt-lang" 
+                            checked={selectedLanguages.includes("LT")} 
+                            onCheckedChange={() => toggleLanguage("LT")}
+                          />
+                          <label htmlFor="lt-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                            Lietuvių
+                          </label>
+                        </div>
+                        
+                        <div className="flex items-center space-x-2 px-2 py-1.5 hover:bg-gray-100 rounded-md">
+                          <Checkbox 
+                            id="pl-lang" 
+                            checked={selectedLanguages.includes("PL")} 
+                            onCheckedChange={() => toggleLanguage("PL")}
+                          />
+                          <label htmlFor="pl-lang" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
+                            Polski
+                          </label>
+                        </div>
+                        
+                        {selectedLanguages.length > 0 && (
+                          <Button 
+                            variant="link" 
+                            onClick={() => setSelectedLanguages([])} 
+                            className="text-xs text-[#8B1E3F] mt-1"
+                          >
+                            {t('blog.clearFilters')}
+                          </Button>
+                        )}
                       </div>
                     </div>
                   </PopoverContent>
