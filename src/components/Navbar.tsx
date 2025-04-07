@@ -20,7 +20,7 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gold/20 shadow-sm">
       <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center">
           {/* Logo with enhanced hover effect */}
           <Link to={navItems[0].path || "/"} className="flex items-center gap-2 group transition-all duration-300">
             <div className="w-10 h-10 rounded-full bg-deep-red flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:scale-110">
@@ -40,7 +40,7 @@ const Navbar = () => {
           )}
           
           {/* Language Selector and Mobile Menu */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ml-auto">
             {!isMobile && (
               <LanguageSelector
                 currentLanguage={language}

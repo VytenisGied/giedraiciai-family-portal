@@ -19,7 +19,7 @@ export const NavDesktop: React.FC<NavDesktopProps> = ({
   const isActive = (path?: string) => path ? location.pathname === path : false;
 
   return (
-    <nav className="flex items-center gap-2">
+    <nav className="flex flex-1 items-center justify-center gap-2">
       {navItems.map(item => {
         // Items with dropdown
         if (item.dropdown && item.dropdown.length > 0) {
