@@ -1,6 +1,6 @@
-
 import * as React from "react";
 import { ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export interface DropdownOption {
@@ -42,6 +42,13 @@ export const CustomDropdown = ({
     };
   }, []);
 
+  const handleItemClick = (option: DropdownOption) => {
+    if (option.onClick) {
+      option.onClick();
+    }
+    setIsOpen(false);
+  };
+
   return (
     <div className={cn("relative", className)} ref={dropdownRef}>
       <div
@@ -61,23 +68,26 @@ export const CustomDropdown = ({
         >
           <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             {options.map((option, index) => (
-              <a
-                key={index}
-                href={option.href || "#"}
-                onClick={(e) => {
-                  if (option.onClick) {
-                    e.preventDefault();
-                    option.onClick();
-                    setIsOpen(false);
-                  } else if (!option.href) {
-                    e.preventDefault();
-                  }
-                }}
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                role="menuitem"
-              >
-                {option.label}
-              </a>
+              option.href ? (
+                <Link
+                  key={index}
+                  to={option.href}
+                  onClick={() => handleItemClick(option)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                >
+                  {option.label}
+                </Link>
+              ) : (
+                <button
+                  key={index}
+                  onClick={() => handleItemClick(option)}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  role="menuitem"
+                >
+                  {option.label}
+                </button>
+              )
             ))}
           </div>
         </div>

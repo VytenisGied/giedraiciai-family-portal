@@ -11,10 +11,15 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<"EN" | "LT" | "PL">("EN");
+  // Initialize language from localStorage or default to "EN"
+  const [language, setLanguage] = useState<"EN" | "LT" | "PL">(() => {
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+    return (savedLanguage as "EN" | "LT" | "PL") || "EN";
+  });
+
   const { t } = useTranslation();
   
-  // Update i18n language when language state changes
+  // Update i18n language when language state changes and save to localStorage
   useEffect(() => {
     // Map uppercase language codes to lowercase
     const languageCodeMap: Record<string, string> = {
@@ -25,6 +30,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     
     const languageCode = languageCodeMap[language];
     console.log(`Changing language to: ${languageCode}`);
+    
+    // Save language preference to localStorage
+    localStorage.setItem("preferredLanguage", language);
     
     try {
       i18n.changeLanguage(languageCode);
