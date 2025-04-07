@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -10,6 +11,19 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 interface LayoutProps {
   children: React.ReactNode;
 }
+
+// Custom component to avoid nesting Links inside NavigationMenuLink
+const NavItem = ({ to, children }: { to: string, children: React.ReactNode }) => {
+  return (
+    <NavigationMenuItem>
+      <Link to={to}>
+        <div className={navigationMenuTriggerStyle()}>
+          {children}
+        </div>
+      </Link>
+    </NavigationMenuItem>
+  );
+};
 
 const Layout = ({ children }: LayoutProps) => {
   const isMobile = useIsMobile();
@@ -35,20 +49,9 @@ const Layout = ({ children }: LayoutProps) => {
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <Link to="/">
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                        Home
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <Link to="/history">
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                        History
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
+                  <NavItem to="/">Home</NavItem>
+                  <NavItem to="/history">History</NavItem>
+                  
                   <NavigationMenuItem>
                     <NavigationMenuTrigger>Official</NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -66,6 +69,7 @@ const Layout = ({ children }: LayoutProps) => {
                       </ul>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
+                  
                   <NavigationMenuItem>
                     <NavigationMenuTrigger>Association</NavigationMenuTrigger>
                     <NavigationMenuContent>
@@ -88,17 +92,12 @@ const Layout = ({ children }: LayoutProps) => {
                       </ul>
                     </NavigationMenuContent>
                   </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <Link to="/blog">
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                        Blog
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
+                  
+                  <NavItem to="/blog">Blog</NavItem>
                 </NavigationMenuList>
               </NavigationMenu>
               
-              {/* Separate Language dropdown using DropdownMenu instead of NavigationMenu */}
+              {/* Language dropdown using DropdownMenu */}
               <DropdownMenu>
                 <DropdownMenuTrigger className="ml-2 inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium">
                   {language}
