@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import History from "./pages/History";
+import CoatOfArms from "./pages/official/CoatOfArms";
+import Documents from "./pages/official/Documents";
+import About from "./pages/association/About";
+import Membership from "./pages/association/Membership";
+import SubmitGenealogy from "./pages/association/SubmitGenealogy";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +25,22 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/history" element={<History />} />
+          
+          {/* Official Routes */}
+          <Route path="/official/coat-of-arms" element={<CoatOfArms />} />
+          <Route path="/official/documents" element={<Documents />} />
+          
+          {/* Association Routes */}
+          <Route path="/association/about" element={<About />} />
+          <Route path="/association/membership" element={<Membership />} />
+          <Route path="/association/submit-genealogy" element={<SubmitGenealogy />} />
+          
+          {/* Blog Routes */}
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          
+          {/* 404 Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
