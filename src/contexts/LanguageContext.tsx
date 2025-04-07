@@ -1,6 +1,7 @@
 
 import React, { createContext, useState, useContext, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useLocation } from "react-router-dom";
 import i18n from "../i18n/i18n";
 import { 
   SupportedLanguage, 
@@ -8,6 +9,7 @@ import {
   saveLanguage, 
   getLowercaseCode 
 } from "../utils/languageUtils";
+import { getLocalizedUrl } from "../utils/urlUtils";
 
 type LanguageContextType = {
   language: SupportedLanguage;
@@ -20,11 +22,21 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   // Initialize language from our utility function
   const [language, setLanguage] = useState<SupportedLanguage>(getStoredLanguage());
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   
   // Update i18n language when language state changes and save to localStorage
   const handleLanguageChange = useMemo(() => (newLanguage: SupportedLanguage) => {
+    const currentUrl = `${location.pathname}${location.search}${location.hash}`;
+    const newUrl = getLocalizedUrl(currentUrl, language, newLanguage);
+    
     setLanguage(newLanguage);
-  }, []);
+    
+    // Navigate to the localized URL
+    if (newUrl !== currentUrl) {
+      navigate(newUrl);
+    }
+  }, [language, location, navigate]);
   
   // Handle actual language change effects
   useEffect(() => {

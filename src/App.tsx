@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -27,36 +27,54 @@ const queryClient = new QueryClient({
   },
 });
 
+const AppRoutes = () => (
+  <Routes>
+    {/* English Routes */}
+    <Route path="/" element={<Index />} />
+    <Route path="/history" element={<History />} />
+    <Route path="/official/coat-of-arms" element={<CoatOfArms />} />
+    <Route path="/official/documents" element={<Documents />} />
+    <Route path="/association/about" element={<About />} />
+    <Route path="/association/membership" element={<Membership />} />
+    <Route path="/association/submit-genealogy" element={<SubmitGenealogy />} />
+    <Route path="/blog" element={<Blog />} />
+    <Route path="/blog/:slug" element={<BlogPost />} />
+    
+    {/* Lithuanian Routes */}
+    <Route path="/istorija" element={<History />} />
+    <Route path="/oficialus/herbas" element={<CoatOfArms />} />
+    <Route path="/oficialus/dokumentai" element={<Documents />} />
+    <Route path="/asociacija/apie" element={<About />} />
+    <Route path="/asociacija/naryste" element={<Membership />} />
+    <Route path="/asociacija/pateikti-genealogija" element={<SubmitGenealogy />} />
+    <Route path="/tinklarastis" element={<Blog />} />
+    <Route path="/tinklarastis/:slug" element={<BlogPost />} />
+    
+    {/* Polish Routes */}
+    <Route path="/historia" element={<History />} />
+    <Route path="/oficjalne/herb" element={<CoatOfArms />} />
+    <Route path="/oficjalne/dokumenty" element={<Documents />} />
+    <Route path="/stowarzyszenie/o-nas" element={<About />} />
+    <Route path="/stowarzyszenie/czlonkostwo" element={<Membership />} />
+    <Route path="/stowarzyszenie/przeslij-genealogie" element={<SubmitGenealogy />} />
+    <Route path="/blog/:slug" element={<BlogPost />} />
+    
+    {/* 404 Route */}
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/history" element={<History />} />
-            
-            {/* Official Routes */}
-            <Route path="/official/coat-of-arms" element={<CoatOfArms />} />
-            <Route path="/official/documents" element={<Documents />} />
-            
-            {/* Association Routes */}
-            <Route path="/association/about" element={<About />} />
-            <Route path="/association/membership" element={<Membership />} />
-            <Route path="/association/submit-genealogy" element={<SubmitGenealogy />} />
-            
-            {/* Blog Routes */}
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            
-            {/* 404 Route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
+    <BrowserRouter>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <AppRoutes />
+        </TooltipProvider>
+      </LanguageProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
