@@ -74,7 +74,7 @@ export const useNavigation = () => {
         {
           name: "Portal",
           caption: "nav.association.portal",
-          path: localizedPath("portal")
+          path: "#"
         }
       ]
     },
