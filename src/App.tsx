@@ -14,11 +14,13 @@ import Portal from './pages/association/Portal';
 import Blog from './pages/Blog';
 import NotFound from './pages/NotFound';
 import { Toaster } from "@/components/ui/toaster";
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <LanguageProvider>
-      <Router>
+    <Router>
+      <LanguageProvider>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout><Home /></Layout>} />
           <Route path="/en" element={<Layout><Home /></Layout>} />
@@ -68,8 +70,8 @@ function App() {
           <Route path="*" element={<Layout><NotFound /></Layout>} />
         </Routes>
         <Toaster />
-      </Router>
-    </LanguageProvider>
+      </LanguageProvider>
+    </Router>
   );
 }
 
